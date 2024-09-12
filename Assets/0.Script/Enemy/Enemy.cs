@@ -27,9 +27,15 @@ public abstract class Enemy : MonoBehaviour
     Player p;
     SpriteRenderer sr;
     SpriteAnimation sa;
-    protected EnemyData data = new EnemyData();
+    public EnemyData data = new EnemyData();
+
     [SerializeField] List<Sprite> enemySprite;
+    [SerializeField] List<Sprite> deadSprite;
     EnemyState state = EnemyState.Idle;
+    protected bool isDead = false;
+
+
+    [SerializeField] GameObject dropItem;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,10 +44,12 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Init()
     {
+        //p = GameManager.Instance.player;
         sr = GetComponent<SpriteRenderer>();
         sa = GetComponent<SpriteAnimation>();
         SpriteManager.EnemySprite enemySprites = SpriteManager.Instance.enemySprite[data.index];
         enemySprite = enemySprites.idleSprite;
+        deadSprite = enemySprites.deadSprite;
         state = EnemyState.Idle;
         sa.SetSprite(enemySprite, 0.2f);
     }
@@ -71,15 +79,27 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine("Hit");
         if(data.HP<=0)
         {
+            isDead = true;
             state = EnemyState.Dead;
-            Destroy(gameObject);
+            StartCoroutine("Dead");
         }
     }
 
     IEnumerator Hit()
     {
         sr.color = new Color32(255, 90, 90, 255);
+        data.Speed = 0f;
         yield return new WaitForSeconds(0.2f);
+        data.Speed = 2f;
         sr.color = Color.white;
+    }
+
+    IEnumerator Dead()
+    {
+        sa.SetSprite(deadSprite, 0.2f);
+        yield return new WaitForSeconds(0.8f);
+        GameObject item = Instantiate(dropItem, transform);
+        item.transform.SetParent(null);
+        Destroy(gameObject);
     }
 }

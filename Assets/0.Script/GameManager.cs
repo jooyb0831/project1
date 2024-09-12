@@ -22,4 +22,17 @@ public class GameManager : Singleton<GameManager>
             return p;
         }
     }
+
+    private PlayerData pData;
+    public PlayerData playerData
+    {
+        get
+        {
+            if(pData == null)
+            {
+                pData = FindAnyObjectByType<PlayerData>();
+            }
+            return pData;
+        }
+    }
 }

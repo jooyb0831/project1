@@ -12,6 +12,7 @@ public class SpriteManager : Singleton<SpriteManager>
         public List<Sprite> attackSprites;
         public List<Sprite> runAttackSprites;
         public List<Sprite> jumpSprites;
+        public List<Sprite> hurtSprites;
         public List<Sprite> slideSprites;
         public List<Sprite> sitSprites;
 
@@ -29,6 +30,7 @@ public class SpriteManager : Singleton<SpriteManager>
     public class EnemySprite
     {
         public List<Sprite> idleSprite;
+        public List<Sprite> deadSprite;
     }
     public EnemySprite[] enemySprite;
 }

@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float speed = 5f;
-    [SerializeField] float runSpeed = 7f;
+
+    public PlayerData data;
+
+
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] Transform firePos;
     [SerializeField] PBullet pBullet;
     public float jumpPower;
     public bool isJump = false;
     public bool isAttacking = false;
+    public bool isHurt = false;
     [SerializeField] float fireDelayTime = 0.5f;
     float fireTimer;
     public enum State
@@ -24,7 +27,7 @@ public class Player : MonoBehaviour
         Attack,
         Slide,
         Sit,
-        Hit,
+        Hurt,
         Dead
     }
 
@@ -35,6 +38,7 @@ public class Player : MonoBehaviour
     private List<Sprite> jumpSprites;
     private List<Sprite> attackSprites;
     private List<Sprite> runAttackSprites;
+    private List<Sprite> hurtSprites;
     private List<Sprite> slideSprites;
     private List<Sprite> sitSprites;
 
@@ -42,6 +46,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        data = GameManager.Instance.playerData;
         sa = GetComponent<SpriteAnimation>();
         SpriteManager.PlayerSprite pSprite = SpriteManager.Instance.playerSprite[0];
         idleSprites = pSprite.idleSprites;
@@ -49,6 +54,7 @@ public class Player : MonoBehaviour
         jumpSprites = pSprite.jumpSprites;
         attackSprites = pSprite.attackSprites;
         runAttackSprites = pSprite.runAttackSprites;
+        hurtSprites = pSprite.hurtSprites;
         slideSprites = pSprite.slideSprites;
         sitSprites = pSprite.sitSprites;
 
@@ -60,8 +66,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        
+       
+        if(isHurt == true)
+        {
+            sa.SetSprite(hurtSprites, 0.2f);
+            Invoke("IdleSprite", 0.5f);
+        }
+        else
+        {
+            Move();
+        }
     }
     
     /// <summary>
@@ -71,11 +85,11 @@ public class Player : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = transform.position.y;
-        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
+        transform.Translate(new Vector2(x, 0) * Time.deltaTime * data.Speed);
         if(Input.GetKey(KeyCode.LeftShift))
         {
             state = State.Run;
-            transform.Translate(new Vector2(x, 0) * Time.deltaTime * runSpeed);
+            transform.Translate(new Vector2(x, 0) * Time.deltaTime * data.RunSpeed);
 
         }
         if (Input.GetButtonDown("Jump"))
@@ -134,7 +148,14 @@ public class Player : MonoBehaviour
     {
         sa.SetSprite(idleSprites, 0.2f);
         state = State.Idle;
-        isAttacking = false;
+        if (isAttacking == true)
+        {
+            isAttacking = false;
+        }
+        if(isHurt == true)
+        {
+            isHurt = false;
+        }
     }
 
     void SpriteChange(float x, float y)
@@ -184,7 +205,11 @@ public class Player : MonoBehaviour
                 sa.SetSprite(attackSprites, 0.2f);
                 Invoke("IdleSprite", 0.6f);
             }
-            if (state != State.Idle && isAttacking == false)
+            if(state.Equals(State.Hurt))
+            {
+                sa.SetSprite(hurtSprites, 0.2f);
+            }
+            if (state != State.Idle && isAttacking == false && isJump == false)
             {
                 sa.SetSprite(idleSprites, 0.2f);
                 state = State.Idle;
@@ -197,6 +222,27 @@ public class Player : MonoBehaviour
         if(collision.gameObject.GetComponent<Ground>()==true)
         {
             isJump = false;
+        }
+
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<Enemy>() == true)
+        {
+            if (data.HP > collision.GetComponent<Enemy>().data.AttackPower)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<Enemy>().data.AttackPower;
+                Debug.Log($"{data.HP}");
+                state = State.Hurt;
+
+            }
+            else if (data.HP <= collision.GetComponent<Enemy>().data.AttackPower)
+            {
+                Destroy(gameObject);
+            }
 
         }
     }

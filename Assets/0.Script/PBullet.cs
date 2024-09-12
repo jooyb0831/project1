@@ -41,7 +41,6 @@ public class PBullet : MonoBehaviour
         }
     }
 
-
     void LastSprite()
     {
         sa.isStop = true;
