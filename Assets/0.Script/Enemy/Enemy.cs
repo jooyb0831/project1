@@ -34,7 +34,7 @@ public abstract class Enemy : MonoBehaviour
     EnemyState state = EnemyState.Idle;
     protected bool isDead = false;
 
-
+    private PlayerData pd;
     [SerializeField] GameObject dropItem;
     // Start is called before the first frame update
     void Start()
@@ -47,6 +47,7 @@ public abstract class Enemy : MonoBehaviour
         //p = GameManager.Instance.player;
         sr = GetComponent<SpriteRenderer>();
         sa = GetComponent<SpriteAnimation>();
+        pd = GameManager.Instance.playerData;
         SpriteManager.EnemySprite enemySprites = SpriteManager.Instance.enemySprite[data.index];
         enemySprite = enemySprites.idleSprite;
         deadSprite = enemySprites.deadSprite;
@@ -79,6 +80,7 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine("Hit");
         if(data.HP<=0)
         {
+            
             isDead = true;
             state = EnemyState.Dead;
             StartCoroutine("Dead");
@@ -96,6 +98,11 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator Dead()
     {
+        if(pd == null)
+        {
+            pd = GameManager.Instance.playerData;
+        }
+        pd.EXP += 10;
         sa.SetSprite(deadSprite, 0.2f);
         yield return new WaitForSeconds(0.8f);
         GameObject item = Instantiate(dropItem, transform);

@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] Transform firePos;
     [SerializeField] PBullet pBullet;
-    public float jumpPower;
+
     public bool isJump = false;
     public bool isAttacking = false;
     public bool isHurt = false;
@@ -75,16 +75,20 @@ public class Player : MonoBehaviour
         else
         {
             Move();
+
         }
     }
-    
+    public float jumpTimer;
+    public float jumpTime;
+    public float jumpPower;
+    public float jumptimeLimit;
     /// <summary>
     /// 플레이어 움직임
     /// </summary>
     void Move()
     {
         float x = Input.GetAxisRaw("Horizontal");
-        float y = transform.position.y;
+        float y = Input.GetAxisRaw("Jump");
         transform.Translate(new Vector2(x, 0) * Time.deltaTime * data.Speed);
         if(Input.GetKey(KeyCode.LeftShift))
         {
@@ -92,15 +96,27 @@ public class Player : MonoBehaviour
             transform.Translate(new Vector2(x, 0) * Time.deltaTime * data.RunSpeed);
 
         }
-        if (Input.GetButtonDown("Jump"))
+
+        if (Input.GetButton("Jump"))
         {
             if (isJump == false)
             {
                 isJump = true;
                 state = State.Jump;
-                rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
+                jumpTimer += Time.deltaTime;
+                if(jumpTimer>=jumpTime)
+                {
+                    return;
+                }
+                else
+                {
+                    rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
+                }
+
+
             }
         }
+
         if (Input.GetMouseButton(0))
         {
             if(isAttacking == false)
@@ -122,6 +138,17 @@ public class Player : MonoBehaviour
        
     }
 
+
+    void JumpGuage()
+    {
+        if(Input.GetButton("Jump") && !isJump)
+        {
+            if(jumptimeLimit >jumpTime)
+            {
+                jumpTime += 0.1f;
+            }
+        }
+    }
     void Attack()
     {
         state = State.Attack;
@@ -244,6 +271,11 @@ public class Player : MonoBehaviour
                 Destroy(gameObject);
             }
 
+        }
+
+        if(collision.gameObject.GetComponent<Jump>()&&rigid.velocity.y<0)
+        {
+            rigid.AddForce(new Vector2(0, 17), ForceMode2D.Impulse);
         }
     }
 }

@@ -33,4 +33,6 @@ public class SpriteManager : Singleton<SpriteManager>
         public List<Sprite> deadSprite;
     }
     public EnemySprite[] enemySprite;
+
+    public List<Sprite> coinSprites;
 }

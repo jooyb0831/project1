@@ -35,4 +35,18 @@ public class GameManager : Singleton<GameManager>
             return pData;
         }
     }
+
+    private Quest q;
+    public Quest quest
+    {
+        get
+        {
+            if(q == null)
+            {
+                q = FindAnyObjectByType<Quest>();
+            }
+            return q;
+        }
+
+    }
 }
