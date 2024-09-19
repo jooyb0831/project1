@@ -14,7 +14,7 @@ public class GameUI : Singleton<GameUI>
     [SerializeField] TMP_Text expTxt;
 
     [SerializeField] TMP_Text coinTxt;
-
+    public Transform questArea;
     private PlayerData pd;
 
     // Start is called before the first frame update

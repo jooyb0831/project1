@@ -11,28 +11,38 @@ public class QuestData
     public int maxCount;
     public int curCount;
     public int exp;
+    public QuestType qType;
+    public int objIndex;
+    
+
 }
 public enum QuestType
 {
     Kill,
     Get
 }
-public class Quest : MonoBehaviour
+public abstract class Quest : MonoBehaviour
 {
-    [SerializeField] List<QuestData> qData;
-    private PlayerData pd;
+    public QuestUI questUI;
+    protected GameUI gi;
+    protected PlayerData pData;
+    public virtual void Init()
+    {
+        if(gi == null)
+        {
+            gi = GameManager.Instance.gameUI;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        pd = GameManager.Instance.playerData;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1))
-        {
-            pd.OnGoingQList.Add(qData[0]);
-        }
+
     }
 }

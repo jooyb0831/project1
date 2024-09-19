@@ -36,17 +36,30 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private Quest q;
-    public Quest quest
+    private QuestManager qm;
+    public QuestManager questManager
     {
         get
         {
-            if(q == null)
+            if(qm == null)
             {
-                q = FindAnyObjectByType<Quest>();
+                qm = FindAnyObjectByType<QuestManager>();
             }
-            return q;
+            return qm;
         }
 
+    }
+
+    private GameUI gui;
+    public GameUI gameUI
+    {
+        get
+        {
+            if(gui == null)
+            {
+                gui = FindAnyObjectByType<GameUI>();
+            }
+            return gui;
+        }
     }
 }

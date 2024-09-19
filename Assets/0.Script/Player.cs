@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetKey(KeyCode.P))
         {
             if(isAttacking == false)
             {

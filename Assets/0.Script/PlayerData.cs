@@ -64,8 +64,10 @@ public class PlayerData : MonoBehaviour
 
     public float RunSpeed { get; set; }
 
-    public List<QuestData> OnGoingQList;
+    public List<Quest> OnGoingQList;
 
+
+    public int[] enemyKillCnt;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +78,10 @@ public class PlayerData : MonoBehaviour
         EXP = 0;
         Speed = 4f;
         RunSpeed = 6f;
+        enemyKillCnt[0] = 0;
+        enemyKillCnt[1] = 0;
+        enemyKillCnt[2] = 0;
+        
     }
 
     // Update is called once per frame

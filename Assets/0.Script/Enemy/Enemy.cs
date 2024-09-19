@@ -102,6 +102,7 @@ public abstract class Enemy : MonoBehaviour
         {
             pd = GameManager.Instance.playerData;
         }
+        pd.enemyKillCnt[data.index] += 1;
         pd.EXP += 10;
         sa.SetSprite(deadSprite, 0.2f);
         yield return new WaitForSeconds(0.8f);

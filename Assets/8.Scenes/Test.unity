@@ -21955,6 +21955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnGoingQList: []
+  enemyKillCnt: 000000000000000000000000
 --- !u!4 &1564950361
 Transform:
   m_ObjectHideFlags: 0
@@ -22235,33 +22236,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1749511913}
-  - component: {fileID: 1749511912}
+  - component: {fileID: 1749511914}
   m_Layer: 0
-  m_Name: Quest
+  m_Name: '[ QuestManager ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1749511912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749511911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4fff06ee237d74bbdfb4eb52768fbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  qData:
-  - QuestTitle: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC \uC7A1\uAE30"
-    QuestNumber: 0
-    isDone: 0
-    maxCount: 1
-    curCount: 0
-    exp: 15
 --- !u!4 &1749511913
 Transform:
   m_ObjectHideFlags: 0
@@ -22277,6 +22259,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1749511914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749511911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6648058eae05f4f4e9a7ce34dd025c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  qList:
+  - {fileID: 3995349001870384839, guid: b5c20ca6537cb9b4da937dd17973ad4d, type: 3}
 --- !u!1 &1785177985
 GameObject:
   m_ObjectHideFlags: 0
