@@ -72,7 +72,8 @@ public class Player : MonoBehaviour
             sa.SetSprite(hurtSprites, 0.2f);
             Invoke("IdleSprite", 0.5f);
         }
-        else
+        
+        else if(!isJump)
         {
             Move();
 
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour
 
         }
 
-        if (Input.GetButton("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             if (isJump == false)
             {
@@ -110,18 +111,24 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
+                    if(x<0)
+                    {
+                        rigid.AddForce(Vector3.left * jumpPower, ForceMode2D.Impulse);
+                    }
+                    else if(x>0)
+                    {
+                        rigid.AddForce(Vector3.right * jumpPower, ForceMode2D.Impulse);
+                    }
                     rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
                 }
-
-
             }
         }
 
         if (Input.GetKey(KeyCode.P))
         {
-            if(isAttacking == false)
+            if(state!=State.Attack)
             {
-                isAttacking = true;
+
                 if(x!=0)
                 {
                     state = State.WalkAttack;
@@ -134,8 +141,6 @@ public class Player : MonoBehaviour
             Attack();
         }
         SpriteChange(x, y);
-
-       
     }
 
 
@@ -151,6 +156,10 @@ public class Player : MonoBehaviour
     }
     void Attack()
     {
+        if(state == State.Attack)
+        {
+            return;
+        }
         state = State.Attack;
         Invoke("Bullet",0.3f);
 
@@ -158,6 +167,7 @@ public class Player : MonoBehaviour
 
     void Bullet()
     {
+        // 총알발사시간을Attack쪽으로
         fireTimer += Time.deltaTime;
         if(fireTimer>=fireDelayTime)
         {
@@ -197,24 +207,47 @@ public class Player : MonoBehaviour
             {
                 transform.localScale = new Vector3(-5f, 5f, 5f);
             }
+
             if (state == State.Run)
             {
                 sa.SetSprite(walkSprites, 0.1f);
+                if (state != State.Jump)
+                {
+                    sa.SetSprite(walkSprites, 0.1f);
+                    state = State.Walk;
+                }
+                else if (y != 0 && state == State.Jump)
+                {
+                    sa.SetSprite(jumpSprites, 0.3f);
+                }
             }
             else
             {
                 sa.SetSprite(walkSprites, 0.2f);
                 state = State.Walk;
+
+                if (state != State.Jump)
+                {
+                    sa.SetSprite(walkSprites, 0.1f);
+                    state = State.Walk;
+                }
+                else if (y != 0 && state == State.Jump)
+                {
+                    sa.SetSprite(jumpSprites, 0.3f);
+                }
             }
-            if (isJump == false)
+
+            /*
+            if (state != State.Jump)
             {
                 sa.SetSprite(walkSprites, 0.1f);
                 state = State.Walk;
             }
-            if(y != 0 && isJump == true)
+            else if(y != 0 && state == State.Jump)
             {
                 sa.SetSprite(jumpSprites, 0.3f);
             }
+            */
             if(isAttacking == true)
             {
                 sa.SetSprite(runAttackSprites, 0.2f);

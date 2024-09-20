@@ -13,8 +13,6 @@ public class QuestData
     public int exp;
     public QuestType qType;
     public int objIndex;
-    
-
 }
 public enum QuestType
 {
@@ -31,16 +29,7 @@ public abstract class Quest : MonoBehaviour
 
 
     public string qTitle;
-    public int currentCnt;
-    public int curCnt
-    {
-        get { return currentCnt; }
-        set
-        {
-            currentCnt = value;
-            QuestUI.Instance.curCnt = currentCnt;
-        }
-    }
+    public int curCnt;
     public int maxCnt;
     public virtual void Init()
     {

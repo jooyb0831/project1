@@ -66,24 +66,6 @@ public class PlayerData : MonoBehaviour
 
     public List<Quest> OnGoingQList;
 
-
-
-    private int e0;
-    public int Enemy0
-    {
-        get { return e0; }
-        set
-        {
-            e0 = value;
-            if(QuestManager.Instance.qUIList.Count !=0)
-            {
-                QuestManager.Instance.qUIList[0].curCnt = e0;
-            }
-            
-        }
-    }
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -93,7 +75,6 @@ public class PlayerData : MonoBehaviour
         EXP = 0;
         Speed = 4f;
         RunSpeed = 6f;
-        Enemy0 = 0;
         
     }
 

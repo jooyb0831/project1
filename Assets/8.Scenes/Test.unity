@@ -22205,6 +22205,9 @@ MonoBehaviour:
   qList:
   - {fileID: -2969373098012164583, guid: b5c20ca6537cb9b4da937dd17973ad4d, type: 3}
   qUIList: []
+  enemyKillCnt: 
+  e0: 0
+  e1: 0
 --- !u!1 &1785177985
 GameObject:
   m_ObjectHideFlags: 0

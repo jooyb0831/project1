@@ -80,7 +80,6 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine("Hit");
         if(data.HP<=0)
         {
-            
             isDead = true;
             state = EnemyState.Dead;
             StartCoroutine("Dead");
@@ -102,8 +101,9 @@ public abstract class Enemy : MonoBehaviour
         {
             pd = GameManager.Instance.playerData;
         }
-        pd.Enemy0 += 1;
+
         pd.EXP += 10;
+        QuestManager.Instance.Check(this);
         sa.SetSprite(deadSprite, 0.2f);
         yield return new WaitForSeconds(0.8f);
         GameObject item = Instantiate(dropItem, transform);

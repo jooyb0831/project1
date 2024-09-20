@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Quest1 :Quest
 {
-  
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,17 +32,20 @@ public class Quest1 :Quest
         data.QuestTitle = "눈알 몬스터 처치";
         data.QuestNumber = 0;
         data.isDone = false;
-        data.maxCount = 1;
+        data.maxCount = 2;
+        data.curCount = 0;
         data.exp = 15;
         data.qType = QuestType.Kill;
         data.objIndex = 0;
         questUI.quest = this;
-        questUI.index = data.QuestNumber;
-        questUI.questTxt.text = $"{data.QuestTitle} ({data.curCount}/{data.maxCount})";
-
+        questUI.SetData(this.data);
         Instantiate(questUI, gi.questArea);
         base.Init();
     }
 
+    void QuestClear()
+    {
+
+    }
 
 }
