@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3995349001870384838}
-  - component: {fileID: 3995349001870384839}
+  - component: {fileID: -2969373098012164583}
   m_Layer: 0
   m_Name: Quest1
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3995349001870384839
+--- !u!114 &-2969373098012164583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,10 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    QuestTitle: "\uB208\uC54C \uBAAC\uC2A4\uD130 \uC7A1\uAE30"
+    QuestTitle: 
     QuestNumber: 0
     isDone: 0
-    maxCount: 1
+    maxCount: 0
     curCount: 0
-    exp: 15
+    exp: 0
+    qType: 0
+    objIndex: 0
   questUI: {fileID: 5118186400754432002, guid: c71760cddd9978d49840f8ddb2842700, type: 3}
+  qTitle: 
+  currentCnt: 0
+  maxCnt: 0

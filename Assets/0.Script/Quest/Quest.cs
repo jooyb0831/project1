@@ -23,15 +23,32 @@ public enum QuestType
 }
 public abstract class Quest : MonoBehaviour
 {
+    public QuestData data = new QuestData();
+
     public QuestUI questUI;
     protected GameUI gi;
     protected PlayerData pData;
+
+
+    public string qTitle;
+    public int currentCnt;
+    public int curCnt
+    {
+        get { return currentCnt; }
+        set
+        {
+            currentCnt = value;
+            QuestUI.Instance.curCnt = currentCnt;
+        }
+    }
+    public int maxCnt;
     public virtual void Init()
     {
         if(gi == null)
         {
             gi = GameManager.Instance.gameUI;
         }
+        data.curCount = 0;
     }
 
     // Start is called before the first frame update
