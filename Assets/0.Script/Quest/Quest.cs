@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class QuestData
 {
+    public bool isStart = false;
     public string QuestTitle;
     public int QuestNumber;
     public bool isDone;

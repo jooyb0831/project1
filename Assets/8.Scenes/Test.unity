@@ -551,7 +551,9 @@ MonoBehaviour:
   isJump: 0
   isAttacking: 0
   isHurt: 0
-  fireDelayTime: 0.5
+  canFire: 0
+  fireDelayTime: 0.8
+  fireTimer: 0
   state: 0
   jumpTimer: 0
   jumpTime: 5

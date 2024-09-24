@@ -26,7 +26,8 @@ public class QuestManager : Singleton<QuestManager>
         if (Input.GetKeyDown(KeyCode.F1))
         {
             pd.OnGoingQList.Add(qList[0]);
-            Instantiate(qList[0], transform);
+            Quest obj= Instantiate(qList[0], transform);
+            obj.data.isStart = true;
         }
     }
 
@@ -42,16 +43,27 @@ public class QuestManager : Singleton<QuestManager>
 
     public void Check(Enemy enemy)
     {
+        int idx = -1;
         for(int i = 0; i<qList.Count; i++)
         {
-            if (qList[i].data.objIndex == enemy.data.index)
+            if (enemy.data.index == qList[i].data.objIndex)
             {
-                enemyKillCnt[enemy.data.index]++;
-                QuestUI qUI = Find(enemy.data.index);
-                qUI.curCnt = enemyKillCnt[enemy.data.index];
+                idx = i;
                 break;
             }
         }
+        if(idx == -1)
+        {
+            return;
+        }
+        else
+        {
+            enemyKillCnt[idx]++;
+            QuestUI qUI = Find(enemy.data.index);
+            qUI.curCnt = enemyKillCnt[enemy.data.index];
+        }
+
+        
 
     }
 
