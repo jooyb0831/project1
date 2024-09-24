@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SpriteAnimation : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class SpriteAnimation : MonoBehaviour
     private float timer;
 
     public bool isStop = false;
+
+    public UnityAction action;
 
     private void Awake()
     {
@@ -46,6 +49,11 @@ public class SpriteAnimation : MonoBehaviour
                     index = 0;
                     if (loop == false)
                     {
+                        if(action != null)
+                        {
+                            action.Invoke();
+                            action = null;
+                        }
                         //sprites.Clear();
                         return;
                     }
@@ -71,6 +79,19 @@ public class SpriteAnimation : MonoBehaviour
             sr = GetComponent<SpriteRenderer>();
         }
 
+        this.sprites = sprites;
+        this.delay = delay;
+        this.loop = loop;
+    }
+
+    public void SetSprite(List<Sprite> sprites, float delay, bool loop, UnityAction action)
+    {
+        if (sr == null)
+        {
+            sr = GetComponent<SpriteRenderer>();
+        }
+
+        this.action = action;
         this.sprites = sprites;
         this.delay = delay;
         this.loop = loop;

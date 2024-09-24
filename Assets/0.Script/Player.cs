@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform firePos;
     [SerializeField] PBullet pBullet;
 
+    public bool isRun = false;
     public bool isJump = false;
     public bool isAttacking = false;
     public bool isHurt = false;
@@ -70,15 +71,36 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (isJump)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if(Input.GetAxisRaw("Horizontal")!=0 && !isRun)
+                {
+                    Move();
+                }
+                return;
+            }
+            else
+            {
+                Move();
+            }
+        }
+        else
+        {
+            Move();
+        }
 
+
+
+        /*
         fireTimer += Time.deltaTime;
         if(fireTimer>fireDelayTime)
         {
             fireTimer = 0;
             canFire = true;
         }
-        
+        */
 
 
     }
@@ -92,11 +114,10 @@ public class Player : MonoBehaviour
         {
             StateCheck(state);
             return;
-        }
+        }    
         float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Jump");
+        float y = Input.GetAxisRaw("Vertical");
         transform.Translate(new Vector2(x, 0) * Time.deltaTime * data.Speed);
-
 
         if (x != 0)
         {
@@ -117,15 +138,17 @@ public class Player : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (isJump == false)
+            if (!isJump)
             {
                 isJump = true;
                 state = State.Jump;
                 rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
             }
+
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            isRun = true;
             state = State.Run;
             transform.Translate(new Vector2(x, 0) * Time.deltaTime * data.RunSpeed);
             if (Input.GetKey(KeyCode.P))
@@ -133,33 +156,42 @@ public class Player : MonoBehaviour
                 state = State.RunAttack;
             }
         }
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            isRun = false;
+        }
+
         if (Input.GetKey(KeyCode.P))
         {
+            if (state != State.Attack && state != State.WalkAttack)
+            {
+                if (x != 0)
+                {
+                    state = State.WalkAttack;
+                }
+                else
+                {
+                    state = State.Attack;
+                }
+            }
+            /*
             if (canFire == true)
             {
-                if (state != State.Attack && state != State.WalkAttack)
-                {
-                    if (x != 0)
-                    {
-                        state = State.WalkAttack;
-                    }
-                    else
-                    {
-                        state = State.Attack;
-                    }
-                }
+                
                 canFire = false;
-                Invoke("Bullet", 0.3f);
+                //Invoke("Bullet", 0.3f);
             }
             else
             {
                 return;
             }
+            */
         }
 
         if(isJump)
         {
             state = State.Jump;
+
         }
         
         StateCheck(state);
@@ -188,8 +220,8 @@ public class Player : MonoBehaviour
                 }
             case State.Attack:
                 {
-                    sa.SetSprite(attackSprites, 0.2f);
-                    Invoke("IdleSprite", 0.6f);
+                    sa.SetSprite(attackSprites, 0.1f, false, Bullet);
+                    //Invoke("IdleSprite", 0.6f);
                     break;
                 }
             case State.RunAttack:
@@ -199,7 +231,7 @@ public class Player : MonoBehaviour
                 }
             case State.WalkAttack:
                 {
-                    sa.SetSprite(runAttackSprites, 0.2f);
+                    sa.SetSprite(runAttackSprites, 0.2f, false, Bullet);
                     break;
                 }
             case State.Jump:

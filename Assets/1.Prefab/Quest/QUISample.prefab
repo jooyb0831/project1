@@ -67,8 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC5EC\uAE30 \uD018\uC2A4\uD2B8 \uC774\uB984\uC774 \uB4E4\uC5B4\uAC11\uB2C8\uB2E4
-    (\uC22B\uC790/\uC22B\uC790)\n"
+  m_text: "\uB208\uC54C \uBAAC\uC2A4\uD130 \uCC98\uCE58 (0/2)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5384ccd75ba0928489be8be0564a2ea5, type: 2}
   m_sharedMaterial: {fileID: 8225268845206943231, guid: 5384ccd75ba0928489be8be0564a2ea5, type: 2}
@@ -205,6 +204,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 0}
   questTxt: {fileID: 1925630029722042462}
+  questTitle: "\uB208\uC54C \uBAAC\uC2A4\uD130 \uCC98\uCE58"
+  index: 0
+  maxCnt: 2
+  objIndex: 0
+  crCnt: 0
 --- !u!222 &2639478777544348405
 CanvasRenderer:
   m_ObjectHideFlags: 0

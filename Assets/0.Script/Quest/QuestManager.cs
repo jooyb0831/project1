@@ -5,6 +5,7 @@ using UnityEngine;
 public class QuestManager : Singleton<QuestManager>
 {
     public List<Quest> qList;
+    public List<Quest> onGoingQList;
     public List<QuestUI> qUIList;
     private PlayerData pd;
 
@@ -27,6 +28,7 @@ public class QuestManager : Singleton<QuestManager>
         {
             pd.OnGoingQList.Add(qList[0]);
             Quest obj= Instantiate(qList[0], transform);
+            onGoingQList.Add(obj);
             obj.data.isStart = true;
         }
     }
@@ -44,22 +46,28 @@ public class QuestManager : Singleton<QuestManager>
     public void Check(Enemy enemy)
     {
         int idx = -1;
-        for(int i = 0; i<qList.Count; i++)
+        QuestUI qUI = null;
+        if(onGoingQList.Count == 0)
         {
-            if (enemy.data.index == qList[i].data.objIndex)
+            return;
+        }
+        for (int i = 0; i< onGoingQList.Count; i++)
+        {
+            if (enemy.data.index == onGoingQList[i].data.objIndex)
             {
                 idx = i;
+                qUI = Find(enemy.data.index);
                 break;
             }
         }
-        if(idx == -1)
+        if(idx == -1 || qUI == null)
         {
             return;
         }
         else
         {
             enemyKillCnt[idx]++;
-            QuestUI qUI = Find(enemy.data.index);
+            onGoingQList[idx].data.curCount = enemyKillCnt[enemy.data.index];
             qUI.curCnt = enemyKillCnt[enemy.data.index];
         }
 

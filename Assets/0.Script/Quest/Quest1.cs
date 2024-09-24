@@ -19,7 +19,7 @@ public class Quest1 :Quest
         }
         if (data.isDone == true)
         {
-            questUI.gameObject.SetActive(false);
+            thisQuestUI.gameObject.SetActive(false);
         }
     }
 
@@ -39,7 +39,8 @@ public class Quest1 :Quest
         data.objIndex = 0;
         questUI.quest = this;
         questUI.SetData(this.data);
-        Instantiate(questUI, gi.questArea);
+        QuestUI qUI = Instantiate(questUI, gi.questArea);
+        thisQuestUI = qUI;
         base.Init();
     }
 

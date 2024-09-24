@@ -25,6 +25,7 @@ public abstract class Quest : MonoBehaviour
     public QuestData data = new QuestData();
 
     public QuestUI questUI;
+    public QuestUI thisQuestUI;
     protected GameUI gi;
     protected PlayerData pData;
 
