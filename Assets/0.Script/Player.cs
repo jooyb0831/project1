@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public bool isAttacking = false;
     public bool isHurt = false;
 
+    [SerializeField] float speed;
     public float jumpPower;
     [SerializeField] bool canFire = false;
     [SerializeField] float fireDelayTime = 0.8f;
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
     private List<Sprite> slideSprites;
     private List<Sprite> sitSprites;
 
+    [SerializeField] bool isJumpRun = false;
     [SerializeField] State state = State.Idle;
     // Start is called before the first frame update
     void Start()
@@ -66,20 +68,49 @@ public class Player : MonoBehaviour
         sa.SetSprite(idleSprites, 0.2f);
         state = State.Idle;
         rigid = GetComponent<Rigidbody2D>();
+        speed = data.Speed;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if(isJump && Input.GetAxisRaw("Horizontal")!=0)
+        {
+            if(Input.GetKey(KeyCode.LeftShift))
+            {
+                isJumpRun = true;
+                speed = data.Speed;
+                Move();
+            }
+            
+            else
+            {
+                Move();
+            }
+        }
+        else
+        {
+            Move();
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            isJumpRun = false;
+        }
+
+        /*
         if (isJump)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetAxisRaw("Horizontal") != 0)
             {
-                if(Input.GetAxisRaw("Horizontal")!=0 && !isRun)
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    speed = data.Speed;
+                }
+                else
                 {
                     Move();
                 }
-                return;
             }
             else
             {
@@ -90,18 +121,16 @@ public class Player : MonoBehaviour
         {
             Move();
         }
+        */
 
 
 
-        /*
         fireTimer += Time.deltaTime;
-        if(fireTimer>fireDelayTime)
+        if (fireTimer > fireDelayTime)
         {
             fireTimer = 0;
             canFire = true;
         }
-        */
-
 
     }
 
@@ -110,14 +139,20 @@ public class Player : MonoBehaviour
     /// </summary>
     void Move()
     {
+        if (speed == 0)
+        {
+            speed = data.Speed;
+        }
+
         if (state == State.Hurt)
         {
             StateCheck(state);
             return;
-        }    
+        }
+
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        transform.Translate(new Vector2(x, 0) * Time.deltaTime * data.Speed);
+        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
 
         if (x != 0)
         {
@@ -144,20 +179,29 @@ public class Player : MonoBehaviour
                 state = State.Jump;
                 rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
             }
+            isRun = false;
 
         }
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             isRun = true;
+            if(!isJumpRun)
+            {
+                speed = data.RunSpeed;
+            }
             state = State.Run;
-            transform.Translate(new Vector2(x, 0) * Time.deltaTime * data.RunSpeed);
+            transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
             if (Input.GetKey(KeyCode.P))
             {
                 state = State.RunAttack;
+                Fire();
             }
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift))
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
+            speed = data.Speed;
             isRun = false;
         }
 
@@ -168,6 +212,7 @@ public class Player : MonoBehaviour
                 if (x != 0)
                 {
                     state = State.WalkAttack;
+                    Fire();
                 }
                 else
                 {
@@ -188,12 +233,12 @@ public class Player : MonoBehaviour
             */
         }
 
-        if(isJump)
+        if (isJump)
         {
             state = State.Jump;
 
         }
-        
+
         StateCheck(state);
     }
 
@@ -220,7 +265,7 @@ public class Player : MonoBehaviour
                 }
             case State.Attack:
                 {
-                    sa.SetSprite(attackSprites, 0.1f, false, Bullet);
+                    sa.SetSprite(attackSprites, 0.3f, false, Bullet);
                     //Invoke("IdleSprite", 0.6f);
                     break;
                 }
@@ -231,7 +276,8 @@ public class Player : MonoBehaviour
                 }
             case State.WalkAttack:
                 {
-                    sa.SetSprite(runAttackSprites, 0.2f, false, Bullet);
+                    sa.SetSprite(runAttackSprites, 0.2f);
+
                     break;
                 }
             case State.Jump:
@@ -257,6 +303,25 @@ public class Player : MonoBehaviour
             pbullet.isRight = false;
         }
         pbullet.transform.SetParent(null);
+
+    }
+
+    void Fire()
+    {
+        if(state == State.WalkAttack || state == State.RunAttack)
+        {
+            if(canFire == false)
+            {
+                return;
+            }
+            else if(canFire == true)
+            {
+                Bullet();
+                fireTimer = 0;
+                canFire = false;
+            }
+        }
+
     }
 
     void IdleSprite()
