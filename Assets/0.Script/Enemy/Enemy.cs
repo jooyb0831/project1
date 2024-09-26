@@ -24,18 +24,21 @@ public abstract class Enemy : MonoBehaviour
         Dead
     }
 
-    Player p;
+    //Player p;
     SpriteRenderer sr;
     SpriteAnimation sa;
     public EnemyData data = new EnemyData();
 
     [SerializeField] List<Sprite> enemySprite;
     [SerializeField] List<Sprite> deadSprite;
+    [SerializeField] protected List<Sprite> attackSprite;
     EnemyState state = EnemyState.Idle;
     protected bool isDead = false;
 
     private PlayerData pd;
     [SerializeField] GameObject dropItem;
+
+    protected SpriteManager.EnemySprite enemySprites;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,9 +51,10 @@ public abstract class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         sa = GetComponent<SpriteAnimation>();
         pd = GameManager.Instance.playerData;
-        SpriteManager.EnemySprite enemySprites = SpriteManager.Instance.enemySprite[data.index];
+        enemySprites = SpriteManager.Instance.enemySprite[data.index];
         enemySprite = enemySprites.idleSprite;
         deadSprite = enemySprites.deadSprite;
+        attackSprite = enemySprites.attackSprite;
         state = EnemyState.Idle;
         sa.SetSprite(enemySprite, 0.2f);
     }

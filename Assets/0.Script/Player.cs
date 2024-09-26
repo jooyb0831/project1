@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] Transform firePos;
     [SerializeField] PBullet pBullet;
-
+    [SerializeField] Transform foot;
+    [SerializeField] float dist;
     public bool isRun = false;
     public bool isJump = false;
     public bool isAttacking = false;
@@ -74,7 +75,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Move();
+        RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down);
+        Debug.DrawRay(foot.position, Vector3.down, Color.red);
 
+        if(hit.collider.GetComponent<Ground>())
+        {
+            dist = hit.distance;
+        }
+        /*
         if(isJump && Input.GetAxisRaw("Horizontal")!=0)
         {
             if(Input.GetKey(KeyCode.LeftShift))
@@ -98,7 +107,7 @@ public class Player : MonoBehaviour
             isJumpRun = false;
         }
 
-        /*
+        
         if (isJump)
         {
             if (Input.GetAxisRaw("Horizontal") != 0)
@@ -149,10 +158,9 @@ public class Player : MonoBehaviour
             StateCheck(state);
             return;
         }
-
+        
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
 
         if (x != 0)
         {
@@ -171,6 +179,42 @@ public class Player : MonoBehaviour
             state = State.Idle;
         }
 
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+
+            speed = data.RunSpeed;
+            state = State.Run;
+            if (Input.GetKey(KeyCode.P))
+            {
+                state = State.RunAttack;
+                Fire();
+            }
+            isRun = true;
+        }
+        
+        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
+
+        
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if(dist>0.1f)
+            {
+                return;
+            }
+            
+        }
+
+        
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            speed = data.Speed;
+            isRun = false;
+        }
+
+
+
         if (Input.GetButtonDown("Jump"))
         {
             if (!isJump)
@@ -183,28 +227,11 @@ public class Player : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            isRun = true;
-            if(!isJumpRun)
-            {
-                speed = data.RunSpeed;
-            }
-            state = State.Run;
-            transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
-            if (Input.GetKey(KeyCode.P))
-            {
-                state = State.RunAttack;
-                Fire();
-            }
-        }
+        // 점프중일 때 Shift 키 막기
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            speed = data.Speed;
-            isRun = false;
-        }
 
+
+        
         if (Input.GetKey(KeyCode.P))
         {
             if (state != State.Attack && state != State.WalkAttack)
@@ -242,6 +269,10 @@ public class Player : MonoBehaviour
         StateCheck(state);
     }
 
+    void Run(float x)
+    {
+        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
+    }
 
     void StateCheck(State state)
     {
