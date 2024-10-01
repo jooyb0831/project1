@@ -26,13 +26,14 @@ public abstract class Enemy : MonoBehaviour
 
     [SerializeField] protected Player p;
     SpriteRenderer sr;
-    SpriteAnimation sa;
+    protected SpriteAnimation sa;
     public EnemyData data = new EnemyData();
+    
 
-    [SerializeField] List<Sprite> enemySprite;
-    [SerializeField] List<Sprite> deadSprite;
-    [SerializeField] protected List<Sprite> attackSprite;
-    EnemyState state = EnemyState.Idle;
+    protected List<Sprite> enemySprite;
+    protected List<Sprite> deadSprite;
+    protected List<Sprite> attackSprite;
+    [SerializeField] protected EnemyState state = EnemyState.Idle;
     protected bool isDead = false;
 
     private PlayerData pd;
@@ -102,7 +103,7 @@ public abstract class Enemy : MonoBehaviour
         sr.color = Color.white;
     }
 
-    IEnumerator Dead()
+    protected IEnumerator Dead()
     {
         if(pd == null)
         {

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Enemy2 : Enemy
 {
-    private bool isFind = false;
+    
+
     [SerializeField] float fireTimer;
     [SerializeField] float fireDelayTime = 2f;
     [SerializeField] bool canFire = false;
@@ -16,8 +17,6 @@ public class Enemy2 : Enemy
     void Start()
     {
         Init();
-
-
     }
 
     // Update is called once per frame
@@ -31,50 +30,27 @@ public class Enemy2 : Enemy
         float dist = Vector2.Distance(p.transform.position, transform.position);
         Debug.Log(dist);
 
-        if (dist < 7f)
+        if (dist <= 10f)
         {
-            isFind = true;
-        }
-        else
-        {
-            isFind = false;
-        }
+            state = EnemyState.Run;
+            
 
-        if(isFind)
-        {
-
-            Move();
-            //Attack();
-        }
-        else
-        {
-            return;
-        }
-        
-        
-        if (isFind)
-        {
-            fireTimer += Time.deltaTime;
-            if (fireTimer > fireDelayTime)
+            if(dist<7f)
             {
-                EBullet2 eb = Pooling.Instance.GetPool(DicKey.eBullet2, firePos).GetComponent<EBullet2>();
-                if(transform.localScale.x<0)
-                {
-                    eb.isRight = true;
-                }
-                eb.damage = data.AttackPower;
-                eb.transform.SetParent(eBulletParent);
-                fireTimer = 0;
+                state = EnemyState.Attack;
             }
+            Move();
         }
-        
 
+        else
+        {
+            state = EnemyState.Idle;
+            Move();
+        }
     }
 
     void Move()
     {
-        Vector2 pos = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * data.Speed);
-
         if (transform.position.x > p.transform.position.x)
         {
             transform.localScale = new Vector3(5, 5, 5);
@@ -84,14 +60,67 @@ public class Enemy2 : Enemy
             transform.localScale = new Vector3(-5, 5, 5);
         }
 
+        if (state == EnemyState.Attack)
+        {
+            SpriteCheck(state);
+            return;
+        }
+        if(state == EnemyState.Idle)
+        {
+            SpriteCheck(state);
+            return;
+        }
+        if(state == EnemyState.Dead)
+        {
+            SpriteCheck(state);
+            return;
+        }
+
+        Vector2 pos = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * data.Speed);
+
         transform.position = new Vector2(pos.x, y);
-        
-        
+
+        SpriteCheck(state);
+
     }
     
+    void SpriteCheck(EnemyState state)
+    {
+        switch(state)
+        {
+            case EnemyState.Idle:
+                {
+                    sa.SetSprite(enemySprite, 0.2f);
+                    break;
+                }
+            case EnemyState.Run:
+                {
+                    sa.SetSprite(enemySprite, 0.2f);
+                    break;
+                }
+            case EnemyState.Attack:
+                {
+                    sa.SetSprite(attackSprite, 0.3f, false, Attack);
+                    break;
+                }
+            case EnemyState.Dead:
+                {
+                    sa.SetSprite(deadSprite, 0.2f);
+                    break;
+                }
+
+        }
+    }
     void Attack()
     {
-
+        EBullet2 eb = Pooling.Instance.GetPool(DicKey.eBullet2, firePos).GetComponent<EBullet2>();
+        if (transform.localScale.x < 0)
+        {
+            eb.isRight = true;
+        }
+        eb.damage = data.AttackPower;
+        eb.transform.SetParent(eBulletParent);
+        state = EnemyState.Idle;
     }
 
     public override void Init()

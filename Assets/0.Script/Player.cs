@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     private List<Sprite> hurtSprites;
     private List<Sprite> slideSprites;
     private List<Sprite> sitSprites;
+    private List<Sprite> deadSprites;
 
     [SerializeField] bool isJumpRun = false;
     [SerializeField] State state = State.Idle;
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
         hurtSprites = pSprite.hurtSprites;
         slideSprites = pSprite.slideSprites;
         sitSprites = pSprite.sitSprites;
+        deadSprites = pSprite.deadSprites;
 
         sa.SetSprite(idleSprites, 0.2f);
         state = State.Idle;
@@ -155,6 +157,12 @@ public class Player : MonoBehaviour
         }
 
         if (state == State.Hurt)
+        {
+            StateCheck(state);
+            return;
+        }
+
+        if (state == State.Dead)
         {
             StateCheck(state);
             return;
@@ -323,6 +331,12 @@ public class Player : MonoBehaviour
                     Invoke("IdleSprite", 0.5f);
                     break;
                 }
+            case State.Dead:
+                {
+                    transform.localRotation = Quaternion.Euler(0, 0, 90f);
+                    sa.SetSprite(deadSprites, 0.2f);
+                    break;
+                }
 
         }
     }
@@ -440,7 +454,7 @@ public class Player : MonoBehaviour
             }
             else if (data.HP <= collision.GetComponent<Enemy>().data.AttackPower)
             {
-                Destroy(gameObject);
+                Dead();
             }
 
         }
@@ -460,9 +474,17 @@ public class Player : MonoBehaviour
             }
             else if (data.HP <= collision.GetComponent<EBullet2>().damage)
             {
-                Destroy(gameObject);
+                Dead();
             }
             Pooling.Instance.SetPool(DicKey.eBullet2, collision.GetComponent<EBullet2>().gameObject);
         }
+    }
+
+
+    void Dead()
+    {
+        data.HP = 0;
+        state = State.Dead;
+        GameUI.Instance.gameOverUI.SetActive(true);
     }
 }

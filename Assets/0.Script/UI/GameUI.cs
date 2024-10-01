@@ -17,6 +17,8 @@ public class GameUI : Singleton<GameUI>
     public Transform questArea;
     private PlayerData pd;
 
+    public GameObject gameOverUI;
+
     // Start is called before the first frame update
     void Start()
     {
