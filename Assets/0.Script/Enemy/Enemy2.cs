@@ -6,23 +6,24 @@ public class Enemy2 : Enemy
 {
     private bool isFind = false;
     [SerializeField] float fireTimer;
-    [SerializeField] float fireDelayTime = 1f;
+    [SerializeField] float fireDelayTime = 2f;
     [SerializeField] bool canFire = false;
-    [SerializeField] EBullet eBullet;
+    [SerializeField] EBullet2 eBullet;
     [SerializeField] Transform firePos;
-    //[SerializeField] Player p;
+    [SerializeField] float y;
+
     // Start is called before the first frame update
     void Start()
     {
         Init();
-        //p = GameManager.Instance.player;
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
+        
         if (p == null)
         {
             p = GameManager.Instance.player;
@@ -34,41 +35,58 @@ public class Enemy2 : Enemy
         {
             isFind = true;
         }
+        else
+        {
+            isFind = false;
+        }
 
         if(isFind)
         {
-            Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * data.Speed);
 
-            if(transform.position.x>p.transform.position.x)
-            {
-                transform.localScale = new Vector3(4, 4, 4);
-            }
-            else if(transform.position.x<p.transform.position.x)
-            {
-                transform.localScale = new Vector3(-4, 4, 4);
-            }
-
-
+            Move();
+            //Attack();
         }
-
+        else
+        {
+            return;
+        }
+        
         
         if (isFind)
         {
             fireTimer += Time.deltaTime;
             if (fireTimer > fireDelayTime)
             {
-                EBullet eb = Instantiate(eBullet, firePos);
-                eb.transform.SetParent(null);
+                EBullet2 eb = Pooling.Instance.GetPool(DicKey.eBullet2, firePos).GetComponent<EBullet2>();
+                if(transform.localScale.x<0)
+                {
+                    eb.isRight = true;
+                }
+                eb.damage = data.AttackPower;
+                eb.transform.SetParent(eBulletParent);
                 fireTimer = 0;
             }
         }
-        */
+        
 
     }
 
     void Move()
     {
+        Vector2 pos = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * data.Speed);
 
+        if (transform.position.x > p.transform.position.x)
+        {
+            transform.localScale = new Vector3(5, 5, 5);
+        }
+        else if (transform.position.x < p.transform.position.x)
+        {
+            transform.localScale = new Vector3(-5, 5, 5);
+        }
+
+        transform.position = new Vector2(pos.x, y);
+        
+        
     }
     
     void Attack()
@@ -80,9 +98,11 @@ public class Enemy2 : Enemy
     {
         data.HP = 10;
         data.index = 1;
-        data.Speed = 3f;
+        data.Speed = 1f;
         data.AttackPower = 8;
-        
+        y = transform.position.y;
+
         base.Init();
     }
+
 }

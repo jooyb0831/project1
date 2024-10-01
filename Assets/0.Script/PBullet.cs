@@ -29,21 +29,32 @@ public class PBullet : MonoBehaviour
         }
         else if (isRight == false)
         {
+            transform.localScale = new Vector2(-5f, 5f);
             transform.Translate(Vector2.left * Time.deltaTime * speed);
         }
         
         sa.SetSprite(pBulletSprite, 0.1f, false);
-        Invoke("LastSprite", 0.25f);
+        
+        //Invoke("LastSprite", 0.25f);
         timer += Time.deltaTime;
         if (timer >= time)
         {
-            Destroy(gameObject);
+            Pooling.Instance.SetPool(DicKey.pBullet, gameObject);
+            timer = 0;
         }
+        
     }
 
     void LastSprite()
     {
         sa.isStop = true;
         transform.GetComponent<SpriteRenderer>().sprite = last[0];
+    }
+
+    public void Initialize()
+    {
+        isRight = true;
+        transform.localScale = new Vector2(5f, 5f);
+        timer = 0;
     }
 }

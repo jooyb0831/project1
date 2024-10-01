@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] PBullet pBullet;
     [SerializeField] Transform foot;
     [SerializeField] float dist;
+    [SerializeField] Transform pBulletParent;
     public bool isRun = false;
     public bool isJump = false;
     public bool isAttacking = false;
@@ -328,12 +329,16 @@ public class Player : MonoBehaviour
 
     void Bullet()
     {
-        PBullet pbullet = Instantiate(pBullet, firePos);
+        PBullet pbullet = Pooling.Instance.GetPool(DicKey.pBullet, firePos).GetComponent<PBullet>();
+        if(pbullet == null)
+        {
+            return;
+        }
         if (transform.localScale.x < 0)
         {
             pbullet.isRight = false;
         }
-        pbullet.transform.SetParent(null);
+        pbullet.transform.SetParent(pBulletParent);
 
     }
 
@@ -440,9 +445,24 @@ public class Player : MonoBehaviour
 
         }
 
-        if(collision.gameObject.GetComponent<Jump>()&&rigid.velocity.y<0)
+        if (collision.gameObject.GetComponent<Jump>() && rigid.velocity.y < 0)
         {
             rigid.AddForce(new Vector2(0, 17), ForceMode2D.Impulse);
+        }
+
+        if (collision.gameObject.GetComponent<EBullet2>())
+        {
+            if(data.HP>collision.GetComponent<EBullet2>().damage)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<EBullet2>().damage;
+                state = State.Hurt;
+            }
+            else if (data.HP <= collision.GetComponent<EBullet2>().damage)
+            {
+                Destroy(gameObject);
+            }
+            Pooling.Instance.SetPool(DicKey.eBullet2, collision.GetComponent<EBullet2>().gameObject);
         }
     }
 }

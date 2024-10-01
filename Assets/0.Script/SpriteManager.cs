@@ -36,4 +36,13 @@ public class SpriteManager : Singleton<SpriteManager>
     public EnemySprite[] enemySprite;
 
     public List<Sprite> coinSprites;
+
+
+    [System.Serializable]
+    public class EnemyBulletSprites
+    {
+        public List<Sprite> eBullet2Sprites;
+    }
+
+    public EnemyBulletSprites[] enemyBulletSprites;
 }

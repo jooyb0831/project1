@@ -24,7 +24,7 @@ public abstract class Enemy : MonoBehaviour
         Dead
     }
 
-    //Player p;
+    [SerializeField] protected Player p;
     SpriteRenderer sr;
     SpriteAnimation sa;
     public EnemyData data = new EnemyData();
@@ -37,6 +37,7 @@ public abstract class Enemy : MonoBehaviour
 
     private PlayerData pd;
     [SerializeField] GameObject dropItem;
+    [SerializeField] protected Transform eBulletParent;
 
     protected SpriteManager.EnemySprite enemySprites;
     // Start is called before the first frame update
@@ -47,7 +48,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Init()
     {
-        //p = GameManager.Instance.player;
+        p = GameManager.Instance.player;
         sr = GetComponent<SpriteRenderer>();
         sa = GetComponent<SpriteAnimation>();
         pd = GameManager.Instance.playerData;
@@ -69,9 +70,11 @@ public abstract class Enemy : MonoBehaviour
         if (collision.gameObject.GetComponent<PBullet>() == true)
         {
             TakeDamage(2);
-            Destroy(collision.gameObject);
+            Pooling.Instance.SetPool(DicKey.pBullet, collision.GetComponent<PBullet>().gameObject);
             Debug.Log("hit");
         }
+
+
     }
 
     public void TakeDamage(int damage)
@@ -114,4 +117,6 @@ public abstract class Enemy : MonoBehaviour
         item.transform.SetParent(null);
         Destroy(gameObject);
     }
+
+
 }
