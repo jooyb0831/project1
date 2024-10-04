@@ -30,6 +30,11 @@ public class Enemy2 : Enemy
         float dist = Vector2.Distance(p.transform.position, transform.position);
         Debug.Log(dist);
 
+        if(state == EnemyState.Dead)
+        {
+            return;
+        }
+
         if (dist <= 10f)
         {
             state = EnemyState.Run;
@@ -41,6 +46,7 @@ public class Enemy2 : Enemy
             }
             Move();
         }
+
 
         else
         {
@@ -66,11 +72,6 @@ public class Enemy2 : Enemy
             return;
         }
         if(state == EnemyState.Idle)
-        {
-            SpriteCheck(state);
-            return;
-        }
-        if(state == EnemyState.Dead)
         {
             SpriteCheck(state);
             return;
@@ -103,11 +104,13 @@ public class Enemy2 : Enemy
                     sa.SetSprite(attackSprite, 0.3f, false, Attack);
                     break;
                 }
+                /*
             case EnemyState.Dead:
                 {
                     sa.SetSprite(deadSprite, 0.2f);
                     break;
                 }
+                */
 
         }
     }

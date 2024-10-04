@@ -46,4 +46,6 @@ public class SpriteManager : Singleton<SpriteManager>
     }
 
     public EnemyBulletSprites[] enemyBulletSprites;
+
+    public List<Sprite> boxSprites;
 }
