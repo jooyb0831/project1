@@ -115,6 +115,7 @@ public abstract class Enemy : MonoBehaviour
         sa.SetSprite(deadSprite, 0.2f);
         yield return new WaitForSeconds(0.8f);
         GameObject item = Instantiate(dropItem, transform);
+        
         item.transform.SetParent(null);
         Destroy(gameObject);
     }

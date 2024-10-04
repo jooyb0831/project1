@@ -5,11 +5,15 @@ using UnityEngine;
 public class Gem : MonoBehaviour
 {
     [SerializeField] Player p;
+    SpriteAnimation sa;
     public bool isFind = false;
+    [SerializeField] List<Sprite> blueGemSprite;
     // Start is called before the first frame update
     void Start()
     {
+        sa = GetComponent<SpriteAnimation>();
         p = GameManager.Instance.player;
+        sa.SetSprite(blueGemSprite, 0.2f);
     }
 
     // Update is called once per frame
