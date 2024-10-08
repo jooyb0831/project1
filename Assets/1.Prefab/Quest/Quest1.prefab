@@ -45,15 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
+    isStart: 0
     QuestTitle: 
     QuestNumber: 0
     isDone: 0
     maxCount: 0
     curCount: 0
     exp: 0
+    gold: 0
     qType: 0
     objIndex: 0
+    QuestExplain: 
+    QuestRewardTxt: 
   questUI: {fileID: 5118186400754432002, guid: c71760cddd9978d49840f8ddb2842700, type: 3}
+  qMenuUI: {fileID: -3198823569248683210, guid: 34742225445ff4442a3216026adc18c5, type: 3}
+  thisQuestUI: {fileID: 0}
   qTitle: 
-  currentCnt: 0
+  curCnt: 0
   maxCnt: 0

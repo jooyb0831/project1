@@ -13,6 +13,9 @@ public class QuestUI : Singleton<QuestUI>
     public int index;
     public int maxCnt;
     public int objIndex;
+    public string questExplainTxt;
+    public string questRewardTxt;
+
     [SerializeField] private int crCnt;
     public int curCnt
     {
@@ -45,7 +48,7 @@ public class QuestUI : Singleton<QuestUI>
     {
         if(quest != null&& !isAdd)
         {
-            GameManager.Instance.questManager.qUIList.Add(this);
+            //GameManager.Instance.questManager.qUIList.Add(this);
             isAdd = true;
         }
     }

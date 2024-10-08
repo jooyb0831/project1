@@ -7,6 +7,7 @@ public class QuestManager : Singleton<QuestManager>
     public List<Quest> qList;
     public List<Quest> onGoingQList;
     public List<QuestUI> qUIList;
+    public List<QuestMenuUIPreset> qMUIList;
     private PlayerData pd;
 
     public List<int> enemyKillCnt;
@@ -47,6 +48,7 @@ public class QuestManager : Singleton<QuestManager>
     {
         int idx = -1;
         QuestUI qUI = null;
+        QuestMenuUIPreset qMUI = null;
         if(onGoingQList.Count == 0)
         {
             return;
@@ -60,7 +62,16 @@ public class QuestManager : Singleton<QuestManager>
                 break;
             }
         }
-        if(idx == -1 || qUI == null)
+        for(int i = 0; i<onGoingQList.Count; i++)
+        {
+            if(enemy.data.index == onGoingQList[i].data.objIndex)
+            {
+                idx = i;
+                qMUI = FindUI(enemy.data.index);
+                break;
+            }
+        }
+        if(idx == -1 || qUI == null || qMUI == null)
         {
             return;
         }
@@ -69,6 +80,7 @@ public class QuestManager : Singleton<QuestManager>
             enemyKillCnt[idx]++;
             onGoingQList[idx].data.curCount = enemyKillCnt[enemy.data.index];
             qUI.curCnt = enemyKillCnt[enemy.data.index];
+            qMUI.curCnt = enemyKillCnt[enemy.data.index];
         }
 
         
@@ -87,5 +99,19 @@ public class QuestManager : Singleton<QuestManager>
             }
         }
         return qUI;
+    }
+
+    QuestMenuUIPreset FindUI (int idx)
+    {
+        QuestMenuUIPreset qMUI = null;
+        for(int i =0; i<qList.Count; i++)
+        {
+            if(qUIList[i].objIndex == idx)
+            {
+                qMUI = qMUIList[i];
+                break;
+            }
+        }
+        return qMUI;
     }
 }

@@ -12,8 +12,11 @@ public class QuestData
     public int maxCount;
     public int curCount;
     public int exp;
+    public int gold;
     public QuestType qType;
     public int objIndex;
+    public string QuestExplain;
+    public string QuestRewardTxt;
 }
 public enum QuestType
 {
@@ -25,8 +28,11 @@ public abstract class Quest : MonoBehaviour
     public QuestData data = new QuestData();
 
     public QuestUI questUI;
+    public QuestMenuUIPreset qMenuUI;
     public QuestUI thisQuestUI;
+    public QuestMenuUIPreset thisQuestMenuUI;
     protected GameUI gi;
+    protected InventoryUI invenUI;
     protected PlayerData pData;
 
 
@@ -38,6 +44,10 @@ public abstract class Quest : MonoBehaviour
         if(gi == null)
         {
             gi = GameManager.Instance.gameUI;
+        }
+        if(invenUI == null)
+        {
+            invenUI = GameManager.Instance.invenUI;
         }
         data.curCount = 0;
     }

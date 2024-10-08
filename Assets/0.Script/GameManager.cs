@@ -62,4 +62,17 @@ public class GameManager : Singleton<GameManager>
             return gui;
         }
     }
+
+    private InventoryUI iui;
+    public InventoryUI invenUI
+    {
+        get
+        {
+            if(iui == null)
+            {
+                iui = FindAnyObjectByType<InventoryUI>();
+            }
+            return iui;
+        }
+    }
 }

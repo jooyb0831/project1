@@ -29,18 +29,33 @@ public class Quest1 :Quest
         {
             gi = GameManager.Instance.gameUI;
         }
+        if(invenUI == null)
+        {
+            invenUI = GameManager.Instance.invenUI;
+        }
         data.QuestTitle = "눈알 몬스터 처치";
         data.QuestNumber = 0;
         data.isDone = false;
         data.maxCount = 2;
         data.curCount = 0;
         data.exp = 15;
+        data.gold = 20;
         data.qType = QuestType.Kill;
         data.objIndex = 0;
-        questUI.quest = this;
-        questUI.SetData(this.data);
+        data.QuestExplain = $"눈알 몬스터 {data.maxCount}마리를 처치하기.";
+        data.QuestRewardTxt = $"보상 : EXP {data.exp}, 골드 {data.gold}";
         QuestUI qUI = Instantiate(questUI, gi.questArea);
+        QuestMenuUIPreset qMUI = Instantiate(qMenuUI, invenUI.questArea);
+        questUI.quest = this;
+        qMenuUI.quest = this;
+        qUI.SetData(this.data);
+        qMUI.SetData(this.data);
+       
+        GameManager.Instance.questManager.qUIList.Add(qUI);
+        GameManager.Instance.questManager.qMUIList.Add(qMUI);
+
         thisQuestUI = qUI;
+        thisQuestMenuUI = qMUI;
         base.Init();
     }
 
