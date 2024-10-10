@@ -15,6 +15,7 @@ public class InventoryUI : MonoBehaviour
     public Transform questArea;
 
     [SerializeField] TMP_Text noQTxt;
+    [SerializeField] Transform questObj;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,15 @@ public class InventoryUI : MonoBehaviour
             Time.timeScale = 1;
             menuUI.SetActive(false);
             isOn = false;
+        }
+
+        if(questObj.childCount !=0)
+        {
+            noQTxt.gameObject.SetActive(false);
+        }
+        else
+        {
+            noQTxt.gameObject.SetActive(true);
         }
     }
 
