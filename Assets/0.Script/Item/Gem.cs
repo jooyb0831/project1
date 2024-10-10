@@ -12,7 +12,7 @@ public class Gem : MonoBehaviour
     void Start()
     {
         sa = GetComponent<SpriteAnimation>();
-        p = GameManager.Instance.player;
+        p = GameManager.Instance.Player;
         sa.SetSprite(blueGemSprite, 0.2f);
     }
 

@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        data = GameManager.Instance.playerData;
+        data = GameManager.Instance.PlayerData;
         sa = GetComponent<SpriteAnimation>();
         SpriteManager.PlayerSprite pSprite = SpriteManager.Instance.playerSprite[0];
         idleSprites = pSprite.idleSprites;

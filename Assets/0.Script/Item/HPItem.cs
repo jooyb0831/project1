@@ -11,8 +11,8 @@ public class HPItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        p = GameManager.Instance.player;
-        pd = GameManager.Instance.playerData;
+        p = GameManager.Instance.Player;
+        pd = GameManager.Instance.PlayerData;
     }
 
     // Update is called once per frame
@@ -20,12 +20,12 @@ public class HPItem : MonoBehaviour
     {
         if(p == null)
         {
-            p = GameManager.Instance.player;
+            p = GameManager.Instance.Player;
             return;
         }
         if(pd == null)
         {
-            pd = GameManager.Instance.playerData;
+            pd = GameManager.Instance.PlayerData;
             return;
         }
         float dist = Vector2.Distance(transform.position, p.transform.position);

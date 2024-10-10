@@ -32,7 +32,7 @@ public abstract class Quest : MonoBehaviour
     public QuestUI thisQuestUI;
     public QuestMenuUIPreset thisQuestMenuUI;
     protected GameUI gi;
-    protected InventoryUI invenUI;
+    protected MenuUI menuUI;
     protected PlayerData pData;
 
 
@@ -43,11 +43,11 @@ public abstract class Quest : MonoBehaviour
     {
         if(gi == null)
         {
-            gi = GameManager.Instance.gameUI;
+            gi = GameManager.Instance.GameUI;
         }
-        if(invenUI == null)
+        if(menuUI == null)
         {
-            invenUI = GameManager.Instance.invenUI;
+            menuUI = GameManager.Instance.MUI;
         }
         data.curCount = 0;
     }

@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     private Player p;
-    public Player player
+    public Player Player
     {
         get
         {
@@ -24,7 +24,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     private PlayerData pData;
-    public PlayerData playerData
+    public PlayerData PlayerData
     {
         get
         {
@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     private QuestManager qm;
-    public QuestManager questManager
+    public QuestManager QuestManager
     {
         get
         {
@@ -51,7 +51,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     private GameUI gui;
-    public GameUI gameUI
+    public GameUI GameUI
     {
         get
         {
@@ -63,16 +63,16 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private InventoryUI iui;
-    public InventoryUI invenUI
+    private MenuUI mui;
+    public MenuUI MUI
     {
         get
         {
-            if(iui == null)
+            if(mui == null)
             {
-                iui = FindAnyObjectByType<InventoryUI>();
+                mui = FindAnyObjectByType<MenuUI>();
             }
-            return iui;
+            return mui;
         }
     }
 }

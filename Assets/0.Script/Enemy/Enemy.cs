@@ -49,10 +49,10 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Init()
     {
-        p = GameManager.Instance.player;
+        p = GameManager.Instance.Player;
         sr = GetComponent<SpriteRenderer>();
         sa = GetComponent<SpriteAnimation>();
-        pd = GameManager.Instance.playerData;
+        pd = GameManager.Instance.PlayerData;
         enemySprites = SpriteManager.Instance.enemySprite[data.index];
         enemySprite = enemySprites.idleSprite;
         deadSprite = enemySprites.deadSprite;
@@ -107,7 +107,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if(pd == null)
         {
-            pd = GameManager.Instance.playerData;
+            pd = GameManager.Instance.PlayerData;
         }
 
         pd.EXP += 10;
@@ -117,6 +117,7 @@ public abstract class Enemy : MonoBehaviour
         GameObject item = Instantiate(dropItem, transform);
         
         item.transform.SetParent(null);
+        item.transform.localScale = new Vector3(6f,6f,6f);
         Destroy(gameObject);
     }
 

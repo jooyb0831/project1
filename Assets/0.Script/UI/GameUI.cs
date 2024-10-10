@@ -22,7 +22,7 @@ public class GameUI : Singleton<GameUI>
     // Start is called before the first frame update
     void Start()
     {
-        pd = GameManager.Instance.playerData;
+        pd = GameManager.Instance.PlayerData;
 
         lvTxt.text = $"Lv.{pd.Level}";
         hpBarImg.fillAmount = (float)((float)pd.HP / (float)pd.MAXHP);
@@ -44,7 +44,7 @@ public class GameUI : Singleton<GameUI>
         {
             if(pd == null)
             {
-                pd = GameManager.Instance.playerData;
+                pd = GameManager.Instance.PlayerData;
                 return;
             }
             hpBarImg.fillAmount = ((float)pd.HP / pd.MAXHP);
@@ -59,7 +59,7 @@ public class GameUI : Singleton<GameUI>
         {
             if(pd == null)
             {
-                pd = GameManager.Instance.playerData;
+                pd = GameManager.Instance.PlayerData;
                 return;
             }
             expBarImg.fillAmount = ((float)pd.EXP / pd.MAXEXP);
@@ -73,7 +73,7 @@ public class GameUI : Singleton<GameUI>
         {
             if(pd == null)
             {
-                pd = GameManager.Instance.playerData;
+                pd = GameManager.Instance.PlayerData;
                 return;
             }
             expBarImg.fillAmount = ((float)pd.EXP / pd.MAXEXP);
@@ -87,7 +87,7 @@ public class GameUI : Singleton<GameUI>
         {
             if(pd == null)
             {
-                pd = GameManager.Instance.playerData;
+                pd = GameManager.Instance.PlayerData;
                 return;
             }
             lvTxt.text = $"Lv.{pd.Level}";
@@ -100,7 +100,7 @@ public class GameUI : Singleton<GameUI>
         {
             if(pd == null)
             {
-                pd = GameManager.Instance.playerData;
+                pd = GameManager.Instance.PlayerData;
                 return;
             }
             coinTxt.text = pd.Coin.ToString();

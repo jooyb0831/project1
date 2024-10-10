@@ -18,7 +18,7 @@ public class QuestManager : Singleton<QuestManager>
     // Start is called before the first frame update
     void Start()
     {
-        pd = GameManager.Instance.playerData;;
+        pd = GameManager.Instance.PlayerData;;
         Init();
     }
 

@@ -12,7 +12,7 @@ public class Coin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pd = GameManager.Instance.playerData;
+        pd = GameManager.Instance.PlayerData;
         sa = GetComponent<SpriteAnimation>();
         coinSprites = SpriteManager.Instance.coinSprites;
         sa.SetSprite(coinSprites, 0.2f);
@@ -30,7 +30,7 @@ public class Coin : MonoBehaviour
         {
             if(pd==null)
             {
-                pd = GameManager.Instance.playerData;
+                pd = GameManager.Instance.PlayerData;
             }
             pd.Coin += 1;
             Destroy(gameObject);

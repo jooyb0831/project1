@@ -13,7 +13,7 @@ public class Box : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        p = GameManager.Instance.player;
+        p = GameManager.Instance.Player;
         sa = GetComponent<SpriteAnimation>();
         sa.SetSprite(sprite, 0.2f);
         boxSprites = SpriteManager.Instance.boxSprites;
@@ -25,7 +25,7 @@ public class Box : MonoBehaviour
     {
         if(p == null)
         {
-            p = GameManager.Instance.player;
+            p = GameManager.Instance.Player;
         }
 
         float dist = Vector2.Distance(transform.position, p.transform.position);
