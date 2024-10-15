@@ -11,13 +11,13 @@ public class InventoryUI : Singleton<InventoryUI>
     [SerializeField] InvenItem sampleInvenitem;
     [SerializeField] PlayerData pData;
 
-    private void Start()
+    void Start()
     {
-        if (inventory == null)
-        {
-            inventory = GameManager.Instance.Inventory;
-        }
+        inventory = GameManager.Instance.Inven;
         pData = GameManager.Instance.PlayerData;
+        SetInvenSlot();
+        //SetInventory();
+        InventoryCheck();
 
     }
 
@@ -33,7 +33,8 @@ public class InventoryUI : Singleton<InventoryUI>
     {
         if (inventory == null)
         {
-            inventory = GameManager.Instance.Inventory;
+            inventory = GameManager.Instance.Inven;
+            return;
         }
         inventory.invenItems.Clear();
         List<InvenData> invenData = inventory.invenDatas;
@@ -66,7 +67,6 @@ public class InventoryUI : Singleton<InventoryUI>
                 item.GetComponent<Slots>().isFilled = true;
             }
         }
-        
     }
 
 

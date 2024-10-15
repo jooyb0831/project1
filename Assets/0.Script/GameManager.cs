@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        
+        DontDestroyOnLoad(this);
     }
 
     private Player p;
@@ -77,11 +77,11 @@ public class GameManager : Singleton<GameManager>
     }
 
     private Inventory inven;
-    public Inventory Inventory
+    public Inventory Inven
     {
         get
         {
-            if(inven = null)
+            if(inven == null)
             {
                 inven = FindAnyObjectByType<Inventory>();
             }

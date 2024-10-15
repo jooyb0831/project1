@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
 public class InvenData
 {
     public Sprite iconSprite;
@@ -29,7 +30,7 @@ public class InventoryData
 }
 
 public class Inventory : Singleton<Inventory>
-{
+{ 
     [SerializeField] InvenItem invenItem;
     public Transform[] invenSlots;
 

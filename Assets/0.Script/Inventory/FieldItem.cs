@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class ItemData
 {
     public string itemTitle;
@@ -27,10 +28,10 @@ public class FieldItem : MonoBehaviour
         sa = GetComponent<SpriteAnimation>();
         p = GameManager.Instance.Player;
 
-        if(itemSprites!=null)
+        if(itemSprites.Count >=1)
         {
             sa.SetSprite(itemSprites, 0.2f);
-        }    
+        }
     }
 
     // Update is called once per frame

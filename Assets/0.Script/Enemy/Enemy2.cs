@@ -28,7 +28,7 @@ public class Enemy2 : Enemy
             p = GameManager.Instance.Player;
         }
         float dist = Vector2.Distance(p.transform.position, transform.position);
-        Debug.Log(dist);
+        //Debug.Log(dist);
 
         if(state == EnemyState.Dead)
         {
