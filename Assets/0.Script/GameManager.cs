@@ -75,4 +75,17 @@ public class GameManager : Singleton<GameManager>
             return mui;
         }
     }
+
+    private Inventory inven;
+    public Inventory Inventory
+    {
+        get
+        {
+            if(inven = null)
+            {
+                inven = FindAnyObjectByType<Inventory>();
+            }
+            return inven;
+        }
+    }
 }

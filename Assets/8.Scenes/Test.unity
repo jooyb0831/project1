@@ -22447,7 +22447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5deafc94faf0a754b962a72e31835e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invenItem: {fileID: 0}
+  invenItem: {fileID: 8853063116645017520, guid: 327d4a405be2cde46898f5c9c2f11e70, type: 3}
   invenSlots: []
   invenItems: []
 --- !u!4 &953522088
