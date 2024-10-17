@@ -16,7 +16,7 @@ public class ItemData
 }
 public class FieldItem : MonoBehaviour
 {
-    [SerializeField] public ItemData itemData;
+    public ItemData itemData;
     private Player p;
     bool isFind = false;
 
@@ -37,25 +37,26 @@ public class FieldItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isFind == true)
+
+        float dist = Vector2.Distance(p.transform.position, transform.position);
+
+        if(dist<=1.5f)
+        {
+            isFind = true;
+        }
+        if (isFind)
         {
             transform.position = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * 5f);
-
-            float dist = Vector2.Distance(p.transform.position, transform.position);
-            if (dist < 0.2f)
-            {
-                Inventory.Instance.GetItem(itemData);
-                Destroy(gameObject);
-            }
         }
-
         else
         {
-            float dist = Vector2.Distance(p.transform.position, transform.position);
-            if (dist <= 1f)
-            {
-                isFind = true;
-            }
+            return;
+        }
+
+        if (dist < 0.2f)
+        {
+            Inventory.Instance.GetItem(itemData);
+            Destroy(gameObject);
         }
     }
 }

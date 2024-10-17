@@ -53,11 +53,8 @@ public class Inventory : Singleton<Inventory>
         }
 
         itemNumbers.Add(itemData.itemNumber);
-        int index = -1;
-        InvenItem item = null;
-
-        index = SlotCheck();
-        item = Instantiate(invenItem, invenSlots[index]);
+        int index = SlotCheck();
+        InvenItem item = Instantiate(invenItem, invenSlots[index]);
         invenSlots[index].GetComponent<Slots>().isFilled = true;
         InvenData data = new InvenData();
         data.title = itemData.itemTitle;

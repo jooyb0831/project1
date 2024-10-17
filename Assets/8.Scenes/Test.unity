@@ -254,7 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 0}
   state: 0
-  dropItem: {fileID: 6972325059712287242, guid: 5e7465e8a7135af4fab39794bbb5e396, type: 3}
+  dropItem: {fileID: 2862627394229396018, guid: 180a834868cfe644a9ec269830ddb22b, type: 3}
   eBulletParent: {fileID: 0}
   timer: 0
   time: 2
@@ -22079,7 +22079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 0}
   state: 0
-  dropItem: {fileID: 6972325059712287242, guid: 5e7465e8a7135af4fab39794bbb5e396, type: 3}
+  dropItem: {fileID: 2862627394229396018, guid: 180a834868cfe644a9ec269830ddb22b, type: 3}
   eBulletParent: {fileID: 0}
   timer: 0
   time: 2
@@ -22235,7 +22235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 0}
   state: 0
-  dropItem: {fileID: 6972325059712287242, guid: 5e7465e8a7135af4fab39794bbb5e396, type: 3}
+  dropItem: {fileID: 2862627394229396018, guid: 180a834868cfe644a9ec269830ddb22b, type: 3}
   eBulletParent: {fileID: 948133205}
   fireTimer: 0
   fireDelayTime: 2
