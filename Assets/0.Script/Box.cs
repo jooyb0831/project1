@@ -7,6 +7,7 @@ public class Box : MonoBehaviour
     [SerializeField] GameObject item;
     [SerializeField] List<Sprite> sprite;
     [SerializeField] bool isOpen = false;
+    [SerializeField] GameObject text;
     private SpriteAnimation sa;
     private Player p;
     private List<Sprite> boxSprites;
@@ -32,11 +33,17 @@ public class Box : MonoBehaviour
 
         if(dist<2)
         {
+            text.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 isOpen = true;
                 OpenBox();
             }
+        }
+
+        if(isOpen)
+        {
+            text.SetActive(false);
         }
 
     }

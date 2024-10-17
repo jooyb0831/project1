@@ -6,6 +6,7 @@ public class HPItem : MonoBehaviour
 {
     [SerializeField] Player p;
     [SerializeField] PlayerData pd;
+    [SerializeField] GameObject text;
     public bool isFind = false;
     [SerializeField] int plusHP;
     // Start is called before the first frame update
@@ -31,6 +32,7 @@ public class HPItem : MonoBehaviour
         float dist = Vector2.Distance(transform.position, p.transform.position);
         if (dist < 2f)
         {
+            text.SetActive(true);
             if(Input.GetKeyDown(KeyCode.E))
             {
                 if(pd.HP == pd.MAXHP)
@@ -52,6 +54,10 @@ public class HPItem : MonoBehaviour
                 }
                 
             }
+        }
+        else
+        {
+            text.SetActive(false);
         }
     }
 }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6579297762923952110}
   - component: {fileID: 2862627394229396019}
   - component: {fileID: 2862627394229396030}
-  - component: {fileID: 6579297762923952109}
   m_Layer: 0
   m_Name: Crystal
   m_TagString: Untagged
@@ -147,25 +146,3 @@ CapsuleCollider2D:
   m_Offset: {x: -0.007840201, y: -0.0074071437}
   m_Size: {x: 0.07710299, y: 0.07710299}
   m_Direction: 0
---- !u!114 &6579297762923952109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2862627394229396018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a2c213737322384eaff00d74a96f25e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData:
-    itemTitle: 
-    itemSprites: []
-    itemType: 0
-    invenIcon: {fileID: 0}
-    invenBGSprite: {fileID: 0}
-    price: 0
-    count: 0
-    itemNumber: 0
-  itemSprites: []

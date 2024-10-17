@@ -117,7 +117,7 @@ public abstract class Enemy : MonoBehaviour
         GameObject item = Instantiate(dropItem, transform);
         
         item.transform.SetParent(null);
-        item.transform.localScale = new Vector3(6f,6f,6f);
+        item.transform.localScale = new Vector3(5f,5f,5f);
         Destroy(gameObject);
     }
 

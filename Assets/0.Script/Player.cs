@@ -478,6 +478,21 @@ public class Player : MonoBehaviour
             }
             Pooling.Instance.SetPool(DicKey.eBullet2, collision.GetComponent<EBullet2>().gameObject);
         }
+
+        if(collision.gameObject.GetComponent<FallObject>())
+        {
+            if(data.HP>collision.GetComponent<FallObject>().damage)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<FallObject>().damage;
+                state = State.Hurt;
+            }
+            else if (data.HP<=collision.GetComponent<FallObject>().damage)
+            {
+                Dead();
+            }
+
+        }
     }
 
 
