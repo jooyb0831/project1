@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public int MAXHP { get; set; } = 30;
+    private int maxHP;
+    public int MAXHP
+    {
+        get { return maxHP; }
+        set
+        {
+            maxHP = value;
+            StatUI.Instance.HP = maxHP;
+        }
+    }
     private int hp;
     public int HP
     {
@@ -46,6 +55,7 @@ public class PlayerData : MonoBehaviour
         {
             level = value;
             GameUI.Instance.Lv = level;
+            StatUI.Instance.Level = level;
         }
     }
 
@@ -57,10 +67,21 @@ public class PlayerData : MonoBehaviour
         {
             coin = value;
             GameUI.Instance.Coin = coin;
+            StatUI.Instance.Gold = coin;
         }
     }
 
-    public float Speed { get; set; }
+    private float speed;
+    public float Speed
+    {
+        get { return speed; }
+        set
+        {
+            speed = value;
+            StatUI.Instance.Speed = (int)speed;
+        }
+    }
+       
 
     public float RunSpeed { get; set; }
 

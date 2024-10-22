@@ -82,11 +82,12 @@ public class Player : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down);
         Debug.DrawRay(foot.position, Vector3.down, Color.red);
 
+        /*
         if(hit.collider.GetComponent<Ground>())
         {
             dist = hit.distance;
         }
-        /*
+        
         if(isJump && Input.GetAxisRaw("Horizontal")!=0)
         {
             if(Input.GetKey(KeyCode.LeftShift))
@@ -481,15 +482,23 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.GetComponent<FallObject>())
         {
-            if(data.HP>collision.GetComponent<FallObject>().damage)
+            if (!collision.GetComponent<FallObject>().isAttack)
             {
-                isHurt = true;
-                data.HP -= collision.GetComponent<FallObject>().damage;
-                state = State.Hurt;
+                if (data.HP > collision.GetComponent<FallObject>().damage)
+                {
+                    collision.GetComponent<FallObject>().isAttack = true;
+                    isHurt = true;
+                    data.HP -= collision.GetComponent<FallObject>().damage;
+                    state = State.Hurt;
+                }
+                else if (data.HP <= collision.GetComponent<FallObject>().damage)
+                {
+                    Dead();
+                }
             }
-            else if (data.HP<=collision.GetComponent<FallObject>().damage)
+            else
             {
-                Dead();
+                return;
             }
 
         }

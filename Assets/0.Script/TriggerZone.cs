@@ -5,6 +5,7 @@ using UnityEngine;
 public class TriggerZone : MonoBehaviour
 {
     [SerializeField] GameObject fallObj;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,15 @@ public class TriggerZone : MonoBehaviour
     {
         if (collision.GetComponent<Player>())
         {
-            fallObj.GetComponent<Rigidbody2D>().gravityScale = 1f;
+            if (fallObj==null)
+            {
+                return;
+            }
+            else
+            {
+                fallObj.GetComponent<Rigidbody2D>().gravityScale = 3f;
+            }
+
         }
     }
 }

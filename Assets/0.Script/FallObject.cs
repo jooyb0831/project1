@@ -11,6 +11,8 @@ public class FallObject : MonoBehaviour
     [SerializeField] List<Sprite> explosionSprites;
     [SerializeField] List<Sprite> sprite;
     public int damage = 15;
+    bool isEnd = false;
+    public bool isAttack = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,11 @@ public class FallObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isEnd)
+        {
+            transform.position = endZone.position;
+        }
+       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,8 +35,7 @@ public class FallObject : MonoBehaviour
         if (collision.transform == endZone)
         {
             // 리지드바디끄기
-            float x = transform.position.x;
-            transform.position = new Vector2(x, endZone.localPosition.y);
+            isEnd = true;
             sa.SetSprite(explosionSprites, 0.2f, false, Delete);
             
         }
