@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 
     public PlayerData data;
 
+    [SerializeField] Transform btm = null;
+    [SerializeField] Transform up = null;
 
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] Transform firePos;
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     public bool isJump = false;
     public bool isAttacking = false;
     public bool isHurt = false;
+    public bool isLadder = false;
 
     [SerializeField] float speed;
     public float jumpPower;
@@ -33,6 +36,8 @@ public class Player : MonoBehaviour
         WalkAttack,
         RunAttack,
         Attack,
+        Ladder,
+        LadderIdle,
         Slide,
         Sit,
         Hurt,
@@ -50,6 +55,8 @@ public class Player : MonoBehaviour
     private List<Sprite> slideSprites;
     private List<Sprite> sitSprites;
     private List<Sprite> deadSprites;
+    private List<Sprite> updownSprites;
+    private List<Sprite> ladderIdleSprites;
 
     [SerializeField] bool isJumpRun = false;
     [SerializeField] State state = State.Idle;
@@ -68,6 +75,8 @@ public class Player : MonoBehaviour
         slideSprites = pSprite.slideSprites;
         sitSprites = pSprite.sitSprites;
         deadSprites = pSprite.deadSprites;
+        updownSprites = pSprite.updownSprites;
+        ladderIdleSprites = pSprite.ladderIdleSprites;
 
         sa.SetSprite(idleSprites, 0.2f);
         state = State.Idle;
@@ -172,6 +181,37 @@ public class Player : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
+        if(isLadder)
+        {
+            if(y!=0)
+            {
+                state = State.Ladder;
+            }
+            else
+            {
+                state = State.LadderIdle;
+            }
+            transform.Translate(new Vector2(0, y) * Time.deltaTime * speed);
+            
+            if (Input.GetButtonDown("Jump"))
+            {
+                if (!isJump)
+                {
+                    state = State.Jump;
+                    GetComponent<Rigidbody2D>().gravityScale = 1;
+                    rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
+                    transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
+                    isJump = true;
+                    isLadder = false;
+
+                }
+                isRun = false;
+            }
+            
+            StateCheck(state);
+            return;
+        }
+
         if (x != 0)
         {
             if (x > 0)
@@ -223,8 +263,6 @@ public class Player : MonoBehaviour
             isRun = false;
         }
 
-
-
         if (Input.GetButtonDown("Jump"))
         {
             if (!isJump)
@@ -234,7 +272,6 @@ public class Player : MonoBehaviour
                 rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
             }
             isRun = false;
-
         }
 
         // 점프중일 때 Shift 키 막기
@@ -338,6 +375,16 @@ public class Player : MonoBehaviour
                     sa.SetSprite(deadSprites, 0.2f);
                     break;
                 }
+            case State.Ladder:
+                {
+                    sa.SetSprite(updownSprites, 0.2f);
+                    break;
+                }
+            case State.LadderIdle:
+                {
+                    sa.SetSprite(ladderIdleSprites, 0.2f);
+                    break;
+                }
 
         }
     }
@@ -434,11 +481,29 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.GetComponent<Ground>()==true)
+        if(collision.gameObject.GetComponent<Ground>())
         {
             isJump = false;
         }
 
+        if(collision.gameObject.GetComponent<MoveGround>())
+        {
+            isJump = false;
+            transform.SetParent(collision.transform);
+            //transform.localScale = new Vector3(5, 5, 1);
+        }
+
+
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.GetComponent<MoveGround>())
+        {
+            transform.SetParent(null);
+        }
+
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -500,7 +565,52 @@ public class Player : MonoBehaviour
             {
                 return;
             }
+        }
 
+
+        if (collision.GetComponent<Ladder>())
+        {
+            btm = collision.GetComponent<Ladder>().bottom;
+            up = collision.GetComponent<Ladder>().up;
+            
+            //transform.SetParent(collision.transform);
+        }
+
+        if(collision == btm)
+        {
+            transform.position = collision.GetComponent<Ladder>().bottom.position;
+            isLadder = true;
+            isJump = false;
+            GetComponent<Rigidbody2D>().gravityScale = 0;
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+
+        if(collision==up)
+        {
+            if(Input.GetKeyDown(KeyCode.S))
+            {
+                transform.position = collision.GetComponent<Ladder>().up.position;
+                isLadder = true;
+                isJump = false;
+                GetComponent<Rigidbody2D>().gravityScale = 0;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<Ladder>())
+        {
+            isLadder = false;
+            state = State.Idle;
+            GetComponent<Rigidbody2D>().gravityScale = 1;
         }
     }
 
