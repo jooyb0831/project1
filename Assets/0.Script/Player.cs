@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
 
     public PlayerData data;
 
-    [SerializeField] Transform btm = null;
-    [SerializeField] Transform up = null;
 
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] Transform firePos;
@@ -203,6 +201,7 @@ public class Player : MonoBehaviour
                     transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
                     isJump = true;
                     isLadder = false;
+                 
 
                 }
                 isRun = false;
@@ -570,37 +569,91 @@ public class Player : MonoBehaviour
 
         if (collision.GetComponent<Ladder>())
         {
-            btm = collision.GetComponent<Ladder>().bottom;
-            up = collision.GetComponent<Ladder>().up;
-            
-            //transform.SetParent(collision.transform);
-        }
-
-        if(collision == btm)
-        {
-            transform.position = collision.GetComponent<Ladder>().bottom.position;
-            isLadder = true;
-            isJump = false;
-            GetComponent<Rigidbody2D>().gravityScale = 0;
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        }
-
-        if(collision==up)
-        {
-            if(Input.GetKeyDown(KeyCode.S))
+            if(isLadder)
             {
-                transform.position = collision.GetComponent<Ladder>().up.position;
+                return;
+            }
+            else
+            {
+                transform.position = new Vector2(collision.transform.position.x, transform.position.y);
                 isLadder = true;
                 isJump = false;
                 GetComponent<Rigidbody2D>().gravityScale = 0;
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
+            /*
+            if(collision.GetComponent<Ladder>().isTop)
+            {
+                if(Input.GetKeyDown(KeyCode.S))
+                {
+                    isLadder = true;
+                    isJump = false;
+                    GetComponent<Rigidbody2D>().gravityScale = 0;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                }
+                else
+                {
+                    return;
+                }
+            }
             else
             {
-                return;
+                isLadder = true;
+                isJump = false;
+                GetComponent<Rigidbody2D>().gravityScale = 0;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+            */
+
+            /*
+            Transform ladder = collision.transform;
+
+            if(collision == ladder.GetChild(0))
+            {
+                transform.position = collision.GetComponent<Ladder>().bottom.position;
+
+            }
+
+            if(collision == ladder.GetChild(1))
+            {
+                if(Input.GetKeyDown(KeyCode.S))
+                {
+                    transform.position = collision.GetComponent<Ladder>().up.position;
+                    isLadder = true;
+                    isJump = false;
+                    GetComponent<Rigidbody2D>().gravityScale = 0;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                }
+                else
+                {
+                    return;
+                }
+            */
+        }
+
+        /*
+        if(collision.GetComponent<LadderTop>())
+        {
+            if(Input.GetKeyDown(KeyCode.S))
+            {
+                collision.transform.parent.GetComponent<Ladder>().isTop = true;
+                transform.position = collision.transform.position;
+                isLadder = true;
+                isJump = false;
+                GetComponent<Rigidbody2D>().gravityScale = 0;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
         }
 
+        if(collision.GetComponent<LadderBtm>())
+        {
+            transform.position = collision.transform.position;
+            isLadder = true;
+            isJump = false;
+            GetComponent<Rigidbody2D>().gravityScale = 0;
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+        */
 
     }
 
@@ -612,6 +665,13 @@ public class Player : MonoBehaviour
             state = State.Idle;
             GetComponent<Rigidbody2D>().gravityScale = 1;
         }
+
+
+        if(collision.GetComponent<LadderTop>())
+        {
+            collision.transform.parent.GetComponent<Ladder>().isTop = false;
+        }
+
     }
 
 

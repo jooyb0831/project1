@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ladder : MonoBehaviour
+public class LadderBtm : MonoBehaviour
 {
-    public Transform bottom;
-    public Transform up;
-    public bool isTop = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +15,4 @@ public class Ladder : MonoBehaviour
     {
         
     }
-
-
 }
