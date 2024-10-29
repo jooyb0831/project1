@@ -19,5 +19,16 @@ public class Ladder : MonoBehaviour
         
     }
 
+    public void LadderTrigger(bool ladderAttach)
+    {
+        if(ladderAttach)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = true;
+        }
 
+        else if (!ladderAttach)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+    }
 }

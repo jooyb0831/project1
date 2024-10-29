@@ -21,7 +21,8 @@ public class InvenData
 public enum ItemType
 {
     Gem,
-    Potion
+    Potion,
+    Bomb
 }
 
 public class InventoryData
