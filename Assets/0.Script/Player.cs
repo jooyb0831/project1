@@ -90,12 +90,24 @@ public class Player : MonoBehaviour
     {
         if(isLadder)
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+            if(ladder.GetComponent<LadderTop>())
             {
-                ladder.GetComponent<Ladder>().LadderTrigger(true);
-                ladderAttach = true;
-                isJump = false;
+                if(Input.GetKeyDown(KeyCode.S))
+                {
+                    ladder.GetComponent<LadderTop>().LadderTopTrigger(true);
+                    ladderAttach = true;
+                    isJump = false;
+                }
             }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+                {
+                    ladderAttach = true;
+                    isJump = false;
+                }
+            }
+
         }
     }
 
@@ -227,13 +239,11 @@ public class Player : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             if (y!=0)
             {
-
                 state = State.LadderMove;
                 transform.Translate(new Vector2(0, y) * Time.deltaTime * speed);
             }
             else
             {
-
                 state = State.LadderIdle;
             }
 
@@ -318,8 +328,6 @@ public class Player : MonoBehaviour
             
         }
 
-        
-
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             speed = data.Speed;
@@ -371,24 +379,51 @@ public class Player : MonoBehaviour
         {
             
             state = State.BombThrow;
-            if (core.rotation == Quaternion.Euler(new Vector3 ( 0, 0, 90)))
+            if (transform.localScale.x < 0)
             {
-                isBack = true;
+                if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 270)))
+                {
+                    isBack = false;
+                }
+                else if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 180)))
+                {
+                    isBack = true;
+                }
 
-            }
-            else if(core.rotation.z < 0)
-            {
-                isBack = false;
-            }    
-            
-            if(isBack == true)
-            {
-                core.Rotate(Vector3.back * Time.deltaTime * 100f);
+                if (isBack == true)
+                {
+                    core.Rotate(Vector3.back * Time.deltaTime * 100f);
+                }
+                else
+                {
+                    core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+                }
             }
             else
             {
-                core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+                if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 90)))
+                {
+                    isBack = true;
+
+                }
+                else if (core.rotation.z < 0)
+                {
+                    isBack = false;
+                }
+
+                if (isBack == true)
+                {
+                    core.Rotate(Vector3.back * Time.deltaTime * 100f);
+                }
+                else
+                {
+                    core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+                }
+                
             }
+
+
+
 
 
         }
@@ -584,10 +619,25 @@ public class Player : MonoBehaviour
             //transform.localScale = new Vector3(5, 5, 1);
         }
 
-        if (collision.gameObject.CompareTag("Ladders"))
+        if (collision.gameObject.GetComponent<LadderTop>())
         {
-            isLadder = true;
-            ladder = collision.gameObject;
+            if (ladder == null)
+            {
+                ladder = collision.gameObject;
+                isLadder = true;
+            }
+            else if (!ladder.GetComponent<Ladder>())
+            {
+                ladder = collision.gameObject;
+                isLadder = true;
+            }
+            else if (ladder.GetComponent<Ladder>())
+            {
+                ladder = collision.gameObject;
+                isLadder = true;
+                collision.gameObject.GetComponent<LadderTop>().LadderTopTrigger(true);
+            }
+            
         }
     }
 
@@ -664,7 +714,11 @@ public class Player : MonoBehaviour
             }
         }
 
-
+        if(collision.GetComponent<Ladder>())
+        {
+            isLadder = true;
+            ladder = collision.gameObject;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -680,19 +734,41 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Ladder>())
         {
-            isLadder = false;
-            ladderMoveTrue = false;
-            ladderAttach = false;
-            collision.gameObject.GetComponent<Ladder>().LadderTrigger(false);
-            ladder = null;
-            state = State.Idle;
-            GetComponent<Rigidbody2D>().gravityScale = 1;
-        }
+            if(ladder.GetComponent<LadderTop>())
+            {
+                return;
+            }
+            else
+            {
+                isLadder = false;
+                ladderMoveTrue = false;
+                ladderAttach = false;
+                ladder = null;
+                state = State.Idle;
+                GetComponent<Rigidbody2D>().gravityScale = 1;
+            }
 
+        }
 
         if(collision.GetComponent<LadderTop>())
         {
-            collision.transform.parent.GetComponent<Ladder>().isTop = false;
+            collision.GetComponent<LadderTop>().LadderTopTrigger(false);
+            if (ladder.GetComponent<LadderTop>())
+            {
+                isLadder = false;
+                ladderMoveTrue = false;
+                ladderAttach = false;
+                state = State.Idle;
+                GetComponent<Rigidbody2D>().gravityScale = 1;
+                ladder = null;
+            }
+            else
+            {
+                return;
+            }
+
+
+
         }
 
     }

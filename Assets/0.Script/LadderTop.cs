@@ -17,26 +17,16 @@ public class LadderTop : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void LadderTopTrigger(bool ladderAttach)
     {
-        if(collision.GetComponent<Player>())
+        if (ladderAttach)
         {
-            if(isCheck)
-            {
-                return;
-            }
-            else
-            {
-                isCheck = true;
-            }
+            GetComponent<BoxCollider2D>().isTrigger = true;
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.GetComponent<Player>())
+        else if (!ladderAttach)
         {
-            isCheck = false;
+            GetComponent<BoxCollider2D>().isTrigger = false;
         }
     }
 }
