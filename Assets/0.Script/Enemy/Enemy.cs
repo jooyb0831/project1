@@ -75,8 +75,17 @@ public abstract class Enemy : MonoBehaviour
             Debug.Log("hit");
         }
 
+        if(collision.gameObject.GetComponent<Missile>())
+        {
+            TakeDamage(collision.GetComponent<Missile>().data.Damage);
+        }
 
+        if(collision.CompareTag("MissileArea"))
+        {
+            TakeDamage(collision.transform.parent.GetComponent<Missile>().data.Damage);
+        }
     }
+
 
     public void TakeDamage(int damage)
     {

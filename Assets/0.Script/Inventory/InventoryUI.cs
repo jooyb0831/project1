@@ -7,6 +7,7 @@ using TMPro;
 public class InventoryUI : Singleton<InventoryUI>
 {
     [SerializeField] Transform[] slots;
+    [SerializeField] Transform quickSlot;
     [SerializeField] Inventory inventory;
     [SerializeField] InvenItem sampleInvenitem;
     [SerializeField] PlayerData pData;
@@ -27,6 +28,7 @@ public class InventoryUI : Singleton<InventoryUI>
         {
             inventory.invenSlots[i] = slots[i];
         }
+        inventory.quickSlot = quickSlot;
     }
 
     void SetInventory()

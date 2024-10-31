@@ -6,11 +6,14 @@ public class Player : MonoBehaviour
 {
 
     public PlayerData data;
-
+    public Inventory inventory;
 
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] Transform firePos;
     [SerializeField] PBullet pBullet;
+    [SerializeField] GameObject rotateCore;
+    [SerializeField] Transform missilePos;
+    [SerializeField] Missile missile;
     [SerializeField] Transform foot;
     [SerializeField] float dist;
     [SerializeField] Transform pBulletParent;
@@ -375,58 +378,97 @@ public class Player : MonoBehaviour
             */
         }
 
-        if(Input.GetKey(KeyCode.O))
+
+        if(inventory.quickSlot.GetComponent<QuickSlot>().isFilled)
         {
-            
-            state = State.BombThrow;
-            if (transform.localScale.x < 0)
+            InvenItem item = inventory.quickSlot.transform.GetChild(1).GetComponent<QuickInven>().invenItem;
+
+            if(item.data.itemNumber == 2)
             {
-                if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 270)))
+                if(item.data.count>0)
                 {
-                    isBack = false;
-                }
-                else if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 180)))
-                {
-                    isBack = true;
-                }
+                    if (Input.GetKeyDown(KeyCode.O))
+                    {
+                        rotateCore.SetActive(true);
+                    }
 
-                if (isBack == true)
-                {
-                    core.Rotate(Vector3.back * Time.deltaTime * 100f);
-                }
-                else
-                {
-                    core.Rotate(Vector3.forward * Time.deltaTime * 100f);
-                }
-            }
-            else
-            {
-                if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 90)))
-                {
-                    isBack = true;
 
-                }
-                else if (core.rotation.z < 0)
-                {
-                    isBack = false;
-                }
+                    if (Input.GetKey(KeyCode.O))
+                    {
 
-                if (isBack == true)
-                {
-                    core.Rotate(Vector3.back * Time.deltaTime * 100f);
-                }
-                else
-                {
-                    core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+                        state = State.BombThrow;
+                        if (transform.localScale.x < 0)
+                        {
+                            if (core.rotation == Quaternion.Euler(new Vector3(0, 0, -90)))
+                            {
+                                isBack = false;
+                            }
+                            else if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 0)))
+                            {
+                                isBack = true;
+                            }
+
+                            if (isBack == true)
+                            {
+                                core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+                            }
+                            else
+                            {
+                                core.Rotate(Vector3.back * Time.deltaTime * 100f);
+                            }
+                        }
+                        else
+                        {
+                            if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 90)))
+                            {
+                                isBack = true;
+
+                            }
+                            else if (core.rotation.z < 0)
+                            {
+                                isBack = false;
+                            }
+
+                            if (isBack == true)
+                            {
+                                core.Rotate(Vector3.back * Time.deltaTime * 100f);
+                            }
+                            else
+                            {
+                                core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+                            }
+
+                        }
+
+                    }
+                    if (Input.GetKeyUp(KeyCode.O))
+                    {
+                        item.data.count--;
+                        item.AddItem(item.data);
+                        state = State.Idle;
+                        float bulletSpeed = 2f;
+                        float power = 3;
+                        Vector2 dir = rotateCore.transform.rotation * new Vector2(bulletSpeed, 0) * power;
+                        GameObject obj = Pooling.Instance.GetPool(DicKey.pMissile, missilePos, rotateCore.transform.rotation).gameObject;
+                        if (transform.localScale.x < 0)
+                        {
+                            obj.GetComponent<Missile>().Shoot(-dir);
+                        }
+                        else
+                        {
+                            obj.GetComponent<Missile>().Shoot(dir);
+                        }
+
+                        rotateCore.transform.rotation = Quaternion.identity;
+                        rotateCore.SetActive(false);
+
+                    }
                 }
                 
             }
-
-
-
-
-
+            
         }
+        
 
         if (isJump)
         {

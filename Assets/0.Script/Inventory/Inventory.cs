@@ -22,7 +22,8 @@ public enum ItemType
 {
     Gem,
     Potion,
-    Bomb
+    Bomb,
+    Missile
 }
 
 public class InventoryData
@@ -33,6 +34,7 @@ public class InventoryData
 public class Inventory : Singleton<Inventory>
 { 
     [SerializeField] InvenItem invenItem;
+    public Transform quickSlot;
     public Transform[] invenSlots;
 
     public InventoryData inventoryData = new InventoryData();
@@ -113,5 +115,31 @@ public class Inventory : Singleton<Inventory>
     void ItemAdd(ItemData itemData)
     {
         //나중에 옆에 UI 추가되면 작업
+    }
+
+    public void UseItem(InvenItem item)
+    {
+        item.data.count--;
+        if(item.data.count<=0)
+        {
+            DeleteItem(item);
+            Destroy(item.gameObject);
+        }
+    }
+
+    public void DeleteItem(InvenItem item)
+    {
+        item.transform.parent.GetComponent<Slots>().isFilled = false;
+        item.invenOption = null;
+    }
+
+    public void ItemEquip(InvenItem item)
+    {
+        if(quickSlot.GetComponent<QuickSlot>().isFilled)
+        {
+            Destroy(quickSlot.GetChild(0));
+        }
+        Instantiate(item, quickSlot);
+        quickSlot.GetComponent<QuickSlot>().isFilled = true;
     }
 }
