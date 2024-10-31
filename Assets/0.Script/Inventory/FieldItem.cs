@@ -13,6 +13,7 @@ public class ItemData
     public int price;
     public int count;
     public int itemNumber;
+    public int usage;
 }
 public class FieldItem : MonoBehaviour
 {

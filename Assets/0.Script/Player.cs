@@ -378,95 +378,124 @@ public class Player : MonoBehaviour
             */
         }
 
-
+        // 아이템 사용하는 코드
         if(inventory.quickSlot.GetComponent<QuickSlot>().isFilled)
         {
-            InvenItem item = inventory.quickSlot.transform.GetChild(1).GetComponent<QuickInven>().invenItem;
+            InvenItem item = inventory.quickSlot.transform.GetChild(0).GetComponent<QuickInven>().invenItem;
+            int itemNum = item.data.itemNumber;
 
-            if(item.data.itemNumber == 2)
+            switch (itemNum) // 아이템 코드
             {
-                if(item.data.count>0)
-                {
-                    if (Input.GetKeyDown(KeyCode.O))
+                case 2: // 아이템 넘버코드가 2번(미사일일 경우)
                     {
-                        rotateCore.SetActive(true);
-                    }
-
-
-                    if (Input.GetKey(KeyCode.O))
-                    {
-
-                        state = State.BombThrow;
-                        if (transform.localScale.x < 0)
+                        if (item.data.count > 0)
                         {
-                            if (core.rotation == Quaternion.Euler(new Vector3(0, 0, -90)))
+                            if (Input.GetKeyDown(KeyCode.O))
                             {
-                                isBack = false;
-                            }
-                            else if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 0)))
-                            {
-                                isBack = true;
+                                rotateCore.SetActive(true);
                             }
 
-                            if (isBack == true)
+
+                            if (Input.GetKey(KeyCode.O))
                             {
-                                core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+
+                                state = State.BombThrow;
+                                if (transform.localScale.x < 0)
+                                {
+                                    if (core.rotation == Quaternion.Euler(new Vector3(0, 0, -90)))
+                                    {
+                                        isBack = false;
+                                    }
+                                    else if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 0)))
+                                    {
+                                        isBack = true;
+                                    }
+
+                                    if (isBack == true)
+                                    {
+                                        core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+                                    }
+                                    else
+                                    {
+                                        core.Rotate(Vector3.back * Time.deltaTime * 100f);
+                                    }
+                                }
+                                else
+                                {
+                                    if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 90)))
+                                    {
+                                        isBack = true;
+
+                                    }
+                                    else if (core.rotation.z < 0)
+                                    {
+                                        isBack = false;
+                                    }
+
+                                    if (isBack == true)
+                                    {
+                                        core.Rotate(Vector3.back * Time.deltaTime * 100f);
+                                    }
+                                    else
+                                    {
+                                        core.Rotate(Vector3.forward * Time.deltaTime * 100f);
+                                    }
+
+                                }
+
+                            }
+                            if (Input.GetKeyUp(KeyCode.O))
+                            {
+                                Inventory.Instance.UseItem(item);
+                                state = State.Idle;
+                                float bulletSpeed = 2f;
+                                float power = 3;
+                                Vector2 dir = rotateCore.transform.rotation * new Vector2(bulletSpeed, 0) * power;
+                                GameObject obj = Pooling.Instance.GetPool(DicKey.pMissile, missilePos, rotateCore.transform.rotation).gameObject;
+                                if (transform.localScale.x < 0)
+                                {
+                                    obj.GetComponent<Missile>().Shoot(-dir);
+                                }
+                                else
+                                {
+                                    obj.GetComponent<Missile>().Shoot(dir);
+                                }
+
+                                rotateCore.transform.rotation = Quaternion.identity;
+                                rotateCore.SetActive(false);
+
+                            }
+                        }
+                        break;
+                    }
+                case 3: // 아이템 넘버코드가 3번(회복약)
+                    {
+                        int plusHP = item.data.usage;
+                        if(Input.GetKeyDown(KeyCode.O))
+                        {
+                            if(data.HP == data.MAXHP)
+                            {
+                                Debug.Log("이미 체력이 가득 찼습니다");
+                                return;
                             }
                             else
                             {
-                                core.Rotate(Vector3.back * Time.deltaTime * 100f);
+                                if(data.MAXHP - data.HP >= plusHP)
+                                {
+                                    data.HP += plusHP;
+                                }
+                                else if(data.MAXHP - data.HP < plusHP)
+                                {
+                                    data.HP = data.MAXHP;
+                                }
                             }
+                            Debug.Log($"{data.HP}");
+                            Inventory.Instance.UseItem(item);
                         }
-                        else
-                        {
-                            if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 90)))
-                            {
-                                isBack = true;
-
-                            }
-                            else if (core.rotation.z < 0)
-                            {
-                                isBack = false;
-                            }
-
-                            if (isBack == true)
-                            {
-                                core.Rotate(Vector3.back * Time.deltaTime * 100f);
-                            }
-                            else
-                            {
-                                core.Rotate(Vector3.forward * Time.deltaTime * 100f);
-                            }
-
-                        }
-
+                        break;
                     }
-                    if (Input.GetKeyUp(KeyCode.O))
-                    {
-                        item.data.count--;
-                        item.AddItem(item.data);
-                        state = State.Idle;
-                        float bulletSpeed = 2f;
-                        float power = 3;
-                        Vector2 dir = rotateCore.transform.rotation * new Vector2(bulletSpeed, 0) * power;
-                        GameObject obj = Pooling.Instance.GetPool(DicKey.pMissile, missilePos, rotateCore.transform.rotation).gameObject;
-                        if (transform.localScale.x < 0)
-                        {
-                            obj.GetComponent<Missile>().Shoot(-dir);
-                        }
-                        else
-                        {
-                            obj.GetComponent<Missile>().Shoot(dir);
-                        }
-
-                        rotateCore.transform.rotation = Quaternion.identity;
-                        rotateCore.SetActive(false);
-
-                    }
-                }
-                
             }
-            
+
         }
         
 

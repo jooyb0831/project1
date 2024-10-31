@@ -145,9 +145,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quickSlot: {fileID: 0}
-  itemIcon: {fileID: 0}
-  cntBG: {fileID: 0}
-  cntTxt: {fileID: 0}
+  invenItem: {fileID: 0}
+  cnt: 0
+  itemIcon: {fileID: 4044521585763286011}
+  cntBG: {fileID: 1199948222571457851}
+  cntTxt: {fileID: 1990401920546140227}
 --- !u!222 &139140436754530148
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -14,7 +14,10 @@ public class InvenData
     public string title;
     public ItemType type;
     public int price;
+    public int usage;
     public int slotIdxNum;
+    public bool inQuickSlot = false;
+    public QuickInven qItem = null;
 
 }
 
@@ -66,6 +69,7 @@ public class Inventory : Singleton<Inventory>
         data.type = itemData.itemType;
         data.count = itemData.count;
         data.price = itemData.price;
+        data.usage = itemData.usage;
         data.itemNumber = itemData.itemNumber;
         data.slotIdxNum = index;
         item.SetData(data);
@@ -108,7 +112,11 @@ public class Inventory : Singleton<Inventory>
             }
         }
         invenItem.data.count += itemData.count;
-        invenItem.GetComponent<InvenItem>().AddItem(invenItem.data);
+        invenItem.GetComponent<InvenItem>().ItemCntChange(invenItem.data);
+        if(invenItem.data.inQuickSlot)
+        {
+            invenItem.data.qItem.ItemCntChange(invenItem);
+        }
     }
 
 
@@ -120,6 +128,7 @@ public class Inventory : Singleton<Inventory>
     public void UseItem(InvenItem item)
     {
         item.data.count--;
+        item.ItemCntChange(item.data);
         if(item.data.count<=0)
         {
             DeleteItem(item);
@@ -131,15 +140,38 @@ public class Inventory : Singleton<Inventory>
     {
         item.transform.parent.GetComponent<Slots>().isFilled = false;
         item.invenOption = null;
+
+        if (item.data.inQuickSlot)
+        {
+            item.data.qItem.transform.parent.GetComponent<QuickSlot>().isFilled = false;
+            Destroy(item.data.qItem.gameObject);
+        }
+        int itemIdx = -1;
+        for (int i = 0; i < invenItems.Count; i++)
+        {
+            if (invenItems[i].data.itemNumber == item.data.itemNumber)
+            {
+                itemIdx = i;
+                break;
+            }
+        }
+        invenItems.RemoveAt(itemIdx);
+        invenDatas.RemoveAt(itemIdx);
+        Destroy(item);
     }
 
+    [SerializeField] QuickInven quickItem;
     public void ItemEquip(InvenItem item)
     {
         if(quickSlot.GetComponent<QuickSlot>().isFilled)
         {
             Destroy(quickSlot.GetChild(0));
         }
-        Instantiate(item, quickSlot);
+        QuickInven qItem = Instantiate(quickItem, quickSlot);
+        item.data.inQuickSlot = true;
+        item.data.qItem = qItem;
+        qItem.SetData(item);
+        qItem.SetInvenItem(item);
         quickSlot.GetComponent<QuickSlot>().isFilled = true;
     }
 }

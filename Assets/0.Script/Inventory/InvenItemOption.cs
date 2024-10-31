@@ -20,5 +20,15 @@ public class InvenItemOption : MonoBehaviour
     public void OnEquiqBtn()
     {
         Inventory.Instance.ItemEquip(item);
+        transform.SetParent(item.transform);
+        transform.SetAsLastSibling();
+        gameObject.SetActive(false);
+    }
+
+    public void OnExitBtn()
+    {
+        transform.SetParent(item.transform);
+        transform.SetAsLastSibling();
+        gameObject.SetActive(false);
     }
 }

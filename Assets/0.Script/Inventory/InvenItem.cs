@@ -31,10 +31,14 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         inventory = inven;
     }
 
-    public void AddItem(InvenData data)
+    public void ItemCntChange(InvenData data)
     {
         cntTxt.text = $"{data.count}";
         cntBG.SetActive(data.count <= 1 ? false : true);
+        if(data.inQuickSlot)
+        {
+            data.qItem.ItemCntChange(this);
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -57,6 +61,17 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
                 invenOption = Instantiate(itemOptionWindow, transform);
                 //아이템 종류에 따라서 목록 다르게 수정
                 invenOption.GetComponent<InvenItemOption>().item = this;
+
+                for (int i = 0; i < invenOption.transform.GetChild(1).childCount; i++)
+                {
+                    invenOption.transform.GetChild(1).GetChild(i).gameObject.SetActive(true);
+                }
+                if (invenOption.GetComponent<InvenItemOption>().item.data.type.Equals(ItemType. Gem))
+                {
+                    invenOption.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+                    invenOption.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+                }
+
                 invenOption.transform.SetParent(transform.parent.parent.parent);
                 invenOption.transform.SetAsLastSibling();
             }
