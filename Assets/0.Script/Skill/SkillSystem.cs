@@ -18,6 +18,11 @@ public class SkillSystem : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
+            if(qSkill == null)
+            {
+                Debug.Log("장착된 스킬이 없습니다.");
+                return;
+            }
             if(qSkill.GetComponent<Skill>().isStart || qSkill.GetComponent<Skill>().isWorking)
             {
                 return;
@@ -27,7 +32,12 @@ public class SkillSystem : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.I))
         {
-            if(iSkill.GetComponent<Skill>().isStart || iSkill.GetComponent<Skill>().isWorking)
+            if (iSkill == null)
+            {
+                Debug.Log("장착된 스킬이 없습니다.");
+                return;
+            }
+            if (iSkill.GetComponent<Skill>().isStart || iSkill.GetComponent<Skill>().isWorking)
             {
                 return;
             }

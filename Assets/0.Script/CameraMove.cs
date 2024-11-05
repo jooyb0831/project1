@@ -14,8 +14,22 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = p.transform.position.x+2f;
-        float y = p.transform.position.y;
+        if(p == null)
+        {
+            p = GameManager.Instance.Player;
+        }
+        float x = p.transform.position.x;
+        /*
+        if (p.transform.localScale.x > 0)
+        {
+            x = p.transform.position.x + 2f;
+        }
+        else
+        {
+            x = p.transform.position.x - 2f;
+        }
+        */
+        float y = p.transform.position.y+1.5f;
         float z = -10;
         transform.position = new Vector3(x, y, z);
     }
