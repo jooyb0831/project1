@@ -15,9 +15,24 @@ public class Enemy1 : Enemy
 
     private void Update()
     {
-        if(isDead == false)
+        if (!isDead)
         {
-            Move();
+            if (state == EnemyState.Back)
+            {
+                if (sk1isLeft)
+                {
+                    transform.Translate(Vector2.left * Time.deltaTime * 10f);
+                }
+                else
+                {
+                    transform.Translate(Vector2.right * Time.deltaTime * 10f);
+                }
+            }
+            else
+            {
+                Move();
+            }
+
         }
         else
         {
@@ -28,20 +43,20 @@ public class Enemy1 : Enemy
     void Move()
     {
         timer += Time.deltaTime;
-        if(timer>=time)
+        if (timer >= time)
         {
             timer = 0;
-            if(isLeft == true)
+            if (isLeft == true)
             {
                 isLeft = false;
             }
-            else if(isLeft == false)
+            else if (isLeft == false)
             {
                 isLeft = true;
             }
 
         }
-        if(isLeft == true)
+        if (isLeft == true)
         {
             transform.localScale = new Vector3(4, 4, 4);
             transform.Translate(Vector2.left * Time.deltaTime * data.Speed);

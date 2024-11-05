@@ -88,4 +88,17 @@ public class GameManager : Singleton<GameManager>
             return inven;
         }
     }
+
+    private SkillSystem sksystem;
+    public SkillSystem SkSystem
+    {
+        get
+        {
+            if(sksystem == null)
+            {
+                sksystem = FindAnyObjectByType<SkillSystem>();
+            }
+            return sksystem;
+        }
+    }
 }

@@ -1,0 +1,22 @@
+{
+  "sData": [
+    {
+      "skilltitle": "빗발치는 총알",
+      "skillexplain": "공중에서 총알이 쏟아집니다.",
+      "index": 0,
+      "cooltime": 15.0,
+      "damage": 30,
+      "needlevel": 3,
+      "skilllevel": 1
+    },
+    {
+      "skilltitle": "공기포",
+      "skillexplain": "적을 뒤로 밀칩니다.",
+      "index": 1,
+      "cooltime": 5.0,
+      "damage": 3,
+      "needlevel": 4,
+      "skilllevel": 1
+    }
+  ]
+}

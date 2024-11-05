@@ -35,24 +35,42 @@ public class Enemy2 : Enemy
             return;
         }
 
-        if (dist <= 10f)
+        if (state == EnemyState.Back)
         {
-            state = EnemyState.Run;
-            
-
-            if(dist<7f)
+            if (sk1isLeft)
             {
-                state = EnemyState.Attack;
+                transform.Translate(Vector2.left * Time.deltaTime * 10f);
             }
-            Move();
+            else
+            {
+                transform.Translate(Vector2.right * Time.deltaTime * 10f);
+            }
+            SpriteCheck(state);
+            return;
         }
-
 
         else
         {
-            state = EnemyState.Idle;
-            Move();
+            if (dist <= 10f)
+            {
+                state = EnemyState.Run;
+
+
+                if (dist < 7f)
+                {
+                    state = EnemyState.Attack;
+                }
+                Move();
+            }
+
+
+            else
+            {
+                state = EnemyState.Idle;
+                Move();
+            }
         }
+        
     }
 
     void Move()
@@ -65,6 +83,7 @@ public class Enemy2 : Enemy
         {
             transform.localScale = new Vector3(-5, 5, 5);
         }
+
 
         if (state == EnemyState.Attack)
         {
@@ -102,6 +121,11 @@ public class Enemy2 : Enemy
             case EnemyState.Attack:
                 {
                     sa.SetSprite(attackSprite, 0.3f, false, Attack);
+                    break;
+                }
+            case EnemyState.Back:
+                {
+                    sa.SetSprite(enemySprite, 0.2f);
                     break;
                 }
                 /*

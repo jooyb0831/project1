@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public Inventory inventory;
 
     [SerializeField] private Rigidbody2D rigid;
-    [SerializeField] Transform firePos;
+    public Transform firePos;
     [SerializeField] PBullet pBullet;
     [SerializeField] GameObject rotateCore;
     [SerializeField] Transform missilePos;
@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
         LadderMove,
         LadderIdle,
         BombThrow,
+        BombThrowWalk,
+        BombThrowRun,
         Slide,
         Sit,
         Hurt,
@@ -59,10 +61,14 @@ public class Player : MonoBehaviour
     private List<Sprite> deadSprites;
     private List<Sprite> updownSprites;
     private List<Sprite> ladderIdleSprites;
+    private List<Sprite> bombSprites;
 
     [SerializeField] bool isJumpRun = false;
     [SerializeField] State state = State.Idle;
     [SerializeField] Transform core;
+    public Transform skill1;
+    public Transform skill2;
+    public GameObject skillPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +86,7 @@ public class Player : MonoBehaviour
         deadSprites = pSprite.deadSprites;
         updownSprites = pSprite.updownSprites;
         ladderIdleSprites = pSprite.ladderIdleSprites;
+        bombSprites = pSprite.bombSprites;
 
         sa.SetSprite(idleSprites, 0.2f);
         state = State.Idle;
@@ -118,6 +125,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ġƮ
+        if(Input.GetKeyDown(KeyCode.F4))
+        {
+            data.Level++;
+        }
+
         Move();
         LadderAttach();
         RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down);
@@ -398,8 +411,21 @@ public class Player : MonoBehaviour
 
                             if (Input.GetKey(KeyCode.O))
                             {
-
-                                state = State.BombThrow;
+                                if(x!=0)
+                                {
+                                    if(isRun)
+                                    {
+                                        state = State.BombThrowRun;
+                                    }
+                                    else
+                                    {
+                                        state = State.BombThrowWalk;
+                                    }
+                                }
+                                else
+                                {
+                                    state = State.BombThrow;
+                                }
                                 if (transform.localScale.x < 0)
                                 {
                                     if (core.rotation == Quaternion.Euler(new Vector3(0, 0, -90)))
@@ -563,9 +589,19 @@ public class Player : MonoBehaviour
                 }
             case State.BombThrow:
                 {
-                    sa.SetSprite(idleSprites, 0.2f);
+                    sa.SetSprite(bombSprites, 0.2f);
                     break;
                 }
+            case State.BombThrowWalk:
+                {
+                    sa.SetSprite(runAttackSprites, 0.2f);
+                }
+                break;
+            case State.BombThrowRun:
+                {
+                    sa.SetSprite(runAttackSprites, 0.1f);
+                }
+                break;
             case State.Dead:
                 {
                     transform.localRotation = Quaternion.Euler(0, 0, 90f);
@@ -726,6 +762,10 @@ public class Player : MonoBehaviour
     [SerializeField] Transform ladderBtm;
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.CompareTag("DeadZone"))
+        {
+            Dead();
+        }
         if (collision.gameObject.GetComponent<Enemy>() == true)
         {
             if (data.HP > collision.GetComponent<Enemy>().data.AttackPower)

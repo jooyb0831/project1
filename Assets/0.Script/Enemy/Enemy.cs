@@ -21,6 +21,7 @@ public abstract class Enemy : MonoBehaviour
         Run,
         Hit,
         Attack,
+        Back,
         Dead
     }
 
@@ -28,7 +29,7 @@ public abstract class Enemy : MonoBehaviour
     SpriteRenderer sr;
     protected SpriteAnimation sa;
     public EnemyData data = new EnemyData();
-    
+    protected SkillSystem sksystem;
 
     protected List<Sprite> enemySprite;
     protected List<Sprite> deadSprite;
@@ -39,7 +40,8 @@ public abstract class Enemy : MonoBehaviour
     private PlayerData pd;
     [SerializeField] GameObject dropItem;
     [SerializeField] protected Transform eBulletParent;
-
+    [SerializeField] protected bool ski1bulletDir = false;
+    [SerializeField] protected bool sk1isLeft = false;
     protected SpriteManager.EnemySprite enemySprites;
     // Start is called before the first frame update
     void Start()
@@ -53,6 +55,7 @@ public abstract class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         sa = GetComponent<SpriteAnimation>();
         pd = GameManager.Instance.PlayerData;
+        sksystem = GameManager.Instance.SkSystem;
         enemySprites = SpriteManager.Instance.enemySprite[data.index];
         enemySprite = enemySprites.idleSprite;
         deadSprite = enemySprites.deadSprite;
@@ -84,6 +87,16 @@ public abstract class Enemy : MonoBehaviour
         {
             TakeDamage(collision.transform.parent.GetComponent<Missile>().data.Damage);
         }
+
+        if(collision.GetComponent<Skill0Bullet>())
+        {
+            TakeDamage(collision.GetComponent<Skill0Bullet>().damage);
+        }
+
+        if(collision.GetComponent<Skill1Bullet>())
+        {
+            Skill1Damage(2, collision.gameObject);
+        }
     }
 
 
@@ -96,6 +109,23 @@ public abstract class Enemy : MonoBehaviour
         data.HP -= damage;
         StartCoroutine("Hit");
         if(data.HP<=0)
+        {
+            isDead = true;
+            state = EnemyState.Dead;
+            StartCoroutine("Dead");
+        }
+    }
+
+    public void Skill1Damage(int damage, GameObject bullet)
+    {
+        if (data.HP <= 0)
+        {
+            return;
+        }
+        data.HP -= damage;
+        Ski1SetDir(bullet);
+        StartCoroutine("Back");
+        if (data.HP <= 0)
         {
             isDead = true;
             state = EnemyState.Dead;
@@ -130,5 +160,42 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
+    IEnumerator Back()
+    {
+        state = EnemyState.Back;
+        sr.color = new Color32(255, 90, 90, 255);
+        data.Speed = 0f;
+        /*
+        if (transform.localScale.x < 0)
+        {
+            transform.Translate(Vector2.left * Time.deltaTime * 10f);
+        }
+        else
+        {
+            Vector2 pos = new Vector2(transform.position.x + 10f, transform.position.y);
+            transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * 5f);
+        }
+        */
+        yield return new WaitForSeconds(0.5f);
+        data.Speed = 2f;
+        sr.color = Color.white;
+        state = EnemyState.Idle;
+        ski1bulletDir = false;
+    }
 
+    public void Ski1SetDir(GameObject bullet)
+    {
+        if(!ski1bulletDir)
+        {
+            if (!bullet.GetComponent<Skill1Bullet>().isRight)
+            {
+                sk1isLeft = true;
+            }
+            else
+            {
+                sk1isLeft = false;
+            }
+        }
+        ski1bulletDir = true;
+    }
 }

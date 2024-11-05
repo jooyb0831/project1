@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ladders
   - MissileArea
+  - DeadZone
   layers:
   - Default
   - TransparentFX

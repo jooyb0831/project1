@@ -18,6 +18,7 @@ public class SpriteManager : Singleton<SpriteManager>
         public List<Sprite> deadSprites;
         public List<Sprite> ladderIdleSprites;
         public List<Sprite> updownSprites;
+        public List<Sprite> bombSprites;
 
     }
     public PlayerSprite[] playerSprite;
