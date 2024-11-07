@@ -13,8 +13,10 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     [SerializeField] TMP_Text cntTxt;
     public GameObject invenOption = null;
     public GameObject itemOptionWindow;
-
+    public GameObject itemSellWindow;
+    public GameObject itemBuyWindow;
     private Inventory inventory;
+   
 
     public InvenData data;
     public void SetData(InvenData data)
@@ -25,6 +27,8 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         cntTxt.text = $"{data.count}";
         cntBG.SetActive(data.count <= 1 ? false : true);
     }
+
+
 
     public void SetInventory(Inventory inven)
     {
@@ -56,6 +60,10 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     {
         if(Input.GetMouseButtonDown(1))
         {
+            if(transform.parent.GetComponent<Slots>().isMerchantInven || transform.transform.parent.GetComponent<Slots>().isSellInven)
+            {
+                return;
+            }
             if(invenOption == null)
             {
                 invenOption = Instantiate(itemOptionWindow, transform);
@@ -79,6 +87,23 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
             else if(invenOption!=null)
             {
                 Destroy(invenOption);
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (transform.parent.GetComponent<Slots>().isMerchantInven)
+            {
+                GameObject window = Instantiate(itemSellWindow, transform.parent.parent.parent);
+                window.transform.SetAsLastSibling();
+                window.GetComponent<ItemSellWindow>().SetItem(this);
+            }
+
+            if (transform.parent.GetComponent<Slots>().isSellInven)
+            {
+                GameObject window = Instantiate(itemBuyWindow, transform.parent.parent.parent);
+                window.transform.SetAsLastSibling();
+                window.GetComponent<ItemBuyWindow>().SetItem(this);
             }
         }
     }

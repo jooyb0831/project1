@@ -150,6 +150,8 @@ MonoBehaviour:
   cntTxt: {fileID: 1990401920546140227}
   invenOption: {fileID: 0}
   itemOptionWindow: {fileID: 8974422446151241562, guid: 6cd5b05ef3ade8f4ba5ad9f0235a2838, type: 3}
+  itemSellWindow: {fileID: 1151259264737084745, guid: 26e3d67405da7604b9d216a04e5a9fa4, type: 3}
+  itemBuyWindow: {fileID: 1151259264737084745, guid: 97274198b21356f4ab14641052714478, type: 3}
   data:
     iconSprite: {fileID: 0}
     bgSprite: {fileID: 0}
@@ -158,7 +160,10 @@ MonoBehaviour:
     title: 
     type: 0
     price: 0
+    usage: 0
     slotIdxNum: 0
+    inQuickSlot: 0
+    qItem: {fileID: 0}
 --- !u!222 &139140436754530148
 CanvasRenderer:
   m_ObjectHideFlags: 0

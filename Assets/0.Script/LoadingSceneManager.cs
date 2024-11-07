@@ -71,7 +71,8 @@ public class LoadingSceneManager : MonoBehaviour
                         .OnComplete(() =>
                         {
                             op.allowSceneActivation = true;
-                            if (nextScene.Equals("Test"))
+
+                            if (nextScene.Equals("Test") || nextScene.Equals("Ship"))
                             {
                                 SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
                             }
@@ -79,7 +80,7 @@ public class LoadingSceneManager : MonoBehaviour
                     yield break;
                 }    
             }
-            loadingScreen.SetActive(false);
         }
+        loadingScreen.SetActive(false);
     }
 }

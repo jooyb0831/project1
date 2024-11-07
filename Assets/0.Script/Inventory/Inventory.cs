@@ -35,7 +35,8 @@ public class InventoryData
 }
 
 public class Inventory : Singleton<Inventory>
-{ 
+{
+    private PlayerData pd;
     [SerializeField] InvenItem invenItem;
     public Transform quickSlot;
     public Transform[] invenSlots;
@@ -48,6 +49,7 @@ public class Inventory : Singleton<Inventory>
     void Start()
     {
         DontDestroyOnLoad(this);
+        pd = GameManager.Instance.PlayerData;
     }
 
     public void GetItem(ItemData itemData)
@@ -77,7 +79,24 @@ public class Inventory : Singleton<Inventory>
         invenItems.Add(item);
         invenDatas.Add(item.data);
         inventoryData.items.Add(item);
+    }
 
+    public void GetItem(InvenItem invenItem)
+    {
+        if(itemNumbers.Contains(invenItem.data.itemNumber))
+        {
+            ItemCheck(invenItem);
+            return;
+        }
+
+        itemNumbers.Add(invenItem.data.itemNumber);
+        int index = SlotCheck();
+        InvenItem item = Instantiate(invenItem, invenSlots[index]);
+        invenSlots[index].GetComponent<Slots>().isFilled = true;
+        item.SetInventory(this);
+        invenItems.Add(item);
+        invenDatas.Add(item.data);
+        inventoryData.items.Add(item);
     }
 
 
@@ -112,6 +131,25 @@ public class Inventory : Singleton<Inventory>
             }
         }
         invenItem.data.count += itemData.count;
+        invenItem.GetComponent<InvenItem>().ItemCntChange(invenItem.data);
+        if(invenItem.data.inQuickSlot)
+        {
+            invenItem.data.qItem.ItemCntChange(invenItem);
+        }
+    }
+
+    void ItemCheck(InvenItem item)
+    {
+        InvenItem invenItem = null;
+        for(int i = 0; i<invenItems.Count; i++)
+        {
+            if(invenItems[i].data.itemNumber == item.data.itemNumber)
+            {
+                invenItem = invenItems[i];
+                break;
+            }
+        }
+        invenItem.data.count += item.data.count;
         invenItem.GetComponent<InvenItem>().ItemCntChange(invenItem.data);
         if(invenItem.data.inQuickSlot)
         {
@@ -174,4 +212,53 @@ public class Inventory : Singleton<Inventory>
         qItem.SetInvenItem(item);
         quickSlot.GetComponent<QuickSlot>().isFilled = true;
     }
+
+    public void ItemCount(InvenItem item, int count, bool sell)
+    {
+        if(sell == true)
+        {
+            int minus = item.data.count - count;
+
+            if (minus <= 0)
+            {
+                DeleteItem(item);
+                Destroy(item.gameObject);
+            }
+            else
+            {
+                item.data.count -= count;
+                item.GetComponent<InvenItem>().ItemCntChange(item.data);
+            }
+        }
+        else
+        {
+            if (itemNumbers.Contains(item.data.itemNumber))
+            {
+                InvenItem invenItem = null;
+                for (int i = 0; i < invenItems.Count; i++)
+                {
+                    if (invenItems[i].data.itemNumber == item.data.itemNumber)
+                    {
+                        invenItem = invenItems[i];
+                        break;
+                    }
+                }
+                invenItem.data.count += count;
+                invenItem.GetComponent<InvenItem>().ItemCntChange(invenItem.data);
+                if (invenItem.data.inQuickSlot)
+                {
+                    invenItem.data.qItem.ItemCntChange(invenItem);
+                }
+            }
+            else
+            {
+                GetItem(item);
+            }
+
+        }
+
+    }
+    
+
+
 }

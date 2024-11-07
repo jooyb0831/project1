@@ -5,6 +5,8 @@ using UnityEngine;
 public class Slots : MonoBehaviour
 {
     public bool isFilled = false;
+    public bool isMerchantInven = false;
+    public bool isSellInven = false;
     // Start is called before the first frame update
     void Start()
     {
