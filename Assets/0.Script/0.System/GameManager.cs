@@ -89,6 +89,18 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    private InventoryUI invenUI;
+    public InventoryUI InvenUI
+    {
+        get
+        {
+            if(invenUI == null)
+            {
+                invenUI = FindAnyObjectByType<InventoryUI>();
+            }
+            return invenUI;
+        }
+    }
     private SkillSystem sksystem;
     public SkillSystem SkSystem
     {

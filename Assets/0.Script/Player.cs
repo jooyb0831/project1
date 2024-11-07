@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        inventory = GameManager.Instance.Inven;
         data = GameManager.Instance.PlayerData;
         sa = GetComponent<SpriteAnimation>();
         SpriteManager.PlayerSprite pSprite = SpriteManager.Instance.playerSprite[0];
@@ -125,6 +126,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(inventory==null)
+        {
+            inventory = GameManager.Instance.Inven;
+            return;
+        }
         //ġƮ
         if(Input.GetKeyDown(KeyCode.F4))
         {

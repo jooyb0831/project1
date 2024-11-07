@@ -90,6 +90,7 @@ public class PlayerData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(this);
         MAXHP = 30;
         HP = MAXHP;
         MAXEXP = 25;

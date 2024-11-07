@@ -8,13 +8,14 @@ using DG.Tweening;
 public class LoadingSceneManager : MonoBehaviour
 {
     public static string nextScene;
-
+    private Inventory inven;
     [SerializeField] Image progressBar;
     [SerializeField] Image fadeScreen;
     [SerializeField] GameObject loadingScreen;
     // Start is called before the first frame update
     void Start()
     {
+        inven = GameManager.Instance.Inven;
         fadeScreen.color = new Color(0, 0, 0, 1);
         fadeScreen.DOFade(0, 0.5f)
             .OnComplete(() =>
@@ -38,6 +39,7 @@ public class LoadingSceneManager : MonoBehaviour
     IEnumerator LoadScene()
     {
         loadingScreen.SetActive(true);
+        SceneChanger.Instance.sceneType = SceneType.Loading;
         yield return null;
 
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
@@ -72,15 +74,19 @@ public class LoadingSceneManager : MonoBehaviour
                         {
                             op.allowSceneActivation = true;
 
-                            if (nextScene.Equals("Test") || nextScene.Equals("Ship"))
+                            if (nextScene.Equals("Test"))
                             {
                                 SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
+                                SceneChanger.Instance.sceneType = SceneType.Stage1;
+                                inven.gameObject.SetActive(true);
+                                Inventory.Instance.SetItem();
                             }
                         });
                     yield break;
                 }    
             }
         }
+        
         loadingScreen.SetActive(false);
     }
 }

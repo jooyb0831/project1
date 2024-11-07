@@ -55,4 +55,8 @@ public class SpriteManager : Singleton<SpriteManager>
     
     public List<Sprite> merchantSprites;
 
+    void Start()
+    {
+        DontDestroyOnLoad(this);
+    }
 }

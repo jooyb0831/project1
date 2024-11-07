@@ -37,6 +37,7 @@ public class InventoryData
 public class Inventory : Singleton<Inventory>
 {
     private PlayerData pd;
+    private Player p;
     [SerializeField] InvenItem invenItem;
     public Transform quickSlot;
     public Transform[] invenSlots;
@@ -54,7 +55,7 @@ public class Inventory : Singleton<Inventory>
 
     public void GetItem(ItemData itemData)
     {
-        if(itemNumbers.Contains(itemData.itemNumber))
+        if (itemNumbers.Contains(itemData.itemNumber))
         {
             ItemCheck(itemData);
             return;
@@ -83,7 +84,7 @@ public class Inventory : Singleton<Inventory>
 
     public void GetItem(InvenItem invenItem)
     {
-        if(itemNumbers.Contains(invenItem.data.itemNumber))
+        if (itemNumbers.Contains(invenItem.data.itemNumber))
         {
             ItemCheck(invenItem);
             return;
@@ -99,13 +100,37 @@ public class Inventory : Singleton<Inventory>
         inventoryData.items.Add(item);
     }
 
+    [SerializeField] InventoryUI invenUI;
+    public void SetItem()
+    {
+        invenUI = GameManager.Instance.InvenUI;
+        invenUI.Init();
+        invenItems.Clear();
+        
+        Debug.Log("»£√‚");
+        for(int i =0; i<invenDatas.Count; i++)
+        {
+            Debug.Log($"Hello{i}");
+            
+            InvenItem item = Instantiate(invenItem, invenSlots[invenDatas[i].slotIdxNum]);
+            
+            item.SetData(invenDatas[i]);
+            item.transform.parent.GetComponent<Slots>().isFilled = true;
+            invenItems.Add(item);
+            if(invenDatas[i].inQuickSlot)
+            {
+                ItemEquip(item);
+            }
+            
+        }
+    }
 
     int SlotCheck()
     {
         int number = 0;
-        for(int i=0; i<invenSlots.Length; i++)
+        for (int i = 0; i < invenSlots.Length; i++)
         {
-            if(!invenSlots[i].GetComponent<Slots>().isFilled)
+            if (!invenSlots[i].GetComponent<Slots>().isFilled)
             {
                 number = i;
                 break;
@@ -116,7 +141,19 @@ public class Inventory : Singleton<Inventory>
     // Update is called once per frame
     void Update()
     {
-        
+        if (SceneChanger.Instance.sceneType.Equals(SceneType.Ship) || SceneChanger.Instance.sceneType.Equals(SceneType.Stage1))
+        {
+            if (quickSlot == null)
+            {
+                quickSlot = InventoryUI.Instance.quickSlot;
+            }
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }    
+
+
     }
 
     void ItemCheck(ItemData itemData)

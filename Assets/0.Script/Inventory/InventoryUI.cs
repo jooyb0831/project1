@@ -7,19 +7,26 @@ using TMPro;
 public class InventoryUI : Singleton<InventoryUI>
 {
     [SerializeField] Transform[] slots;
-    [SerializeField] Transform quickSlot;
+    public Transform quickSlot;
     [SerializeField] Inventory inventory;
     [SerializeField] InvenItem sampleInvenitem;
     [SerializeField] PlayerData pData;
 
     void Start()
     {
+        if(SceneChanger.Instance.sceneType.Equals(SceneType.Ship))
+        {
+            Init();
+        }
+    }
+
+    public void Init()
+    {
         inventory = GameManager.Instance.Inven;
         pData = GameManager.Instance.PlayerData;
         SetInvenSlot();
         //SetInventory();
         InventoryCheck();
-
     }
 
     void SetInvenSlot()
