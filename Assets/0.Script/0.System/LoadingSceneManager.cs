@@ -30,11 +30,6 @@ public class LoadingSceneManager : MonoBehaviour
         SceneManager.LoadScene("Loading");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     IEnumerator LoadScene()
     {
@@ -77,16 +72,22 @@ public class LoadingSceneManager : MonoBehaviour
                             if (nextScene.Equals("Test"))
                             {
                                 SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
-                                SceneChanger.Instance.sceneType = SceneType.Stage1;
                                 inven.gameObject.SetActive(true);
-                                Inventory.Instance.SetItem();
+                                SceneChanger.Instance.sceneType = SceneType.Stage1;
+                            }
+
+                            if(nextScene.Equals("Ship"))
+                            {
+                                SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
+                                SceneManager.LoadScene("MerchantUI", LoadSceneMode.Additive);
+                                inven.gameObject.SetActive(true);
+                                SceneChanger.Instance.sceneType = SceneType.Ship;
                             }
                         });
                     yield break;
                 }    
             }
         }
-        
         loadingScreen.SetActive(false);
     }
 }

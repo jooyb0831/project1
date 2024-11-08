@@ -17,6 +17,21 @@ public class Skill1UI :  SkillUISample
         base.Init();
         skill = sksystem.skills[1];
         SetUI();
+        if (skill.isSet)
+        {
+            isEquiped = true;
+            /*
+            if(skill.slotIdx == 1)
+            {
+                SkillUISystem.Instance.SetQSkill(skill);
+            }
+            else if(skill.slotIdx== 2)
+            {
+                SkillUISystem.Instance.SetISkill(skill);
+            }
+            */
+        }
+
 
     }
     // Update is called once per frame

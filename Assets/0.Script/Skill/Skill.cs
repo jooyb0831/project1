@@ -23,6 +23,7 @@ public class Skill : MonoBehaviour
     protected PlayerData pd;
     public Data data = new Data();
     public bool isSet = false;
+    public int slotIdx;
     public Transform slot;
     public bool isStart = false;
     public bool isWorking = false;
@@ -49,5 +50,6 @@ public class Skill : MonoBehaviour
         {
             Debug.Log($"{data.CoolTime}");
         }
+
     }
 }

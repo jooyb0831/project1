@@ -26,7 +26,6 @@ public class SceneChanger : Singleton<SceneChanger>
     {
         LoadingSceneManager.LoadScene("Ship");
         sceneType = SceneType.Ship;
-        inven.SetItem();
     }
 
     public void MapSelect()
@@ -38,6 +37,10 @@ public class SceneChanger : Singleton<SceneChanger>
     public void Stage1()
     {
         LoadingSceneManager.LoadScene("Test");
+    }
 
+    public void GoShip()
+    {
+        LoadingSceneManager.LoadScene("Ship");
     }
 }

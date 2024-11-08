@@ -42,6 +42,10 @@ public class SKill0UI : SkillUISample
     {
         base.Init();
         skill = sksystem.skills[0];
+        if (skill.isSet)
+        {
+            isEquiped = true;
+        }
         SetUI();
         
     }

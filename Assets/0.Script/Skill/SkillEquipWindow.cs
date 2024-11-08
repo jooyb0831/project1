@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillEquipWindow : MonoBehaviour
-{
+public class SkillEquipWindow : Singleton<SkillEquipWindow>
+{ 
     private SkillSystem sksystem;
     [SerializeField] Transform Qslot;
     [SerializeField] Transform Islot;
     public GameObject temp_skill;
     public GameObject skillIcon;
-    [SerializeField] GameObject skill_Q;
-    [SerializeField] GameObject skill_I;
+    public GameObject skill_Q;
+    public GameObject skill_I;
     [SerializeField] Transform qSlot_inGame;
     [SerializeField] Transform iSlot_inGame;
     [SerializeField] GameObject clearWindow;
+    [SerializeField] GameObject skillQuickIcon;
     // Start is called before the first frame update
     void Start()
     {
         sksystem = GameManager.Instance.SkSystem;
+
     }
 
     // Update is called once per frame
@@ -27,11 +29,37 @@ public class SkillEquipWindow : MonoBehaviour
         
     }
 
+    /*
+    public void SetQSkill(Skill skill)
+    {
+        
+        GameObject obj = Instantiate(skillIcon, Qslot);
+        obj.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = skill.data.SkillIcon;
+        obj.transform.SetAsFirstSibling();
+        Qslot.GetComponent<ActiveSkillSlot>().isFilled = true;
+        GameObject obj2 = Instantiate(skillQuickIcon, qSlot_inGame);
+        obj2.GetComponent<SkillQuickIcon>().skill = skill;
+        //obj2.GetComponent<SkillQuickIcon>().skillui = skill_Q.GetComponent<SkillUISample>();
+    }
+
+    public void SetISkill(Skill skill)
+    {
+        GameObject obj = Instantiate(skillIcon, Islot);
+        obj.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = skill.data.SkillIcon;
+        obj.transform.SetAsFirstSibling();
+        Islot.GetComponent<ActiveSkillSlot>().isFilled = true;
+        GameObject obj2 = Instantiate(skillQuickIcon, iSlot_inGame);
+        obj2.GetComponent<SkillQuickIcon>().skill = skill;
+        //obj2.GetComponent<SkillQuickIcon>().skillui = skill_Q.GetComponent<SkillUISample>();
+    }
+    */
     public void OnQEquipBtn()
     {
         if(Qslot.GetComponent<ActiveSkillSlot>().isFilled)
         {
             skill_Q.GetComponent<SkillUISample>().isEquiped = false;
+            skill_Q.GetComponent<SkillUISample>().skill.GetComponent<Skill>().isSet = false;
+            skill_Q.GetComponent<SkillUISample>().skill.GetComponent<Skill>().slotIdx = 0;
             skill_Q = null;
             Destroy(Qslot.GetChild(0).gameObject);
         }
@@ -41,7 +69,8 @@ public class SkillEquipWindow : MonoBehaviour
         obj.transform.SetAsFirstSibling();
         Qslot.GetComponent<ActiveSkillSlot>().isFilled = true;
         temp_skill.GetComponent<SkillUISample>().isEquiped = true;
-        
+        skill_Q.GetComponent<SkillUISample>().skill.GetComponent<Skill>().isSet = true;
+        skill_Q.GetComponent<SkillUISample>().skill.GetComponent<Skill>().slotIdx = 1;
         obj.GetComponent<SkillIcon>().skill = skill_Q;
 
         GameObject obj2 = Instantiate(skill_Q.GetComponent<SkillUISample>().skillqicon.gameObject, qSlot_inGame);
@@ -57,6 +86,8 @@ public class SkillEquipWindow : MonoBehaviour
         if(Islot.GetComponent<ActiveSkillSlot>().isFilled)
         {
             skill_I.GetComponent<SkillUISample>().isEquiped = false;
+            skill_I.GetComponent<SkillUISample>().skill.GetComponent<Skill>().isSet = false;
+            skill_I.GetComponent<SkillUISample>().skill.GetComponent<Skill>().slotIdx = 0;
             skill_I = null;
             Destroy(Islot.GetChild(0).gameObject);
         }
@@ -66,8 +97,10 @@ public class SkillEquipWindow : MonoBehaviour
         obj.transform.SetAsFirstSibling();
         Islot.GetComponent<ActiveSkillSlot>().isFilled = true;
         temp_skill.GetComponent<SkillUISample>().isEquiped = true;
-        
         obj.GetComponent<SkillIcon>().skill = skill_I;
+        skill_I.GetComponent<SkillUISample>().skill.GetComponent<Skill>().isSet = true;
+        skill_I.GetComponent<SkillUISample>().skill.GetComponent<Skill>().slotIdx = 2;
+
         GameObject obj2 = Instantiate(skill_I.GetComponent<SkillUISample>().skillqicon.gameObject, iSlot_inGame);
         obj2.GetComponent<SkillQuickIcon>().skill = skill_I.GetComponent<SkillUISample>().skill;
         obj2.GetComponent<SkillQuickIcon>().skillui = skill_I.GetComponent<SkillUISample>();
@@ -106,6 +139,8 @@ public class SkillEquipWindow : MonoBehaviour
     {
         skill_Q.GetComponent<SkillUISample>().isEquiped = false;
         Qslot.GetComponent<ActiveSkillSlot>().isFilled = false;
+        skill_Q.GetComponent<SkillUISample>().skill.GetComponent<Skill>().isSet = false;
+        skill_Q.GetComponent<SkillUISample>().skill.GetComponent<Skill>().slotIdx = 0;
         skill_Q = null;
         sksystem.qSkill = null;
         Destroy(Qslot.GetChild(0).gameObject);
@@ -116,6 +151,8 @@ public class SkillEquipWindow : MonoBehaviour
     {
         skill_I.GetComponent<SkillUISample>().isEquiped = false;
         Islot.GetComponent<ActiveSkillSlot>().isFilled = false;
+        skill_I.GetComponent<SkillUISample>().skill.GetComponent<Skill>().isSet = false;
+        skill_I.GetComponent<SkillUISample>().skill.GetComponent<Skill>().slotIdx = 0;
         skill_I = null;
         sksystem.iSkill = null;
         Destroy(Islot.GetChild(0).gameObject);

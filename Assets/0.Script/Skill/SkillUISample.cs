@@ -32,6 +32,7 @@ public class SkillUISample : MonoBehaviour
     {
         pData = GameManager.Instance.PlayerData;
         sksystem = GameManager.Instance.SkSystem;
+
     }
 
     // Update is called once per frame

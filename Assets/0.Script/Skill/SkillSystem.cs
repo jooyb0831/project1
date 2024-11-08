@@ -10,7 +10,7 @@ public class SkillSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
@@ -43,5 +43,25 @@ public class SkillSystem : MonoBehaviour
             }
             iSkill.GetComponent<Skill>().isStart = true;
         }
+    }
+
+    public void SetSkill()
+    {
+        if(qSkill!=null)
+        {
+            if (qSkill.GetComponent<Skill>().isSet)
+            {
+                SkillUISystem.Instance.SetQSkill(qSkill.GetComponent<Skill>());
+            }
+        }
+
+        if(iSkill!=null)
+        {
+            if (iSkill.GetComponent<Skill>().isSet)
+            {
+                SkillUISystem.Instance.SetISkill(iSkill.GetComponent<Skill>());
+            }
+        }
+
     }
 }

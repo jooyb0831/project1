@@ -2628,6 +2628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &294465782
 GameObject:
   m_ObjectHideFlags: 0
@@ -2872,6 +2873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &340094366
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,7 +3042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &355927199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4182,6 +4184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &414047173
 GameObject:
   m_ObjectHideFlags: 0
@@ -4624,6 +4627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &444618668
 GameObject:
   m_ObjectHideFlags: 0
@@ -4783,6 +4787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 468667792}
+  - component: {fileID: 468667793}
   m_Layer: 0
   m_Name: '[ SkillUI ]'
   m_TagString: Untagged
@@ -4805,6 +4810,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &468667793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468667791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 057a79aac8e310b4b9d31630adbd6f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Qslot: {fileID: 589640424}
+  Islot: {fileID: 1887700978}
+  skillIcon: {fileID: 5785761462775181815, guid: c614e169c6985c147b1a3a3d325e3c40, type: 3}
+  skill_Q: {fileID: 0}
+  skill_I: {fileID: 0}
+  qSlot_inGame: {fileID: 1022937371}
+  iSlot_inGame: {fileID: 857804826}
+  skillQuickIcon: {fileID: 6747173760752870076, guid: 9cc2abdfaafea3645aa59c1737a22055, type: 3}
 --- !u!1 &496957336
 GameObject:
   m_ObjectHideFlags: 0
@@ -7127,6 +7152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &706151745
 GameObject:
   m_ObjectHideFlags: 0
@@ -7648,6 +7674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &816271279
 GameObject:
   m_ObjectHideFlags: 0
@@ -7897,6 +7924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &833085236
 GameObject:
   m_ObjectHideFlags: 0
@@ -8758,7 +8786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.50980395}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9691,6 +9719,7 @@ MonoBehaviour:
   qSlot_inGame: {fileID: 1022937371}
   iSlot_inGame: {fileID: 857804826}
   clearWindow: {fileID: 539134945}
+  skillQuickIcon: {fileID: 6747173760752870076, guid: 9cc2abdfaafea3645aa59c1737a22055, type: 3}
 --- !u!1 &1081547334
 GameObject:
   m_ObjectHideFlags: 0
@@ -11190,7 +11219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1254518933
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14451,6 +14480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &1679744261
 GameObject:
   m_ObjectHideFlags: 0
@@ -15130,6 +15160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &1737862642
 GameObject:
   m_ObjectHideFlags: 0
@@ -17820,6 +17851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFilled: 0
   isMerchantInven: 0
+  isSellInven: 0
 --- !u!1 &2129688016
 GameObject:
   m_ObjectHideFlags: 0

@@ -100,14 +100,15 @@ public class Inventory : Singleton<Inventory>
         inventoryData.items.Add(item);
     }
 
+    /*
     [SerializeField] InventoryUI invenUI;
     public void SetItem()
     {
-        invenUI = GameManager.Instance.InvenUI;
-        invenUI.Init();
+        InventoryUI.Instance.Init();
         invenItems.Clear();
         
         Debug.Log("»£√‚");
+        Debug.Log($"{invenDatas.Count}");
         for(int i =0; i<invenDatas.Count; i++)
         {
             Debug.Log($"Hello{i}");
@@ -124,7 +125,7 @@ public class Inventory : Singleton<Inventory>
             
         }
     }
-
+    */
     int SlotCheck()
     {
         int number = 0;
@@ -152,7 +153,6 @@ public class Inventory : Singleton<Inventory>
         {
             gameObject.SetActive(false);
         }    
-
 
     }
 

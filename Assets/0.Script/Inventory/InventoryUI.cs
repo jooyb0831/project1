@@ -14,10 +14,8 @@ public class InventoryUI : Singleton<InventoryUI>
 
     void Start()
     {
-        if(SceneChanger.Instance.sceneType.Equals(SceneType.Ship))
-        {
-            Init();
-        }
+        Init();
+        SetInventory();
     }
 
     public void Init()
