@@ -141,8 +141,12 @@ public class SkillEquipWindow : Singleton<SkillEquipWindow>
         Qslot.GetComponent<ActiveSkillSlot>().isFilled = false;
         skill_Q.GetComponent<SkillUISample>().skill.GetComponent<Skill>().isSet = false;
         skill_Q.GetComponent<SkillUISample>().skill.GetComponent<Skill>().slotIdx = 0;
-        skill_Q = null;
+        if(sksystem == null)
+        {
+            sksystem = GameManager.Instance.SkSystem;
+        }
         sksystem.qSkill = null;
+        skill_Q = null;
         Destroy(Qslot.GetChild(0).gameObject);
         Destroy(qSlot_inGame.GetChild(0).gameObject);
     }
@@ -153,8 +157,13 @@ public class SkillEquipWindow : Singleton<SkillEquipWindow>
         Islot.GetComponent<ActiveSkillSlot>().isFilled = false;
         skill_I.GetComponent<SkillUISample>().skill.GetComponent<Skill>().isSet = false;
         skill_I.GetComponent<SkillUISample>().skill.GetComponent<Skill>().slotIdx = 0;
-        skill_I = null;
+        if (sksystem == null)
+        {
+            sksystem = GameManager.Instance.SkSystem;
+        }
         sksystem.iSkill = null;
+        skill_I = null;
+
         Destroy(Islot.GetChild(0).gameObject);
         Destroy(iSlot_inGame.GetChild(0).gameObject);
     }

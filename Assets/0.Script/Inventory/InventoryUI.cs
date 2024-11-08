@@ -11,6 +11,7 @@ public class InventoryUI : Singleton<InventoryUI>
     [SerializeField] Inventory inventory;
     [SerializeField] InvenItem sampleInvenitem;
     [SerializeField] PlayerData pData;
+    [SerializeField] GameObject quickItem;
 
     void Start()
     {
@@ -62,6 +63,15 @@ public class InventoryUI : Singleton<InventoryUI>
         item.SetData(data);
         item.SetInventory(inventory);
         inventory.invenItems.Add(item);
+
+        if(data.inQuickSlot)
+        {
+            GameObject obj = Instantiate(quickItem, quickSlot);
+            obj.GetComponent<QuickInven>().SetData(item);
+            obj.GetComponent<QuickInven>().SetInvenItem(item);
+            quickSlot.GetComponent<QuickSlot>().isFilled = true;
+            data.qItem = obj.GetComponent<QuickInven>();
+        }
     }
 
 
@@ -75,6 +85,8 @@ public class InventoryUI : Singleton<InventoryUI>
             }
         }
     }
+
+
 
 
 }

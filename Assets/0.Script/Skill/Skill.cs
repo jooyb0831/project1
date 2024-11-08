@@ -25,6 +25,7 @@ public class Skill : MonoBehaviour
     public bool isSet = false;
     public int slotIdx;
     public Transform slot;
+    public SkillUISample ui;
     public bool isStart = false;
     public bool isWorking = false;
     // Start is called before the first frame update

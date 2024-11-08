@@ -5,8 +5,11 @@ using UnityEngine;
 public class SkillSystem : MonoBehaviour
 {
     public Skill[] skills;
+    public SkillUISample[] skillUIs;
     public GameObject qSkill;
     public GameObject iSkill;
+    public SkillUISample qSkillUI;
+    public SkillUISample iSkillUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,5 +66,13 @@ public class SkillSystem : MonoBehaviour
             }
         }
 
+    }
+
+    public void SetSkillUI()
+    {
+        for(int i = 0; i<skills.Length; i++)
+        {
+            skills[i].ui = skillUIs[i];
+        }
     }
 }

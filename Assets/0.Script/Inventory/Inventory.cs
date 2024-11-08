@@ -144,7 +144,7 @@ public class Inventory : Singleton<Inventory>
     {
         if (SceneChanger.Instance.sceneType.Equals(SceneType.Ship) || SceneChanger.Instance.sceneType.Equals(SceneType.Stage1))
         {
-            if (quickSlot == null)
+            if (quickSlot == null && InventoryUI.Instance != null)
             {
                 quickSlot = InventoryUI.Instance.quickSlot;
             }
@@ -240,7 +240,7 @@ public class Inventory : Singleton<Inventory>
     {
         if(quickSlot.GetComponent<QuickSlot>().isFilled)
         {
-            Destroy(quickSlot.GetChild(0));
+            Destroy(quickSlot.GetChild(0).gameObject);
         }
         QuickInven qItem = Instantiate(quickItem, quickSlot);
         item.data.inQuickSlot = true;

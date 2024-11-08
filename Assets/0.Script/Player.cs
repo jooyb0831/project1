@@ -481,7 +481,7 @@ public class Player : MonoBehaviour
                                 Inventory.Instance.UseItem(item);
                                 state = State.Idle;
                                 float bulletSpeed = 2f;
-                                float power = 3;
+                                float power = 5;
                                 Vector2 dir = rotateCore.transform.rotation * new Vector2(bulletSpeed, 0) * power;
                                 GameObject obj = Pooling.Instance.GetPool(DicKey.pMissile, missilePos, rotateCore.transform.rotation).gameObject;
                                 if (transform.localScale.x < 0)
@@ -732,6 +732,23 @@ public class Player : MonoBehaviour
             //transform.localScale = new Vector3(5, 5, 1);
         }
 
+        if (collision.gameObject.GetComponent<Enemy>())
+        {
+            if (data.HP > collision.gameObject.GetComponent<Enemy>().data.AttackPower)
+            {
+                isHurt = true;
+                data.HP -= collision.gameObject.GetComponent<Enemy>().data.AttackPower;
+                Debug.Log($"{data.HP}");
+                state = State.Hurt;
+
+            }
+            else if (data.HP <= collision.gameObject.GetComponent<Enemy>().data.AttackPower)
+            {
+                Dead();
+            }
+
+        }
+
         if (collision.gameObject.GetComponent<LadderTop>())
         {
             if (ladder == null)
@@ -760,8 +777,6 @@ public class Player : MonoBehaviour
         {
             transform.SetParent(null);
         }
-
-        
     }
 
     [SerializeField] Transform ladderTop;
@@ -772,22 +787,7 @@ public class Player : MonoBehaviour
         {
             Dead();
         }
-        if (collision.gameObject.GetComponent<Enemy>() == true)
-        {
-            if (data.HP > collision.GetComponent<Enemy>().data.AttackPower)
-            {
-                isHurt = true;
-                data.HP -= collision.GetComponent<Enemy>().data.AttackPower;
-                Debug.Log($"{data.HP}");
-                state = State.Hurt;
-
-            }
-            else if (data.HP <= collision.GetComponent<Enemy>().data.AttackPower)
-            {
-                Dead();
-            }
-
-        }
+        
 
         if (collision.gameObject.GetComponent<Jump>() && rigid.velocity.y < 0)
         {
@@ -883,9 +883,6 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-
-
-
         }
 
     }

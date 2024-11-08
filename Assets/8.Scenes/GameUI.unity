@@ -3283,7 +3283,7 @@ GameObject:
   - component: {fileID: 364499942}
   - component: {fileID: 364499941}
   m_Layer: 5
-  m_Name: SkillMenuSample
+  m_Name: Skill0UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4830,6 +4830,10 @@ MonoBehaviour:
   qSlot_inGame: {fileID: 1022937371}
   iSlot_inGame: {fileID: 857804826}
   skillQuickIcon: {fileID: 6747173760752870076, guid: 9cc2abdfaafea3645aa59c1737a22055, type: 3}
+  skilluis:
+  - {fileID: 364499944}
+  - {fileID: 509815799}
+  skEqwindow: {fileID: 1058119240}
 --- !u!1 &496957336
 GameObject:
   m_ObjectHideFlags: 0
@@ -5054,7 +5058,7 @@ GameObject:
   - component: {fileID: 509815796}
   - component: {fileID: 509815795}
   m_Layer: 5
-  m_Name: SkillMenuSample (1)
+  m_Name: Skill1UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7827,7 +7831,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -9015,6 +9018,7 @@ MonoBehaviour:
   inventory: {fileID: 0}
   sampleInvenitem: {fileID: 8853063116645017520, guid: 327d4a405be2cde46898f5c9c2f11e70, type: 3}
   pData: {fileID: 0}
+  quickItem: {fileID: 1407813295554532400, guid: 9bdf16825ede48e49a0bc8956bef639c, type: 3}
 --- !u!1 &955502703
 GameObject:
   m_ObjectHideFlags: 0

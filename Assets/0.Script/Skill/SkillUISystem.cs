@@ -14,10 +14,13 @@ public class SkillUISystem : Singleton<SkillUISystem>
     [SerializeField] Transform qSlot_inGame;
     [SerializeField] Transform iSlot_inGame;
     [SerializeField] GameObject skillQuickIcon;
+    [SerializeField] SkillUISample[] skilluis;
+    [SerializeField] SkillEquipWindow skEqwindow;
     // Start is called before the first frame update
     void Start()
     {
         sksystem = GameManager.Instance.SkSystem;
+        SetSkillUIs();
         sksystem.SetSkill();
     }
 
@@ -26,6 +29,16 @@ public class SkillUISystem : Singleton<SkillUISystem>
     {
         
     }
+
+    public void SetSkillUIs()
+    {
+        for(int i = 0; i<skilluis.Length; i++)
+        {
+            sksystem.skillUIs[i] = skilluis[i];
+        }
+        sksystem.SetSkillUI();
+       
+    }
     public void SetQSkill(Skill skill)
     {
 
@@ -33,11 +46,11 @@ public class SkillUISystem : Singleton<SkillUISystem>
         obj.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = skill.data.SkillIcon;
         obj.GetComponent<SkillIcon>().skill = skill.gameObject;
         obj.transform.SetAsFirstSibling();
-        //SkillEquipWindow.Instance.skill_Q = skill.gameObject;
+        skEqwindow.skill_Q = skill.ui.gameObject;
         Qslot.GetComponent<ActiveSkillSlot>().isFilled = true;
         GameObject obj2 = Instantiate(skillQuickIcon, qSlot_inGame);
         obj2.GetComponent<SkillQuickIcon>().skill = skill;
-        //obj2.GetComponent<SkillQuickIcon>().skillui = skill_Q.GetComponent<SkillUISample>();
+        obj2.GetComponent<SkillQuickIcon>().skillui = skill.ui;
     }
 
     public void SetISkill(Skill skill)
@@ -46,10 +59,11 @@ public class SkillUISystem : Singleton<SkillUISystem>
         obj.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = skill.data.SkillIcon;
         obj.GetComponent<SkillIcon>().skill = skill.gameObject;
         obj.transform.SetAsFirstSibling();
-        //SkillEquipWindow.Instance.skill_I = skill.gameObject;
+        skEqwindow.skill_I = skill.ui.gameObject;
         Islot.GetComponent<ActiveSkillSlot>().isFilled = true;
         GameObject obj2 = Instantiate(skillQuickIcon, iSlot_inGame);
         obj2.GetComponent<SkillQuickIcon>().skill = skill;
-        //obj2.GetComponent<SkillQuickIcon>().skillui = skill_Q.GetComponent<SkillUISample>();
+        obj2.GetComponent<SkillQuickIcon>().skillui = skill.ui;
     }
+
 }

@@ -25,7 +25,7 @@ public class JsonData : Singleton<JsonData>
     public SkillJsonData skillData = new SkillJsonData();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         DontDestroyOnLoad(this);
         skillData = JsonUtility.FromJson<SkillJsonData>(skillJson.text);
