@@ -142,18 +142,16 @@ public class Inventory : Singleton<Inventory>
     // Update is called once per frame
     void Update()
     {
-        if (SceneChanger.Instance.sceneType.Equals(SceneType.Ship) || SceneChanger.Instance.sceneType.Equals(SceneType.Stage1))
+        /*
+        if(SceneChanger.Instance.sceneType.Equals("Ship")||SceneChanger.Instance.sceneType.Equals("Stage1"))
         {
-            if (quickSlot == null && InventoryUI.Instance != null)
-            {
-                quickSlot = InventoryUI.Instance.quickSlot;
-            }
+            gameObject.SetActive(true);
         }
         else
         {
             gameObject.SetActive(false);
-        }    
-
+        }
+        */
     }
 
     void ItemCheck(ItemData itemData)
@@ -194,6 +192,49 @@ public class Inventory : Singleton<Inventory>
         }
     }
 
+    public int ItemCheck(int itemNum)
+    {
+        int cnt = 0;
+        InvenItem invenItem = null;
+        if(invenItems.Count ==0)
+        {
+            return cnt;
+        }
+        else
+        {
+            for (int i = 0; i < invenItems.Count; i++)
+            {
+                if (invenItems[i].data.itemNumber == itemNum)
+                {
+                    invenItem = invenItems[i];
+                    cnt = invenItem.data.count;
+                    break;
+                }
+            }
+            return cnt;
+        }
+
+    }
+
+    public void Enchant(int itemNum, int useCnt)
+    {
+        InvenItem invenItem = null;
+        for (int i = 0; i < invenItems.Count; i++)
+        {
+            if (invenItems[i].data.itemNumber == itemNum)
+            {
+                invenItem = invenItems[i];
+                break;
+            }
+        }
+        invenItem.data.count -= useCnt;
+        invenItem.ItemCntChange(invenItem.data);
+        if(invenItem.data.count<=0)
+        {
+            DeleteItem(invenItem);
+            Destroy(invenItem.gameObject);
+        }
+    }
 
     void ItemAdd(ItemData itemData)
     {

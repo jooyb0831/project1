@@ -11,7 +11,9 @@ public class PlayerData : MonoBehaviour
         set
         {
             maxHP = value;
+            GameUI.Instance.MAXHP = maxHP;
             StatUI.Instance.HP = maxHP;
+            
         }
     }
     private int hp;
@@ -93,6 +95,7 @@ public class PlayerData : MonoBehaviour
         DontDestroyOnLoad(this);
         MAXHP = 30;
         HP = MAXHP;
+        EnchantSystem.Instance.HP = MAXHP;
         MAXEXP = 25;
         EXP = 0;
         Speed = 4f;
@@ -113,6 +116,11 @@ public class PlayerData : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Z))
         {
             EXP += 5;
+        }
+
+        if(Input.GetKeyDown(KeyCode.F9))
+        {
+            Coin += 10;
         }
     }
 }

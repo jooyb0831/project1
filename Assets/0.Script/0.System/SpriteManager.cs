@@ -50,10 +50,22 @@ public class SpriteManager : Singleton<SpriteManager>
 
     public EnemyBulletSprites[] enemyBulletSprites;
 
+    [System.Serializable]
+    public class BossSprite
+    {
+        public List<Sprite> idleSprite;
+        public List<Sprite> attack1Sprites;
+        public List<Sprite> attack2Sprites;
+        public List<Sprite> hitSprite;
+        public List<Sprite> deadSprite;
+    }
+    public BossSprite[] bossSprite;
+
     public List<Sprite> boxSprites;
 
-    
     public List<Sprite> merchantSprites;
+
+    public List<Sprite> enchantNPCSprites;
 
     void Start()
     {

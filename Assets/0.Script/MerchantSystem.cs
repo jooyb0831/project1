@@ -46,6 +46,7 @@ public class MerchantSystem : Singleton<MerchantSystem>
 
     public void SetInven()
     {
+        Debug.Log("¿€µø");
         for(int i = 0; i<merchInvenSlots.Length; i++)
         {
             if(merchInvenSlots[i].transform.childCount>=1)
@@ -54,9 +55,9 @@ public class MerchantSystem : Singleton<MerchantSystem>
             }
         }
 
-        for (int i = 0; i < inven.invenSlots.Length; i++)
+        for (int i = 0; i < Inventory.Instance.invenSlots.Length; i++)
         {
-            if (inven.invenSlots[i].GetComponent<Slots>().isFilled)
+            if (Inventory.Instance.invenSlots[i].GetComponent<Slots>().isFilled)
             {
                 merchInvenUI = inven.invenSlots[i].GetChild(0).gameObject;
                 Instantiate(merchInvenUI, merchInvenSlots[i]);

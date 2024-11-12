@@ -113,4 +113,17 @@ public class GameManager : Singleton<GameManager>
             return sksystem;
         }
     }
+
+    private EnchantSystem enchtSystem;
+    public EnchantSystem EnchtSystem
+    {
+        get
+        {
+            if(enchtSystem == null)
+            {
+                enchtSystem = FindAnyObjectByType<EnchantSystem>();
+            }
+            return enchtSystem;
+        }
+    }
 }

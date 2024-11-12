@@ -35,7 +35,20 @@ public class GameUI : Singleton<GameUI>
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    public int MAXHP
+    {
+        set
+        {
+            if(pd == null)
+            {
+                pd = GameManager.Instance.PlayerData;
+                return;
+            }
+            hpBarImg.fillAmount = ((float)pd.HP / pd.MAXHP);
+            hpTxt.text = $"{pd.HP}/{pd.MAXHP}";
+        }
     }
 
     public int HP

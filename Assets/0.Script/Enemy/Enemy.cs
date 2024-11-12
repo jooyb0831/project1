@@ -25,6 +25,7 @@ public abstract class Enemy : MonoBehaviour
         Dead
     }
 
+
     [SerializeField] protected Player p;
     SpriteRenderer sr;
     protected SpriteAnimation sa;

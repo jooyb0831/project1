@@ -836,6 +836,21 @@ public class Player : MonoBehaviour
             isLadder = true;
             ladder = collision.gameObject;
         }
+
+        if (collision.GetComponent<Boss1>())
+        {
+
+            if (data.HP > collision.GetComponent<EnemyBoss>().data.Atk1Power)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<EnemyBoss>().data.Atk1Power;
+                state = State.Hurt;
+            }
+            else if (data.HP <= collision.GetComponent<EnemyBoss>().data.Atk1Power)
+            {
+                Dead();
+            }
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

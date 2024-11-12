@@ -248,6 +248,44 @@ MonoBehaviour:
     - {fileID: 21300000, guid: a74da400f08b35d489c837658f327fe1, type: 3}
     - {fileID: 21300000, guid: 486879228a060ff43b93b20c2a5b05f3, type: 3}
     - {fileID: 21300000, guid: 4c4718430ae3993409360a5474573c91, type: 3}
+  bossSprite:
+  - idleSprite:
+    - {fileID: -4795363162621231457, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+    - {fileID: -3652676412848291748, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+    - {fileID: -596950462376016933, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+    - {fileID: -4538786591655478766, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+    - {fileID: 8639066506597270619, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+    - {fileID: -4262185617143388622, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+    - {fileID: 5066340549283584134, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+    - {fileID: 7784096630628774620, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+    attack1Sprites:
+    - {fileID: -7008412969330441016, guid: ce3326307819d6e4497038e63e070108, type: 3}
+    - {fileID: -7763475090823894447, guid: ce3326307819d6e4497038e63e070108, type: 3}
+    - {fileID: 302641331129538988, guid: ce3326307819d6e4497038e63e070108, type: 3}
+    - {fileID: -6329420634031446844, guid: ce3326307819d6e4497038e63e070108, type: 3}
+    - {fileID: -910092549403018386, guid: ce3326307819d6e4497038e63e070108, type: 3}
+    - {fileID: 221524225039350300, guid: ce3326307819d6e4497038e63e070108, type: 3}
+    - {fileID: 1290532464073988732, guid: ce3326307819d6e4497038e63e070108, type: 3}
+    - {fileID: 4780903288873104255, guid: ce3326307819d6e4497038e63e070108, type: 3}
+    attack2Sprites:
+    - {fileID: 7441861488978599509, guid: dd255f029b1eb1347b77fb335d97ea38, type: 3}
+    - {fileID: 8288915215451595207, guid: dd255f029b1eb1347b77fb335d97ea38, type: 3}
+    - {fileID: 4668938655123782945, guid: dd255f029b1eb1347b77fb335d97ea38, type: 3}
+    - {fileID: 5683539909772271658, guid: dd255f029b1eb1347b77fb335d97ea38, type: 3}
+    - {fileID: 5764228812365489207, guid: dd255f029b1eb1347b77fb335d97ea38, type: 3}
+    - {fileID: -1191510351576865934, guid: dd255f029b1eb1347b77fb335d97ea38, type: 3}
+    - {fileID: -8937499057154260928, guid: dd255f029b1eb1347b77fb335d97ea38, type: 3}
+    - {fileID: 5293088307283036655, guid: dd255f029b1eb1347b77fb335d97ea38, type: 3}
+    hitSprite:
+    - {fileID: -7500690451134026123, guid: 244d2b7af82202d4daae9b898fd596d1, type: 3}
+    - {fileID: -889859373511162655, guid: 244d2b7af82202d4daae9b898fd596d1, type: 3}
+    - {fileID: -3088938797480143695, guid: 244d2b7af82202d4daae9b898fd596d1, type: 3}
+    - {fileID: -9206091644520726168, guid: 244d2b7af82202d4daae9b898fd596d1, type: 3}
+    deadSprite:
+    - {fileID: 6991849013916550155, guid: b9517addf15136e47a89337d912454b0, type: 3}
+    - {fileID: -276728812324164698, guid: b9517addf15136e47a89337d912454b0, type: 3}
+    - {fileID: 3156895337291164288, guid: b9517addf15136e47a89337d912454b0, type: 3}
+    - {fileID: 1400002288684528572, guid: b9517addf15136e47a89337d912454b0, type: 3}
   boxSprites:
   - {fileID: 21300000, guid: 952326841b2574044b1a9a84e17482d0, type: 3}
   - {fileID: 21300000, guid: 734bf051e598a3f42b7dbb6effc4d2c0, type: 3}
@@ -259,6 +297,11 @@ MonoBehaviour:
   - {fileID: -8683559125218077074, guid: 6eedc78c635734143a7981e2f563c86b, type: 3}
   - {fileID: 322446011706806947, guid: 6eedc78c635734143a7981e2f563c86b, type: 3}
   - {fileID: 5204286466199426606, guid: 6eedc78c635734143a7981e2f563c86b, type: 3}
+  enchantNPCSprites:
+  - {fileID: 7766810354827972583, guid: ec10b46feb584e647b5bebf8b2c7afb2, type: 3}
+  - {fileID: 7706183676985790108, guid: ec10b46feb584e647b5bebf8b2c7afb2, type: 3}
+  - {fileID: 2554333878209642030, guid: ec10b46feb584e647b5bebf8b2c7afb2, type: 3}
+  - {fileID: 5658770433963272373, guid: ec10b46feb584e647b5bebf8b2c7afb2, type: 3}
 --- !u!4 &144977742
 Transform:
   m_ObjectHideFlags: 0
@@ -328,6 +371,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &603259025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 603259027}
+  - component: {fileID: 603259026}
+  m_Layer: 0
+  m_Name: '[ EnchantSystem ]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &603259026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603259025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcea41cb91797848bceb57e68bfcb63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 0
+--- !u!4 &603259027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603259025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &611672502
 GameObject:
@@ -432,7 +520,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &866691170
 GameObject:
@@ -476,7 +564,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1139443096
 GameObject:
@@ -523,7 +611,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1548916911
 GameObject:
@@ -634,7 +722,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1697982093
 GameObject:

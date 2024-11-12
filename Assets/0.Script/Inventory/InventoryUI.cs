@@ -54,6 +54,16 @@ public class InventoryUI : Singleton<InventoryUI>
         {
             SetData(invenData[i]);
         }
+
+        SceneType type = SceneChanger.Instance.sceneType;
+        if (type.Equals(SceneType.Ship) || type.Equals(SceneType.Stage1))
+        {
+            Inventory.Instance.quickSlot = quickSlot;
+        }
+        else
+        {
+            return;
+        }
     }
 
     void SetData(InvenData data)
@@ -62,6 +72,7 @@ public class InventoryUI : Singleton<InventoryUI>
         item = Instantiate(sampleInvenitem, slots[data.slotIdxNum]);
         item.SetData(data);
         item.SetInventory(inventory);
+        item.transform.parent.gameObject.GetComponent<Slots>().isFilled = true;
         inventory.invenItems.Add(item);
 
         if(data.inQuickSlot)
