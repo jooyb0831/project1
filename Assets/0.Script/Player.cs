@@ -839,16 +839,30 @@ public class Player : MonoBehaviour
 
         if (collision.GetComponent<Boss1>())
         {
-
-            if (data.HP > collision.GetComponent<EnemyBoss>().data.Atk1Power)
+            if(collision.GetComponent<EnemyBoss>().state == EnemyBoss.BossState.Attack1)
             {
                 isHurt = true;
-                data.HP -= collision.GetComponent<EnemyBoss>().data.Atk1Power;
                 state = State.Hurt;
+                data.HP -= collision.GetComponent<EnemyBoss>().data.Atk1Power;
+                if(data.HP<=0)
+                {
+                    Dead();
+                }
             }
-            else if (data.HP <= collision.GetComponent<EnemyBoss>().data.Atk1Power)
+
+            else if (collision.GetComponent<EnemyBoss>().state == EnemyBoss.BossState.Attack2)
             {
-                Dead();
+                isHurt = true;
+                state = State.Hurt;
+                data.HP -= collision.GetComponent<EnemyBoss>().data.Atk2Power;
+                if (data.HP <= 0)
+                {
+                    Dead();
+                }
+            }
+            else
+            {
+                return;
             }
         }
     }

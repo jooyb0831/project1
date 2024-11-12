@@ -151,8 +151,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53419975}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.05, y: -1.53, z: -10.818898}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.050003, y: -1.5299988, z: -10.818898}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -193,8 +193,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04774475, y: -0.029938126}
-  m_Size: {x: 0.18420716, y: 0.29216692}
+  m_Offset: {x: 0.037121583, y: -0.029938126}
+  m_Size: {x: 0.2904419, y: 0.29216692}
   m_Direction: 0
 --- !u!212 &53419979
 SpriteRenderer:
@@ -281,6 +281,11 @@ MonoBehaviour:
   isAttack2: 0
   portal: {fileID: 7610837730316348120, guid: a33f85f84790ee64ebf6764066947ac0, type: 3}
   portalPos: {fileID: 1817663261}
+  atk2Left: 0
+  atkTimer: 0
+  prob: 0
+  isAtk2DirSet: 0
+  timer: 0
 --- !u!1 &55372358
 GameObject:
   m_ObjectHideFlags: 0
@@ -28544,7 +28549,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -28625,7 +28629,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0

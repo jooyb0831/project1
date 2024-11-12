@@ -9,6 +9,7 @@ public class EnemyBoss : MonoBehaviour
         public int HP { get; set; }
         public int EXP { get; set; }
         public int Atk1Power { get; set; }
+        public int Atk2Power { get; set; }
         public float Speed { get; set; }
         public int Index { get; set; }
     }
@@ -36,7 +37,7 @@ public class EnemyBoss : MonoBehaviour
     protected List<Sprite> attack1Sprite;
     protected List<Sprite> attack2Sprite;
 
-    [SerializeField] protected BossState state = BossState.Idle;
+    [SerializeField] public BossState state = BossState.Idle;
     protected bool isDead = false;
     private PlayerData pd;
     [SerializeField] GameObject dropItem;
