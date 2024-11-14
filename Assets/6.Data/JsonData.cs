@@ -15,20 +15,36 @@ public class SkillData
 }
 
 [System.Serializable]
+public class QuestDialogueData
+{
+    public string[] quest1;
+}
+
+[System.Serializable]
 public class SkillJsonData
 {
     public List<SkillData> sData = new List<SkillData>();
 }
+
+[System.Serializable]
+public class QuestDialogueJsonData
+{
+    public List<QuestDialogueData> questDialogueData = new List<QuestDialogueData>();
+} 
+
 public class JsonData : Singleton<JsonData>
 {
     [SerializeField] private TextAsset skillJson;
-    public SkillJsonData skillData = new SkillJsonData();
+    [SerializeField] private TextAsset questDialogueJson;
 
+    public SkillJsonData skillData = new SkillJsonData();
+    public QuestDialogueJsonData qDiaData = new QuestDialogueJsonData();
     // Start is called before the first frame update
     void Awake()
     {
         DontDestroyOnLoad(this);
         skillData = JsonUtility.FromJson<SkillJsonData>(skillJson.text);
+        qDiaData = JsonUtility.FromJson<QuestDialogueJsonData>(questDialogueJson.text);
     }
 
     // Update is called once per frame

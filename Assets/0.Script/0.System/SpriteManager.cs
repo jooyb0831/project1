@@ -67,6 +67,8 @@ public class SpriteManager : Singleton<SpriteManager>
 
     public List<Sprite> enchantNPCSprites;
 
+    public List<Sprite> questNPCSprites;
+
     void Start()
     {
         DontDestroyOnLoad(this);

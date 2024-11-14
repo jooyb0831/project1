@@ -46,6 +46,11 @@ public class EnemyBoss : MonoBehaviour
 
     protected SpriteManager.BossSprite bossSprites;
 
+    [SerializeField] protected float originSpeed;
+
+    [SerializeField] GameObject portal;
+    [SerializeField] Transform portalPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,68 +75,101 @@ public class EnemyBoss : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PBullet>())
+        if(isDead)
         {
-            TakeDamage(2);
-            Pooling.Instance.SetPool(DicKey.pBullet, collision.GetComponent<PBullet>().gameObject);
-            Debug.Log("hit");
+            return;
         }
+        else
+        {
+            if (collision.gameObject.GetComponent<PBullet>())
+            {
+                TakeDamage(2);
+                Pooling.Instance.SetPool(DicKey.pBullet, collision.GetComponent<PBullet>().gameObject);
+                Debug.Log("hit");
+            }
 
-        if (collision.gameObject.GetComponent<Missile>())
-        {
-            TakeDamage(collision.GetComponent<Missile>().data.Damage);
-        }
+            if (collision.gameObject.GetComponent<Missile>())
+            {
+                TakeDamage(collision.GetComponent<Missile>().data.Damage);
+            }
 
-        if (collision.CompareTag("MissileArea"))
-        {
-            TakeDamage(collision.transform.parent.GetComponent<Missile>().data.Damage);
-        }
+            if (collision.CompareTag("MissileArea"))
+            {
+                TakeDamage(collision.transform.parent.GetComponent<Missile>().data.Damage);
+            }
 
-        if (collision.GetComponent<Skill0Bullet>())
-        {
-            TakeDamage(collision.GetComponent<Skill0Bullet>().damage);
-        }
+            if (collision.GetComponent<Skill0Bullet>())
+            {
+                TakeDamage(collision.GetComponent<Skill0Bullet>().damage);
+            }
 
-        if (collision.GetComponent<Skill1Bullet>())
-        {
-            Skill1Damage(2, collision.gameObject);
+            if (collision.GetComponent<Skill1Bullet>())
+            {
+                Skill1Damage(2, collision.gameObject);
+            }
         }
+        
     }
 
     public void TakeDamage(int damage)
     {
+        originSpeed = data.Speed;
         data.HP -= damage;
+        StartCoroutine(Hit());
         if (data.HP<=0)
         {
             isDead = true;
             state = BossState.Dead;
+            Dead();
             return;
         }
+    }
+
+    IEnumerator Hit()
+    {
         state = BossState.Hit;
-        sa.SetSprite(hitSprites, 0.2f, false, Idle);
+        float originSpeed = data.Speed;
+        data.Speed = 0;
+        yield return new WaitForSeconds(0.5f);
+        data.Speed = originSpeed;
+    }
+
+    public void Dead()
+    {
+        data.Speed = 0;
+        GetComponent<CapsuleCollider2D>().isTrigger = false;
+        GetComponent<Rigidbody2D>().gravityScale = 1;
+        sa.SetSprite(deadSprite, 0.2f, false, Clear);
+        p.data.EXP += data.EXP;
+    }
+
+    void Clear()
+    {
+        GameObject obj = Instantiate(portal, portalPos);
+        obj.transform.SetParent(null);
+        Destroy(gameObject,0.6f);
     }
 
     public void Idle()
     {
         state = BossState.Idle;
         sa.SetSprite(idleSprites, 0.2f);
+        data.Speed = originSpeed;
     }
 
     public void Skill1Damage(int damage, GameObject bullet)
     {
-        if(data.HP<=0)
-        {
-            return;
-        }
         data.HP -= damage;
-        Ski1SetDir(bullet);
-        StartCoroutine("Back");
-        if(data.HP<=0)
+        if (data.HP<=0)
         {
             isDead = true;
             state = BossState.Dead;
             sa.SetSprite(deadSprite, 0.2f, false);
+            Dead();
+            return;
         }
+        Ski1SetDir(bullet);
+        StartCoroutine(Back());
     }
 
     IEnumerator Back()

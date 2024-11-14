@@ -49,7 +49,7 @@ public class GameManager : Singleton<GameManager>
         }
 
     }
-
+    
     private GameUI gui;
     public GameUI GameUI
     {

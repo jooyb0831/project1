@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/8.Scenes/MerchantUI.unity
     guid: 2ffa0210ac7f15543bb831d7ca3d9990
   - enabled: 1
+    path: Assets/8.Scenes/EnchantUI.unity
+    guid: 3c68e0f1b7a5d424b8b607e80099183f
+  - enabled: 1
     path: Assets/8.Scenes/GameUI.unity
     guid: 4855327583ece0d4c8165e38c06b99e9
   - enabled: 1

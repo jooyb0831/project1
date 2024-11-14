@@ -22,9 +22,22 @@ public class SKill0UI : SkillUISample
             return;
         }
 
-        if (skill.data.NeedLevel == pData.Level)
+        if(skill.data.Unlocked)
         {
             isUnlock = true;
+        }
+        else
+        {
+            if (skill.data.NeedLevel <= pData.Level)
+            {
+                isUnlock = true;
+                skill.data.Unlocked = true;
+                unlockCover.SetActive(false);
+            }
+        }
+
+        if(isUnlock)
+        {
             unlockCover.SetActive(false);
         }
 

@@ -302,6 +302,11 @@ MonoBehaviour:
   - {fileID: 7706183676985790108, guid: ec10b46feb584e647b5bebf8b2c7afb2, type: 3}
   - {fileID: 2554333878209642030, guid: ec10b46feb584e647b5bebf8b2c7afb2, type: 3}
   - {fileID: 5658770433963272373, guid: ec10b46feb584e647b5bebf8b2c7afb2, type: 3}
+  questNPCSprites:
+  - {fileID: -3827066802863639638, guid: 76a59ef996c53c64bb48fae131d5727d, type: 3}
+  - {fileID: -2887185384596672309, guid: 76a59ef996c53c64bb48fae131d5727d, type: 3}
+  - {fileID: 3467472655778454953, guid: 76a59ef996c53c64bb48fae131d5727d, type: 3}
+  - {fileID: -985714212584088775, guid: 76a59ef996c53c64bb48fae131d5727d, type: 3}
 --- !u!4 &144977742
 Transform:
   m_ObjectHideFlags: 0
@@ -448,6 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     SkillIcon: {fileID: 21300000, guid: d8dcf411124678a459e2764491797f38, type: 3}
+    Unlocked: 0
   isSet: 0
   slotIdx: 0
   slot: {fileID: 0}
@@ -596,8 +602,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillJson: {fileID: 4900000, guid: c7aea6f8194000746bb95012daf6c283, type: 3}
+  questDialogueJson: {fileID: 4900000, guid: 1acba5f3338762f47b78a5c6c0e1bf0f, type: 3}
   skillData:
     sData: []
+  qDiaData:
+    questDialogueData: []
 --- !u!4 &1139443098
 Transform:
   m_ObjectHideFlags: 0
@@ -644,6 +653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     SkillIcon: {fileID: 21300000, guid: 9f3aea2564b922f4abc4c5e8a5feba82, type: 3}
+    Unlocked: 0
   isSet: 0
   slotIdx: 0
   slot: {fileID: 0}
@@ -702,7 +712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   qList:
-  - {fileID: -2969373098012164583, guid: b5c20ca6537cb9b4da937dd17973ad4d, type: 3}
+  - {fileID: 7033643449859663994}
   onGoingQList: []
   qUIList: []
   qMUIList: []
@@ -914,3 +924,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &10268520637221029
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10268520637221050}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &10268520637221050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10268520637221029}
+  - component: {fileID: 7033643449859663994}
+  m_Layer: 0
+  m_Name: Quest1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &7033643449859663994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10268520637221050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe765ccacfbb924abbb654c115bcfd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    isStart: 0
+    QuestTitle: 
+    QuestNumber: 0
+    isDone: 0
+    maxCount: 0
+    curCount: 0
+    exp: 0
+    gold: 0
+    qType: 0
+    objIndex: 0
+    QuestExplain: 
+    QuestRewardTxt: 
+    dialogue: []
+  questUI: {fileID: 5118186400754432002, guid: c71760cddd9978d49840f8ddb2842700, type: 3}
+  qMenuUI: {fileID: -3198823569248683210, guid: 34742225445ff4442a3216026adc18c5, type: 3}
+  thisQuestUI: {fileID: 0}
+  thisQuestMenuUI: {fileID: 0}
+  qTitle: 
+  curCnt: 0
+  maxCnt: 0

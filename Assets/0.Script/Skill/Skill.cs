@@ -15,8 +15,8 @@ public class Skill : MonoBehaviour
         public int Damage { get; set; }
         public int NeedLevel { get; set; }
         public int SkillLevel { get; set; }
-
         public Sprite SkillIcon;
+        public bool Unlocked = false;
 
     }
     protected Player p;

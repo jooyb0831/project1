@@ -44,6 +44,9 @@ public class Quest1 :Quest
         data.objIndex = 0;
         data.QuestExplain = $"눈알 몬스터 {data.maxCount}마리를 처치하기.";
         data.QuestRewardTxt = $"보상 : EXP {data.exp}, 골드 {data.gold}";
+
+        data.dialogue = JsonData.Instance.qDiaData.questDialogueData[0].quest1;
+
         QuestUI qUI = Instantiate(questUI, gi.questArea);
         QuestMenuUIPreset qMUI = Instantiate(qMenuUI, menuUI.questArea);
         questUI.quest = this;
@@ -51,6 +54,7 @@ public class Quest1 :Quest
         qUI.SetData(this.data);
         qMUI.SetData(this.data);
        
+
         GameManager.Instance.QuestManager.qUIList.Add(qUI);
         GameManager.Instance.QuestManager.qMUIList.Add(qMUI);
 

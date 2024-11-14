@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class QuestManagerData
+{
+    public bool isQuest1Started = false;
+}
 public class QuestManager : Singleton<QuestManager>
 {
     public List<Quest> qList;
@@ -9,6 +13,7 @@ public class QuestManager : Singleton<QuestManager>
     public List<QuestUI> qUIList;
     public List<QuestMenuUIPreset> qMUIList;
     private PlayerData pd;
+    public QuestManagerData data = new QuestManagerData();
 
     public List<int> enemyKillCnt;
 

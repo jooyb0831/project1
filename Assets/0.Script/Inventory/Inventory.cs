@@ -271,6 +271,7 @@ public class Inventory : Singleton<Inventory>
                 break;
             }
         }
+        itemNumbers.Remove(item.data.itemNumber);
         invenItems.RemoveAt(itemIdx);
         invenDatas.RemoveAt(itemIdx);
         Destroy(item);

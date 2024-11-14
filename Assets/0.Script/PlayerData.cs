@@ -11,8 +11,15 @@ public class PlayerData : MonoBehaviour
         set
         {
             maxHP = value;
-            GameUI.Instance.MAXHP = maxHP;
-            StatUI.Instance.HP = maxHP;
+            if(GameUI.Instance!=null)
+            {
+                GameUI.Instance.MAXHP = maxHP;
+            }
+            if(StatUI.Instance!=null)
+            {
+                StatUI.Instance.HP = maxHP;
+            }
+
             
         }
     }
@@ -23,7 +30,11 @@ public class PlayerData : MonoBehaviour
         set
         {
             hp = value;
-            GameUI.Instance.HP = hp;
+            if(GameUI.Instance!=null)
+            {
+                GameUI.Instance.HP = hp;
+            }
+
         }
     }
 
@@ -34,7 +45,12 @@ public class PlayerData : MonoBehaviour
         set
         {
             maxExp = value;
-            GameUI.Instance.MAXEXP = maxExp;
+            if (GameUI.Instance != null)
+            {
+                GameUI.Instance.MAXEXP = maxExp;
+            }
+            
+
         }
     }
 
@@ -45,7 +61,11 @@ public class PlayerData : MonoBehaviour
         set
         {
             exp = value;
-            GameUI.Instance.EXP = exp;
+            if (GameUI.Instance != null)
+            {
+                GameUI.Instance.EXP = exp;
+            }
+            
         }
     }
 
@@ -56,8 +76,15 @@ public class PlayerData : MonoBehaviour
         set
         {
             level = value;
-            GameUI.Instance.Lv = level;
-            StatUI.Instance.Level = level;
+            if(GameUI.Instance!=null)
+            {
+                GameUI.Instance.Lv = level;
+            }
+            if(StatUI.Instance!=null)
+            {
+                StatUI.Instance.Level = level;
+            }
+
         }
     }
 
@@ -68,8 +95,16 @@ public class PlayerData : MonoBehaviour
         set
         {
             coin = value;
-            GameUI.Instance.Coin = coin;
-            StatUI.Instance.Gold = coin;
+            if(GameUI.Instance!=null)
+            {
+                GameUI.Instance.Coin = coin;
+            }
+            
+            if(StatUI.Instance!=null)
+            {
+                StatUI.Instance.Gold = coin;
+            }
+            
         }
     }
 
@@ -80,7 +115,11 @@ public class PlayerData : MonoBehaviour
         set
         {
             speed = value;
-            StatUI.Instance.Speed = (int)speed;
+            if(StatUI.Instance!=null)
+            {
+                StatUI.Instance.Speed = (int)speed;
+            }
+            
         }
     }
        

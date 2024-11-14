@@ -74,6 +74,12 @@ public class Missile : MonoBehaviour
             Attacked();
             atkArea.gameObject.SetActive(true);
         }
+
+        if(collision.GetComponent<EnemyBoss>())
+        {
+            Attacked();
+            atkArea.gameObject.SetActive(true);
+        }
     }
 
     public void Attacked()

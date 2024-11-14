@@ -17,6 +17,8 @@ public class QuestData
     public int objIndex;
     public string QuestExplain;
     public string QuestRewardTxt;
+
+    public string[] dialogue;
 }
 public enum QuestType
 {
@@ -26,7 +28,6 @@ public enum QuestType
 public abstract class Quest : MonoBehaviour
 {
     public QuestData data = new QuestData();
-
     public QuestUI questUI;
     public QuestMenuUIPreset qMenuUI;
     public QuestUI thisQuestUI;

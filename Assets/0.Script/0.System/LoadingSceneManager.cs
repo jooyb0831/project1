@@ -80,6 +80,7 @@ public class LoadingSceneManager : MonoBehaviour
                             {
                                 SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
                                 SceneManager.LoadScene("MerchantUI", LoadSceneMode.Additive);
+                                SceneManager.LoadScene("EnchantUI", LoadSceneMode.Additive);
                                 inven.gameObject.SetActive(true);
                                 SceneChanger.Instance.sceneType = SceneType.Ship;
                             }

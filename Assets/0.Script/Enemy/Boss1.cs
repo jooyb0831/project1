@@ -6,17 +6,15 @@ using UnityEngine;
 public class Boss1 : EnemyBoss
 {
     [SerializeField] bool isAttack2 = false;
-
-    [SerializeField] GameObject portal;
-    [SerializeField] Transform portalPos;
-    [SerializeField] bool atk2Left = false;
+    [SerializeField] bool posSet = false;
     [SerializeField] float atkTimer = 0;
-    [SerializeField] int prob = 0;
+    [SerializeField] bool atk2 = false;
     // Start is called before the first frame update
     void Start()
     {
         Init();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -30,19 +28,21 @@ public class Boss1 : EnemyBoss
             p = GameManager.Instance.Player;
         }
 
+        if (state == BossState.Dead)
+        {
+            return;
+        }
+
         float dist = Vector2.Distance(p.transform.position, transform.position);
 
-        atkTimer += Time.deltaTime;
-        if(atkTimer>=5f)
+        if(!atk2)
         {
-            atkTimer = 0;
-            prob = Random.Range(0, 100);
-        }
-        
-        if(state == BossState.Dead)
-        {
-            Dead();
-            return;
+            atkTimer += Time.deltaTime;
+            if (atkTimer >= 10f)
+            {
+                atkTimer = 0;
+                atk2 = true;
+            }
         }
 
         if(state == BossState.Back)
@@ -71,19 +71,18 @@ public class Boss1 : EnemyBoss
             {
                 state = BossState.Move;
 
-                if(dist<10f)
+                if(atk2)
                 {
                     state = BossState.Attack2;
-                    
                     isAttack2 = true;
                 }
-                
-                /*
-                if (dist < 2f)
+                else
                 {
-                    state = BossState.Attack1;
+                    if(dist<2f)
+                    {
+                        state = BossState.Attack1;
+                    }
                 }
-                */
                 Move();
             }
             else
@@ -94,7 +93,6 @@ public class Boss1 : EnemyBoss
         }
     }
 
-    [SerializeField] bool isAtk2DirSet = false;
     void Move()
     {
         if(transform.position.x > p.transform.position.x)
@@ -124,12 +122,9 @@ public class Boss1 : EnemyBoss
         if (state == BossState.Idle)
         {
             SpriteCheck(state);
-            isAtk2DirSet = false;
+            posSet = false;
             return;
         }
-
-        //Vector2 pos = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * data.Speed);
-
         transform.position = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * data.Speed);
         SpriteCheck(state);
     }
@@ -141,7 +136,6 @@ public class Boss1 : EnemyBoss
             case BossState.Idle:
                 {
                     sa.SetSprite(idleSprites, 0.2f);
-                    isAtk2DirSet = false;
                     break;
                 }
             case BossState.Move:
@@ -151,7 +145,7 @@ public class Boss1 : EnemyBoss
                 }
             case BossState.Hit:
                 {
-                    sa.SetSprite(hitSprites, 0.2f, false, Idle);
+                    sa.SetSprite(hitSprites, 0.1f, false, Idle);
                     break;
                 }
             case BossState.Attack1:
@@ -178,31 +172,27 @@ public class Boss1 : EnemyBoss
         SpriteCheck(state);
     }
 
-    [SerializeField] float timer = 0;
+    [SerializeField] Vector2 pos = new Vector2(0, 0);
     void Attack2()
     {
         state = BossState.Attack2;
         SpriteCheck(state);
-        bool posSet = false;
         if(isAttack2)
         {
-            Vector2 pos = new Vector2(0,0);
-            if(transform.position.x<p.transform.position.x)
+           
+            if (!posSet)
             {
-                if (!posSet)
+                
+                if (transform.position.x < p.transform.position.x)
                 {
                     pos = new Vector2(p.transform.position.x + 10f, p.transform.position.y);
                     posSet = true;
                 }
-            }
-            else
-            {
-                if(!posSet)
+                else if( (transform.position.x>p.transform.position.x))
                 {
                     pos = new Vector2(p.transform.position.x - 10f, p.transform.position.y);
                     posSet = true;
                 }
-                
             }
             float dist = Vector2.Distance(transform.position, pos);
             transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * 20f);
@@ -211,6 +201,7 @@ public class Boss1 : EnemyBoss
                 isAttack2 = false;
                 state = BossState.Idle;
                 posSet = false;
+                atk2 = false;
                 Move();
             }
         }
@@ -219,29 +210,6 @@ public class Boss1 : EnemyBoss
             state = BossState.Idle;
             SpriteCheck(state);
         }
-        if (timer >= 1.5)
-        {
-            isAttack2 = false;
-            isAtk2DirSet = false;
-            state = BossState.Idle;
-            timer = 0;
-        }
-    }
-
-
-    void Dead()
-    {
-        data.Speed = 0;
-        GetComponent<CapsuleCollider2D>().isTrigger = false;
-        GetComponent<Rigidbody2D>().gravityScale = 1;
-        sa.SetSprite(deadSprite, 0.3f, false, Clear);
-    }
-
-    void Clear()
-    {
-        GameObject obj = Instantiate(portal, portalPos);
-        obj.transform.SetParent(null);
-        Destroy(gameObject, 0.9f);
     }
     public override void Init()
     {
@@ -251,6 +219,7 @@ public class Boss1 : EnemyBoss
         data.Atk1Power = 10;
         data.Atk2Power = 15;
         data.EXP = 20;
+        originSpeed = data.Speed;
         base.Init();
     }
 }

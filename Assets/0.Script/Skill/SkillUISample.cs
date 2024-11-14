@@ -17,7 +17,7 @@ public class SkillUISample : MonoBehaviour
     [SerializeField] protected GameObject unlockCover;
     [SerializeField] protected TMP_Text unlockTxt;
     [SerializeField] protected GameObject usingCover;
-    [SerializeField] protected bool isUnlock = false;
+    public bool isUnlock = false;
     public bool isEquiped = false;
     public GameObject skillUIicon;
     
@@ -38,7 +38,7 @@ public class SkillUISample : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnClickBtn()
