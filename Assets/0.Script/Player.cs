@@ -831,6 +831,20 @@ public class Player : MonoBehaviour
             }
         }
 
+        if(collision.gameObject.GetComponent<FireBall>())
+        {
+            if(data.HP>collision.GetComponent<FireBall>().damage)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<FireBall>().damage;
+                state = State.Hurt;
+            }
+            else if (data.HP <= collision.GetComponent<FireBall>().damage)
+            {
+                Dead();
+            }
+        }
+
         if(collision.GetComponent<Ladder>())
         {
             isLadder = true;

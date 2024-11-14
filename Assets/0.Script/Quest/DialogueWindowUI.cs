@@ -24,9 +24,12 @@ public class DialogueWindowUI : MonoBehaviour
     public void OnClickNextBtn()
     {
         idx++;
-        stringArea.text = dialogue[idx];
+        if (idx<dialogue.Count)
+        {
+            stringArea.text = dialogue[idx];
+        }    
 
-        if(idx>dialogue.Count)
+        else if (idx==dialogue.Count)
         {
             gameObject.SetActive(false);
         }

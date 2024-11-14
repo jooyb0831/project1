@@ -35,6 +35,7 @@ public class QuestNPC : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E))
             {
+                QuestNPCUI.Instance.SetString();
                 QuestNPCUI.Instance.window.SetActive(true);
             }
         }

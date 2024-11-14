@@ -17,7 +17,14 @@ public class SkillData
 [System.Serializable]
 public class QuestDialogueData
 {
-    public string[] quest1;
+    [System.Serializable]
+    public class Quest1Dialogue
+    {
+        public string[] quest1Basic;
+        public string[] quest1Y;
+        public string[] quest1N;
+    }
+    public Quest1Dialogue q1Dialogue = new Quest1Dialogue();
 }
 
 [System.Serializable]

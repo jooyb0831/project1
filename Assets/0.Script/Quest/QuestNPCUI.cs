@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class QuestNPCUI : Singleton<QuestNPCUI>
 {
@@ -12,12 +14,16 @@ public class QuestNPCUI : Singleton<QuestNPCUI>
     void Start()
     {
         qm = GameManager.Instance.QuestManager;
-        SetString();
+        SetQuest();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            Debug.Log($"{curQuest.data.dialogue.Length}");
+        }
         /*
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -33,20 +39,24 @@ public class QuestNPCUI : Singleton<QuestNPCUI>
         */
     }
 
-    void SetString()
+    void SetQuest()
     {
         if(!qm.data.isQuest1Started)
         {
             curQuest = qm.qList[0];
-            for(int i =0; i<curQuest.data.dialogue.Length; i++)
-            {
-                chats[i] = curQuest.data.dialogue[i];
-            }
-            for(int i = 0; i<chats.Count; i++)
-            {
-                window.GetComponent<DialogueWindowUI>().dialogue[i] = chats[i];
-            }
-            window.GetComponent<DialogueWindowUI>().stringArea.text = window.GetComponent<DialogueWindowUI>().dialogue[0];
+            //window.GetComponent<DialogueWindowUI>().stringArea.text = window.GetComponent<DialogueWindowUI>().dialogue[0];
         }
     }
+
+    public void SetString()
+    {
+        for (int i = 0; i < curQuest.data.dialogue.Length; i++)
+        {
+            Debug.Log($"{i}");
+            chats.Add(curQuest.data.dialogue[i]);
+            window.GetComponent<DialogueWindowUI>().dialogue.Add(curQuest.data.dialogue[i]);
+        }
+        window.GetComponent<DialogueWindowUI>().stringArea.text = curQuest.data.dialogue[0];
+    }
+
 }
