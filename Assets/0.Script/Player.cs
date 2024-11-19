@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rigid;
     public Transform firePos;
+    public Transform sitFirePos;
     [SerializeField] PBullet pBullet;
     [SerializeField] GameObject rotateCore;
     [SerializeField] Transform missilePos;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
         BombThrowRun,
         Slide,
         Sit,
+        SitAttack,
         Hurt,
         Dead
     }
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour
     private List<Sprite> hurtSprites;
     private List<Sprite> slideSprites;
     private List<Sprite> sitSprites;
+    private List<Sprite> sitAttackSprites;
     private List<Sprite> deadSprites;
     private List<Sprite> updownSprites;
     private List<Sprite> ladderIdleSprites;
@@ -84,6 +87,7 @@ public class Player : MonoBehaviour
         hurtSprites = pSprite.hurtSprites;
         slideSprites = pSprite.slideSprites;
         sitSprites = pSprite.sitSprites;
+        sitAttackSprites = pSprite.sitAttackSprites;
         deadSprites = pSprite.deadSprites;
         updownSprites = pSprite.updownSprites;
         ladderIdleSprites = pSprite.ladderIdleSprites;
@@ -93,6 +97,9 @@ public class Player : MonoBehaviour
         state = State.Idle;
         rigid = GetComponent<Rigidbody2D>();
         speed = data.Speed;
+
+        originOffset = GetComponent<CapsuleCollider2D>().offset;
+        originSize = GetComponent<CapsuleCollider2D>().size;
     }
 
     [SerializeField] bool ladderAttach = false;
@@ -141,6 +148,12 @@ public class Player : MonoBehaviour
         LadderAttach();
         RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down);
         Debug.DrawRay(foot.position, Vector3.down, Color.red);
+
+        if(Input.GetKeyUp(KeyCode.C))
+        {
+            GetComponent<CapsuleCollider2D>().offset = originOffset;
+            GetComponent<CapsuleCollider2D>().size = originSize;
+        }
         /*
         if(ladderAttach)
         {
@@ -339,7 +352,16 @@ public class Player : MonoBehaviour
         
         transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
 
-        
+        if (Input.GetKey(KeyCode.C))
+        {
+            state = State.Sit;
+            Sit();
+            if (Input.GetKey(KeyCode.P))
+            {
+                state = State.SitAttack;
+                Fire();
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -347,7 +369,6 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -371,7 +392,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.P))
         {
-            if (state != State.Attack && state != State.WalkAttack)
+            if (state != State.Attack && state != State.WalkAttack && state!=State.SitAttack)
             {
                 if (x != 0)
                 {
@@ -593,6 +614,16 @@ public class Player : MonoBehaviour
                     Invoke("IdleSprite", 0.5f);
                     break;
                 }
+            case State.Sit:
+                {
+                    sa.SetSprite(sitSprites, 0.1f, false);
+                    break;
+                }
+            case State.SitAttack:
+                {
+                    sa.SetSprite(sitAttackSprites, 0.1f);
+                    break;
+                }
             case State.BombThrow:
                 {
                     sa.SetSprite(bombSprites, 0.2f);
@@ -627,11 +658,10 @@ public class Player : MonoBehaviour
 
         }
     }
-
     void Bullet()
     {
         PBullet pbullet = Pooling.Instance.GetPool(DicKey.pBullet, firePos).GetComponent<PBullet>();
-        if(pbullet == null)
+        if (pbullet == null)
         {
             return;
         }
@@ -640,18 +670,38 @@ public class Player : MonoBehaviour
             pbullet.isRight = false;
         }
         pbullet.transform.SetParent(pBulletParent);
+    }
+
+    
+    void Bullet(State state)
+    {
+        PBullet pbullet = null;
+        if (state.Equals(State.WalkAttack) || state.Equals(State.RunAttack))
+        {
+            pbullet = Pooling.Instance.GetPool(DicKey.pBullet, firePos).GetComponent<PBullet>();
+        }
+        if (state.Equals(State.SitAttack))
+        {
+            pbullet = Pooling.Instance.GetPool(DicKey.pBullet, sitFirePos).GetComponent<PBullet>();
+        }
+        if (transform.localScale.x < 0)
+        {
+            pbullet.isRight = false;
+        }
+        pbullet.transform.SetParent(pBulletParent);
 
     }
+    
 
     void Fire()
     {
         if(state == State.WalkAttack || state == State.RunAttack)
         {
-            if(canFire == false)
+            if(!canFire)
             {
                 return;
             }
-            else if(canFire == true)
+            else if(canFire)
             {
                 Bullet();
                 fireTimer = 0;
@@ -659,6 +709,21 @@ public class Player : MonoBehaviour
             }
         }
 
+        
+        if(state == State.SitAttack)
+        {
+            if(canFire == false)
+            {
+                return;
+            }
+            else if (canFire)
+            {
+                Bullet(state);
+                fireTimer = 0;
+                canFire = false;
+            }
+        }
+        
     }
 
     void IdleSprite()
@@ -891,6 +956,17 @@ public class Player : MonoBehaviour
                 return;
             }
         }
+
+        if(collision.GetComponent<ThornFloor>())
+        {
+            isHurt = true;
+            state = State.Hurt;
+            data.HP -= collision.GetComponent<ThornFloor>().Damage;
+            if(data.HP<=0)
+            {
+                Dead();
+            }
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -940,6 +1016,15 @@ public class Player : MonoBehaviour
             }
         }
 
+    }
+
+    [SerializeField] Vector2 originOffset;
+    [SerializeField] Vector2 originSize;
+   
+    void Sit()
+    {
+        GetComponent<CapsuleCollider2D>().offset = new Vector2(originOffset.x, -0.07884782f);
+        GetComponent<CapsuleCollider2D>().size = new Vector2(originSize.x, 0.2223044f);
     }
 
 

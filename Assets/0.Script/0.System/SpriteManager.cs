@@ -15,6 +15,7 @@ public class SpriteManager : Singleton<SpriteManager>
         public List<Sprite> hurtSprites;
         public List<Sprite> slideSprites;
         public List<Sprite> sitSprites;
+        public List<Sprite> sitAttackSprites;
         public List<Sprite> deadSprites;
         public List<Sprite> ladderIdleSprites;
         public List<Sprite> updownSprites;

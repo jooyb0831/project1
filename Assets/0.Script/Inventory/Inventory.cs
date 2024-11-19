@@ -24,6 +24,7 @@ public class InvenData
 public enum ItemType
 {
     Gem,
+    MonsterDrop,
     Potion,
     Bomb,
     Missile
