@@ -7,8 +7,10 @@ using TMPro;
 public class QuestNPCUI : Singleton<QuestNPCUI>
 {
     public GameObject window;
-    public List<string> chats;
-    [SerializeField] Quest curQuest = null;
+    public List<string> basicDialogue;
+    public List<string> yesDialogue;
+    public List<string> noDialogue;
+    public Quest curQuest = null;
     private QuestManager qm;
     // Start is called before the first frame update
     void Start()
@@ -22,7 +24,7 @@ public class QuestNPCUI : Singleton<QuestNPCUI>
     {
         if(Input.GetKeyDown(KeyCode.N))
         {
-            Debug.Log($"{curQuest.data.dialogue.Length}");
+            //Debug.Log($"{curQuest.data.dialogue.Length}");
         }
         /*
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -44,19 +46,30 @@ public class QuestNPCUI : Singleton<QuestNPCUI>
         if(!qm.data.isQuest1Started)
         {
             curQuest = qm.qList[0];
+            window.GetComponent<DialogueWindowUI>().curQuest = curQuest;
             //window.GetComponent<DialogueWindowUI>().stringArea.text = window.GetComponent<DialogueWindowUI>().dialogue[0];
         }
     }
 
     public void SetString()
     {
-        for (int i = 0; i < curQuest.data.dialogue.Length; i++)
+        for (int i = 0; i < curQuest.data.basicDialogue.Length; i++)
         {
             Debug.Log($"{i}");
-            chats.Add(curQuest.data.dialogue[i]);
-            window.GetComponent<DialogueWindowUI>().dialogue.Add(curQuest.data.dialogue[i]);
+            basicDialogue.Add(curQuest.data.basicDialogue[i]);
+            window.GetComponent<DialogueWindowUI>().basicDialogue.Add(curQuest.data.basicDialogue[i]);
         }
-        window.GetComponent<DialogueWindowUI>().stringArea.text = curQuest.data.dialogue[0];
+        for(int i = 0; i < curQuest.data.yesDialogue.Length; i++)
+        {
+            yesDialogue.Add(curQuest.data.yesDialogue[i]);
+            window.GetComponent<DialogueWindowUI>().yesDialogue.Add(curQuest.data.yesDialogue[i]);
+        }
+        for(int i = 0; i< curQuest.data.noDialogue.Length; i++)
+        {
+            noDialogue.Add(curQuest.data.noDialogue[i]);
+            window.GetComponent<DialogueWindowUI>().noDialogue.Add(curQuest.data.noDialogue[i]);
+        }
+        window.GetComponent<DialogueWindowUI>().SetCurDialogue(basicDialogue);
     }
 
 }

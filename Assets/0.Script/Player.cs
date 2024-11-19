@@ -732,6 +732,13 @@ public class Player : MonoBehaviour
             //transform.localScale = new Vector3(5, 5, 1);
         }
 
+        if (collision.gameObject.GetComponent<UpDownGround>())
+        {
+            isJump = false;
+            transform.SetParent(collision.transform);
+            //transform.localScale = new Vector3(5, 5, 1);
+        }
+
         if (collision.gameObject.GetComponent<Enemy>())
         {
             if (data.HP > collision.gameObject.GetComponent<Enemy>().data.AttackPower)
@@ -774,6 +781,11 @@ public class Player : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if(collision.gameObject.GetComponent<MoveGround>())
+        {
+            transform.SetParent(null);
+        }
+
+        if (collision.gameObject.GetComponent<UpDownGround>())
         {
             transform.SetParent(null);
         }

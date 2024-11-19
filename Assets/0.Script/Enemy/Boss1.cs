@@ -19,6 +19,10 @@ public class Boss1 : EnemyBoss
     // Update is called once per frame
     void Update()
     {
+        if(isDead)
+        {
+            pd.StageCleared[0] = true;
+        }
         if(Input.GetKeyDown(KeyCode.F7))
         {
             Debug.Log($"{data.HP}");

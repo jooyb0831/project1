@@ -237,6 +237,24 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 26c7e978fe7d7814785abd8f63e51668, type: 3}
     - {fileID: 21300000, guid: 87918a2f1c602b246b11824371d3bff2, type: 3}
     - {fileID: 21300000, guid: 631589e687b6c6c41a51fe5a2aefcb2e, type: 3}
+  - idleSprite:
+    - {fileID: 21300000, guid: 9b80f82b9f75b854ea2b7fa7180e8798, type: 3}
+    - {fileID: 21300000, guid: 8ff12b598ab488240a78a3a7fa33bfdd, type: 3}
+    - {fileID: 21300000, guid: 97091f4cc45919f4384bcd4338eaa165, type: 3}
+    - {fileID: 21300000, guid: 2d21d8c87ba79d548a657bac6408e0b9, type: 3}
+    - {fileID: 21300000, guid: 6cbf6cf5bbc66974fa3ee21a77c62b93, type: 3}
+    deadSprite:
+    - {fileID: 21300000, guid: c85ce45bbbd7ccc42adddb95a82e92e3, type: 3}
+    - {fileID: 21300000, guid: c85ce45bbbd7ccc42adddb95a82e92e3, type: 3}
+    - {fileID: 21300000, guid: b8f06dfa9f724e8479724032f73e4f05, type: 3}
+    - {fileID: 21300000, guid: 52f49fcad719ceb4cad6af0876255df1, type: 3}
+    - {fileID: 21300000, guid: bf2778a8671d03547ac06eed4462b0d8, type: 3}
+    attackSprite:
+    - {fileID: 21300000, guid: 9b80f82b9f75b854ea2b7fa7180e8798, type: 3}
+    - {fileID: 21300000, guid: 8ff12b598ab488240a78a3a7fa33bfdd, type: 3}
+    - {fileID: 21300000, guid: 97091f4cc45919f4384bcd4338eaa165, type: 3}
+    - {fileID: 21300000, guid: 2d21d8c87ba79d548a657bac6408e0b9, type: 3}
+    - {fileID: 21300000, guid: 6cbf6cf5bbc66974fa3ee21a77c62b93, type: 3}
   coinSprites:
   - {fileID: 8980438598086963491, guid: ede4b03d4049f481a80ce6756418b385, type: 3}
   - {fileID: 3344596444136561788, guid: ede4b03d4049f481a80ce6756418b385, type: 3}
@@ -307,6 +325,11 @@ MonoBehaviour:
   - {fileID: -2887185384596672309, guid: 76a59ef996c53c64bb48fae131d5727d, type: 3}
   - {fileID: 3467472655778454953, guid: 76a59ef996c53c64bb48fae131d5727d, type: 3}
   - {fileID: -985714212584088775, guid: 76a59ef996c53c64bb48fae131d5727d, type: 3}
+  fireBallSprites:
+  - {fileID: 21300000, guid: 8615bf84e9a5a13428ae6275a562a853, type: 3}
+  - {fileID: 21300000, guid: a74da400f08b35d489c837658f327fe1, type: 3}
+  - {fileID: 21300000, guid: 486879228a060ff43b93b20c2a5b05f3, type: 3}
+  - {fileID: 21300000, guid: 4c4718430ae3993409360a5474573c91, type: 3}
 --- !u!4 &144977742
 Transform:
   m_ObjectHideFlags: 0
@@ -582,7 +605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1000781201}
   m_Layer: 0
-  m_Name: '[Quest]'
+  m_Name: '[QuestList]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -637,7 +660,7 @@ MonoBehaviour:
   questDialogueJson: {fileID: 4900000, guid: 1acba5f3338762f47b78a5c6c0e1bf0f, type: 3}
   skillData:
     sData: []
-  qDiaData:
+  questDialogueData:
     questDialogueData: []
 --- !u!4 &1139443098
 Transform:
@@ -942,6 +965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnGoingQList: []
+  StageCleared: 000000
 --- !u!4 &1890554312
 Transform:
   m_ObjectHideFlags: 0
@@ -1014,7 +1038,9 @@ MonoBehaviour:
     objIndex: 0
     QuestExplain: 
     QuestRewardTxt: 
-    dialogue: []
+    basicDialogue: []
+    yesDialogue: []
+    noDialogue: []
   questUI: {fileID: 5118186400754432002, guid: c71760cddd9978d49840f8ddb2842700, type: 3}
   qMenuUI: {fileID: -3198823569248683210, guid: 34742225445ff4442a3216026adc18c5, type: 3}
   thisQuestUI: {fileID: 0}

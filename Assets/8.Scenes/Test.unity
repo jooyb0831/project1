@@ -23829,6 +23829,7 @@ MonoBehaviour:
   pBullet: {fileID: 644219692578632883, guid: 939adfa70be20814285077d29c50241b, type: 3}
   eBullet2: {fileID: 4351262320808491682, guid: 311a1aaff1e8a6d4ea78101df2758715, type: 3}
   pMissile: {fileID: 3826383629789056581, guid: 58b62414bf0a9fe47a6f3947be47643b, type: 3}
+  fireball: {fileID: 0}
 --- !u!4 &506260827
 Transform:
   m_ObjectHideFlags: 0

@@ -128,6 +128,7 @@ public class PlayerData : MonoBehaviour
 
     public List<Quest> OnGoingQList;
 
+    public bool[] StageCleared = { false, false, false };
     // Start is called before the first frame update
     void Start()
     {

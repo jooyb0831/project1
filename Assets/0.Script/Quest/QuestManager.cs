@@ -88,9 +88,6 @@ public class QuestManager : Singleton<QuestManager>
             qUI.curCnt = enemyKillCnt[enemy.data.index];
             qMUI.curCnt = enemyKillCnt[enemy.data.index];
         }
-
-        
-
     }
 
     QuestUI Find (int idx)
@@ -119,5 +116,14 @@ public class QuestManager : Singleton<QuestManager>
             }
         }
         return qMUI;
+    }
+
+    public void AddQuest(Quest quest)
+    {
+        pd.OnGoingQList.Add(quest);
+        //Quest obj = Instantiate(qList[0], transform);
+        onGoingQList.Add(quest);
+        quest.data.isStart = true;
+        quest.QuestAdd();
     }
 }

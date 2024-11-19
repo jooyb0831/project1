@@ -39,7 +39,7 @@ public class EnemyBoss : MonoBehaviour
 
     [SerializeField] public BossState state = BossState.Idle;
     protected bool isDead = false;
-    private PlayerData pd;
+    protected PlayerData pd;
     [SerializeField] GameObject dropItem;
     [SerializeField] protected bool ski1bulletDir = false;
     [SerializeField] protected bool sk1isLeft = false;

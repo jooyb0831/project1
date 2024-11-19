@@ -69,6 +69,7 @@ public class SpriteManager : Singleton<SpriteManager>
 
     public List<Sprite> questNPCSprites;
 
+    public List<Sprite> fireBallSprites;
     void Start()
     {
         DontDestroyOnLoad(this);

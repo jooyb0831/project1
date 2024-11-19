@@ -18,7 +18,9 @@ public class QuestData
     public string QuestExplain;
     public string QuestRewardTxt;
 
-    public string[] dialogue;
+    public string[] basicDialogue;
+    public string[] yesDialogue;
+    public string[] noDialogue;
 }
 public enum QuestType
 {
@@ -53,6 +55,22 @@ public abstract class Quest : MonoBehaviour
         data.curCount = 0;
     }
 
+    public virtual void QuestAdd()
+    {
+
+    }
+
+    public virtual void SetQuestUI()
+    {
+        if(gi == null)
+        {
+            gi = GameManager.Instance.GameUI;
+        }
+        if(menuUI == null)
+        {
+            menuUI = GameManager.Instance.MUI;
+        }
+    }    
     // Start is called before the first frame update
     void Start()
     {
