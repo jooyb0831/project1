@@ -779,18 +779,23 @@ public class Player : MonoBehaviour
             }
         */
     }
-        
-        
-    
+
+
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.GetComponent<Ground>())
+        if (collision.gameObject.GetComponent<Ground>())
         {
             isJump = false;
         }
 
-        if(collision.gameObject.GetComponent<MoveGround>())
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            isJump = false;
+        }
+        
+        if (collision.gameObject.GetComponent<MoveGround>())
         {
             isJump = false;
             transform.SetParent(collision.transform);
@@ -803,6 +808,8 @@ public class Player : MonoBehaviour
             transform.SetParent(collision.transform);
             //transform.localScale = new Vector3(5, 5, 1);
         }
+
+
 
         if (collision.gameObject.GetComponent<Enemy>())
         {
@@ -905,6 +912,21 @@ public class Player : MonoBehaviour
             else
             {
                 return;
+            }
+        }
+
+        if(collision.CompareTag("Boss2Punch"))
+        {
+            Debug.Log("ÀÎ½Ä");
+            if(collision.transform.parent.GetComponent<Boss2>().state.Equals(EnemyBoss.BossState.Attack1))
+            {
+                isHurt = true;
+                state = State.Hurt;
+                data.HP -= collision.transform.parent.GetComponent<Boss2>().data.Atk1Power;
+                if(data.HP<=0)
+                {
+                    Dead();
+                }
             }
         }
 

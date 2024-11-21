@@ -32,6 +32,7 @@ public class EnemyBoss : MonoBehaviour
     protected SkillSystem sksystem;
 
     protected List<Sprite> idleSprites;
+    protected List<Sprite> walkSprites;
     protected List<Sprite> hitSprites;
     protected List<Sprite> deadSprite;
     protected List<Sprite> attack1Sprite;
@@ -65,6 +66,7 @@ public class EnemyBoss : MonoBehaviour
         sksystem = GameManager.Instance.SkSystem;
         bossSprites = SpriteManager.Instance.bossSprite[data.Index];
         idleSprites = bossSprites.idleSprite;
+        walkSprites = bossSprites.walkSprite;
         hitSprites = bossSprites.hitSprite;
         deadSprite = bossSprites.deadSprite;
         attack1Sprite = bossSprites.attack1Sprites;

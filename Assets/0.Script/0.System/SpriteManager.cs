@@ -55,6 +55,7 @@ public class SpriteManager : Singleton<SpriteManager>
     public class BossSprite
     {
         public List<Sprite> idleSprite;
+        public List<Sprite> walkSprite;
         public List<Sprite> attack1Sprites;
         public List<Sprite> attack2Sprites;
         public List<Sprite> hitSprite;

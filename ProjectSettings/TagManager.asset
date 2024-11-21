@@ -8,6 +8,8 @@ TagManager:
   - MissileArea
   - DeadZone
   - FireBallTurnArea
+  - Ground
+  - Boss2Punch
   layers:
   - Default
   - TransparentFX
