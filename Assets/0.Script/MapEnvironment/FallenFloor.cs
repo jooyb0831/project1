@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class FallenFloor : MonoBehaviour
 {
     private Player p;
@@ -31,11 +31,20 @@ public class FallenFloor : MonoBehaviour
 
     IEnumerator VanishFloor()
     {
-        yield return new WaitForSeconds(0.7f);
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
-        yield return new WaitForSeconds(1.5f);
-        GetComponent<SpriteRenderer>().enabled = true;
-        GetComponent<BoxCollider2D>().enabled = true;
+        yield return new WaitForSeconds(0.5f);
+        
+        GetComponent<SpriteRenderer>().DOFade(0,0.3f)
+            .OnComplete(() =>
+            {
+                GetComponent<BoxCollider2D>().enabled = false;
+            });
+        
+        yield return new WaitForSeconds(2f);
+        GetComponent<SpriteRenderer>().DOFade(1, 0.3f)
+           .OnComplete(() =>
+           {
+               GetComponent<BoxCollider2D>().enabled = true;
+           });
     }
+    
 }

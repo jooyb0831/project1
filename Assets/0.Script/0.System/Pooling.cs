@@ -7,7 +7,8 @@ public enum DicKey
     pBullet,
     pMissile,
     eBullet2,
-    fireball
+    fireball,
+    boss2Bullet
 }
 public class Pooling : Singleton<Pooling>
 {
@@ -15,11 +16,13 @@ public class Pooling : Singleton<Pooling>
     private Queue<EBullet2> eb2Queue = new Queue<EBullet2>();
     private Queue<Missile> pMsQueue = new Queue<Missile>();
     private Queue<FireBall> fireBallQueue = new Queue<FireBall>();
+    private Queue<Boss2Bullet> boss2BulletQueue = new Queue<Boss2Bullet>();
 
     public PBullet pBullet;
     [SerializeField] EBullet2 eBullet2;
     [SerializeField] Missile pMissile;
     [SerializeField] FireBall fireball;
+    [SerializeField] Boss2Bullet boss2Bullet;
 
     private Dictionary<DicKey, Queue<GameObject>> pool = new Dictionary<DicKey, Queue<GameObject>>();
     // Start is called before the first frame update
@@ -29,6 +32,7 @@ public class Pooling : Singleton<Pooling>
         pool.Add(DicKey.eBullet2, new Queue<GameObject>());
         pool.Add(DicKey.pMissile, new Queue<GameObject>());
         pool.Add(DicKey.fireball, new Queue<GameObject>());
+        pool.Add(DicKey.boss2Bullet, new Queue<GameObject>());
         
     }
 
@@ -54,6 +58,11 @@ public class Pooling : Singleton<Pooling>
             case DicKey.fireball:
                 {
                     obj.GetComponent<FireBall>().Initialize();
+                }
+                break;
+            case DicKey.boss2Bullet:
+                {
+                    obj.GetComponent<Boss2Bullet>().Initialize();
                 }
                 break;
         }
@@ -106,6 +115,12 @@ public class Pooling : Singleton<Pooling>
                 case DicKey.pMissile:
                     {
                         obj = Instantiate(pMissile, trans.position, rotate).gameObject;
+                        pool[key].Enqueue(obj);
+                    }
+                    break;
+                case DicKey.boss2Bullet:
+                    {
+                        obj = Instantiate(boss2Bullet, trans.position, rotate).gameObject;
                         pool[key].Enqueue(obj);
                     }
                     break;

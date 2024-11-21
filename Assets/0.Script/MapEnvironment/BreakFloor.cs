@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BreakFloor : MonoBehaviour
 {
@@ -24,11 +25,11 @@ public class BreakFloor : MonoBehaviour
             timer = 0;
             if(isVanish)
             {
-                tiles[idx].SetActive(false);
+                tiles[idx].GetComponent<SpriteRenderer>().DOFade(0,0.2f);
             }
             else
             {
-                tiles[idx].SetActive(true);
+                tiles[idx].GetComponent<SpriteRenderer>().DOFade(1, 0.2f);
             }
             
             idx++;

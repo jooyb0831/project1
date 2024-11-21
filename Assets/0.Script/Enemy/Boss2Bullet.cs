@@ -12,6 +12,7 @@ public class Boss2Bullet : MonoBehaviour
     [SerializeField] List<Sprite> fireSprites;
     [SerializeField] float bulletSpeed;
     [SerializeField] bool isEnd = false;
+    public int damage;
     public Transform atkArea;
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class Boss2Bullet : MonoBehaviour
         if (!isEnd)
         {
             float angle = Mathf.Atan2(rigid.velocity.y, rigid.velocity.x) * Mathf.Rad2Deg;
-            transform.eulerAngles = new Vector3(0, 0, angle - 90);
+            transform.eulerAngles = new Vector3(0, 0, angle);
         }
         else
         {
@@ -75,8 +76,7 @@ public class Boss2Bullet : MonoBehaviour
 
     void DestroyObject()
     {
-        Destroy(gameObject);
-        //Pooling.Instance.SetPool(DicKey.pMissile, gameObject);
+        Pooling.Instance.SetPool(DicKey.boss2Bullet, gameObject);
     }
 
     public void Initialize()

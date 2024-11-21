@@ -141,7 +141,7 @@ Transform:
   m_GameObject: {fileID: 3826383629789056576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3995964144824744043}
@@ -166,7 +166,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 86dd7dc47e8a22b46bb5c58159c15f04, type: 3}
   - {fileID: 21300000, guid: 56f88ff2e60f4314a87fad896024e3a3, type: 3}
   - {fileID: 21300000, guid: cc923659320ca1642901ea7336aff44f, type: 3}
-  fireSprites: []
+  fireSprites:
+  - {fileID: 21300000, guid: 408809b8ec8064b0b9a3b5eee6a08ded, type: 3}
+  - {fileID: 21300000, guid: f1dc6aa1d597f45abb6711ac6331b302, type: 3}
+  - {fileID: 21300000, guid: c4be53d53dda94492af25a25a3de280b, type: 3}
   bulletSpeed: 5
   isEnd: 0
   atkArea: {fileID: 3995964144824744043}

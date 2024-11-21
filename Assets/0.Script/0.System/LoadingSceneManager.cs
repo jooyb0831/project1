@@ -83,7 +83,14 @@ public class LoadingSceneManager : MonoBehaviour
                                 SceneChanger.Instance.sceneType = SceneType.Stage2;
                             }
 
-                            if(nextScene.Equals("Ship"))
+                            if (nextScene.Equals("Stage3"))
+                            {
+                                SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
+                                inven.gameObject.SetActive(true);
+                                SceneChanger.Instance.sceneType = SceneType.Stage3;
+                            }
+
+                            if (nextScene.Equals("Ship"))
                             {
                                 SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
                                 SceneManager.LoadScene("MerchantUI", LoadSceneMode.Additive);

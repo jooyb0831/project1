@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyBoss : MonoBehaviour
 {
@@ -147,8 +148,13 @@ public class EnemyBoss : MonoBehaviour
 
     void Clear()
     {
+        GetComponent<SpriteRenderer>().DOFade(0, 0.5f).OnComplete(() =>
+         {
+
+         });
         GameObject obj = Instantiate(portal, portalPos);
         obj.transform.SetParent(null);
+        obj.transform.localScale = new Vector2(7, 7);
         Destroy(gameObject,0.6f);
     }
 

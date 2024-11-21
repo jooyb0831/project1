@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     [SerializeField] bool canFire = false;
     [SerializeField] float fireDelayTime = 0.8f;
     [SerializeField] float fireTimer;
+
+    [SerializeField] bool onMoveFloor = false;
     public enum State
     {
         Idle,
@@ -284,10 +286,10 @@ public class Player : MonoBehaviour
 
             if (Input.GetButtonDown("Jump"))
             {
+
                 if (!isJump)
                 {
                     state = State.Jump;
-
                     GetComponent<Rigidbody2D>().gravityScale = 1;
                     rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
                     transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
@@ -798,6 +800,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.GetComponent<MoveGround>())
         {
             isJump = false;
+            onMoveFloor = true;
             transform.SetParent(collision.transform);
             //transform.localScale = new Vector3(5, 5, 1);
         }
@@ -805,6 +808,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.GetComponent<UpDownGround>())
         {
             isJump = false;
+            onMoveFloor = true;
             transform.SetParent(collision.transform);
             //transform.localScale = new Vector3(5, 5, 1);
         }
@@ -850,15 +854,39 @@ public class Player : MonoBehaviour
         }
     }
 
+
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<MoveGround>())
+        {
+            if(Input.GetButtonDown("Jump"))
+            {
+                //rigid.velocity = Vector2.zero;
+                transform.SetParent(null);
+            }
+        }
+
+        if (collision.gameObject.GetComponent<UpDownGround>())
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                //rigid.velocity = Vector2.zero;
+                transform.SetParent(null);
+            }
+        }
+    }
     private void OnCollisionExit2D(Collision2D collision)
     {
         if(collision.gameObject.GetComponent<MoveGround>())
         {
+            onMoveFloor = false;
             transform.SetParent(null);
         }
 
         if (collision.gameObject.GetComponent<UpDownGround>())
         {
+            onMoveFloor = false;
             transform.SetParent(null);
         }
     }
@@ -893,7 +921,21 @@ public class Player : MonoBehaviour
             Pooling.Instance.SetPool(DicKey.eBullet2, collision.GetComponent<EBullet2>().gameObject);
         }
 
-        if(collision.gameObject.GetComponent<FallObject>())
+        if (collision.gameObject.GetComponent<Boss2Bullet>())
+        {
+            if (data.HP > collision.GetComponent<Boss2Bullet>().damage)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<Boss2Bullet>().damage;
+                state = State.Hurt;
+            }
+            else if (data.HP <= collision.GetComponent<Boss2Bullet>().damage)
+            {
+                Dead();
+            }
+            Pooling.Instance.SetPool(DicKey.boss2Bullet, collision.GetComponent<Boss2Bullet>().gameObject);
+        }
+        if (collision.gameObject.GetComponent<FallObject>())
         {
             if (!collision.GetComponent<FallObject>().isAttack)
             {

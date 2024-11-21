@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/8.Scenes/Stage2.unity
     guid: dd5eabcf6f4ae784fb094678f083a801
   - enabled: 1
+    path: Assets/8.Scenes/Stage3.unity
+    guid: cd291f0c9cfedf841842af31bc94ae36
+  - enabled: 1
     path: Assets/8.Scenes/MapSelectScene.unity
     guid: 60908059bf49eee48bf805ed1594f52a
   m_configObjects: {}

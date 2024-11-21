@@ -9,6 +9,9 @@ public class MapSelectScene : MonoBehaviour
 
     [SerializeField] Button stage2;
     [SerializeField] GameObject stage2LockedIcon;
+
+    [SerializeField] Button stage3;
+    [SerializeField] GameObject stage3LockedIcon;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,13 @@ public class MapSelectScene : MonoBehaviour
         {
             stage2LockedIcon.SetActive(false);
             stage2.interactable = true;
-        }    
+        }
+        
+        if(pd.StageCleared[1] == true)
+        {
+            stage3LockedIcon.SetActive(false);
+            stage3.interactable = true;
+        }
     }
     public void OnClickedBackBtn()
     {
@@ -36,5 +45,10 @@ public class MapSelectScene : MonoBehaviour
     public void OnStage2Clicked()
     {
         SceneChanger.Instance.Stage2();
+    }
+
+    public void OnStage3Clicekd()
+    {
+        SceneChanger.Instance.Stage3();
     }
 }

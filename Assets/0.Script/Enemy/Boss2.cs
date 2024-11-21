@@ -7,6 +7,8 @@ public class Boss2 : EnemyBoss
     public Transform punchArea;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform fireArea;
+    [SerializeField] float atkTimer = 0;
+    [SerializeField] bool atk2 = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +17,7 @@ public class Boss2 : EnemyBoss
 
     public override void Init()
     {
-        data.HP = 70;
+        data.HP = 10;
         data.Index = 1;
         data.Speed = 5f;
         data.Atk1Power = 20;
@@ -30,6 +32,7 @@ public class Boss2 : EnemyBoss
     {
         if (isDead)
         {
+            pd.StageCleared[1] = true;
             return;
         }
 
@@ -66,12 +69,46 @@ public class Boss2 : EnemyBoss
             return;
         }
 
-        if(dist<15f)
+        if(!atk2)
+        {
+            atkTimer += Time.deltaTime;
+            if(atkTimer>=3f)
+            {
+                atkTimer = 0;
+                atk2 = true;
+            }
+        }
+
+        if (state == BossState.Back)
+        {
+            if (sk1isLeft)
+            {
+                transform.Translate(Vector2.left * Time.deltaTime * 6f);
+            }
+            else
+            {
+                transform.Translate(Vector2.right * Time.deltaTime * 6f);
+            }
+            SpriteCheck(state);
+            return;
+        }
+
+        if (dist<15f)
         {
             state = BossState.Move;
-            if (dist < 10)
+
+            if(atk2)
             {
+                state = BossState.Attack2;
                 Attack2();
+            }
+            else
+            {
+                if(dist<3f)
+                {
+                    state = BossState.Attack1;
+                    Attack1();
+                }
             }
             Move();
             
@@ -99,6 +136,7 @@ public class Boss2 : EnemyBoss
         {
             transform.position = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * data.Speed);
         }
+
         SpriteCheck(state);
     }
 
@@ -123,9 +161,9 @@ public class Boss2 : EnemyBoss
 
     void Fire()
     {
-        Vector2 dir = fireArea.rotation * new Vector2(2f, 0) * 3f;
-        GameObject obj = Instantiate(bullet, fireArea);
-
+        Vector2 dir = fireArea.rotation * new Vector2(2f, 0) * 5f;
+        GameObject obj = Pooling.Instance.GetPool(DicKey.boss2Bullet, fireArea, fireArea.rotation).gameObject;
+        obj.GetComponent<Boss2Bullet>().damage = data.Atk2Power;
         if(transform.localScale.x<0)
         {
             obj.GetComponent<Boss2Bullet>().Shoot(-dir);
@@ -134,6 +172,7 @@ public class Boss2 : EnemyBoss
         {
             obj.GetComponent<Boss2Bullet>().Shoot(dir);
         }
+        atk2 = false;
 
     }
     void SpriteCheck(BossState state)

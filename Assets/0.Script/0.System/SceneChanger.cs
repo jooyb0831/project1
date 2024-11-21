@@ -10,6 +10,7 @@ public enum SceneType
     MapSelect,
     Stage1,
     Stage2,
+    Stage3,
     Loading
 }
 public class SceneChanger : Singleton<SceneChanger>
@@ -43,6 +44,11 @@ public class SceneChanger : Singleton<SceneChanger>
     public void Stage2()
     {
         LoadingSceneManager.LoadScene("Stage2");
+    }
+
+    public void Stage3()
+    {
+        LoadingSceneManager.LoadScene("Stage3");
     }
 
     public void GoShip()
