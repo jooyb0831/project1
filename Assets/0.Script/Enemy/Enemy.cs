@@ -98,6 +98,11 @@ public abstract class Enemy : MonoBehaviour
         {
             Skill1Damage(2, collision.gameObject);
         }
+
+        if(collision.CompareTag("BombArea"))
+        {
+            TakeDamage(collision.transform.parent.GetComponent<Bomb>().damage);
+        }
     }
 
 

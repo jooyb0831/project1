@@ -72,6 +72,7 @@ public class LoadingSceneManager : MonoBehaviour
                             if (nextScene.Equals("Test"))
                             {
                                 SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
+                                SceneManager.LoadScene("BossUI", LoadSceneMode.Additive);
                                 inven.gameObject.SetActive(true);
                                 SceneChanger.Instance.sceneType = SceneType.Stage1;
                             }
@@ -79,6 +80,7 @@ public class LoadingSceneManager : MonoBehaviour
                             if(nextScene.Equals("Stage2"))
                             {
                                 SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
+                                SceneManager.LoadScene("BossUI", LoadSceneMode.Additive);
                                 inven.gameObject.SetActive(true);
                                 SceneChanger.Instance.sceneType = SceneType.Stage2;
                             }
@@ -95,6 +97,7 @@ public class LoadingSceneManager : MonoBehaviour
                                 SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
                                 SceneManager.LoadScene("MerchantUI", LoadSceneMode.Additive);
                                 SceneManager.LoadScene("EnchantUI", LoadSceneMode.Additive);
+                                SceneManager.LoadScene("QuestNPCUI", LoadSceneMode.Additive);
                                 inven.gameObject.SetActive(true);
                                 SceneChanger.Instance.sceneType = SceneType.Ship;
                             }

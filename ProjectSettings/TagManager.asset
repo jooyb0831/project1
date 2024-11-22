@@ -10,6 +10,7 @@ TagManager:
   - FireBallTurnArea
   - Ground
   - Boss2Punch
+  - BombArea
   layers:
   - Default
   - TransparentFX

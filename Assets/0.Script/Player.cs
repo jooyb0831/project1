@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform missilePos;
     [SerializeField] Missile missile;
     [SerializeField] Transform foot;
+    [SerializeField] Transform bombPos;
     [SerializeField] float dist;
     [SerializeField] Transform pBulletParent;
     public bool isRun = false;
@@ -549,6 +550,19 @@ public class Player : MonoBehaviour
                         }
                         break;
                     }
+                case 5: // ¾ÆÀÌÅÛ ³Ñ¹öÄÚµå 5¹ø(ÆøÅº)
+                    {
+                        if(Input.GetKeyDown(KeyCode.O))
+                        {
+                            if(item.data.count>0)
+                            {
+                                Inventory.Instance.UseItem(item);
+                                GameObject obj = Pooling.Instance.GetPool(DicKey.bomb, bombPos);
+                                obj.transform.SetParent(null);
+                            }
+                        }
+                    }
+                    break;
             }
 
         }
@@ -1026,6 +1040,17 @@ public class Player : MonoBehaviour
             isHurt = true;
             state = State.Hurt;
             data.HP -= collision.GetComponent<ThornFloor>().Damage;
+            if(data.HP<=0)
+            {
+                Dead();
+            }
+        }
+
+        if(collision.CompareTag("BombArea"))
+        {
+            isHurt = true;
+            state = State.Hurt;
+            data.HP -= collision.transform.parent.GetComponent<Bomb>().damage;
             if(data.HP<=0)
             {
                 Dead();

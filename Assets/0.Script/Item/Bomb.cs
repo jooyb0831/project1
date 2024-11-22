@@ -10,22 +10,31 @@ public class Bomb : MonoBehaviour
     [SerializeField] Transform blowArea;
     [SerializeField] List<Sprite> explosionSprites;
     [SerializeField] List<Sprite> bombSprite;
+    [SerializeField] bool isStart = true;
     // Start is called before the first frame update
     void Start()
     {
         sa = GetComponent<SpriteAnimation>();
         sa.SetSprite(bombSprite, 0.2f);
-        BlowUp();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(isStart)
+        {
+            BlowUp();
+        }
+        else
+        {
+            return;
+        }
     }
 
     void BlowUp()
     {
+        isStart = false;
         GetComponent<SpriteRenderer>().DOColor(Color.red, 0.3f).SetLoops(6, LoopType.Yoyo)
             .OnComplete(() =>
             {
@@ -36,6 +45,15 @@ public class Bomb : MonoBehaviour
 
     void DestroyBomb()
     {
-        Destroy(gameObject);
+        blowArea.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+        Pooling.Instance.SetPool(DicKey.bomb, gameObject);
+    }
+
+    public void Initialize()
+    {
+        GetComponent<SpriteRenderer>().sprite = bombSprite[0];
+        sa.SetSprite(bombSprite, 0.2f);
+        transform.localPosition = Vector2.zero;
+        isStart = true;
     }
 }

@@ -373,7 +373,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -796,7 +795,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -2218,11 +2216,13 @@ MonoBehaviour:
   inventory: {fileID: 0}
   rigid: {fileID: 0}
   firePos: {fileID: 1252664998}
+  sitFirePos: {fileID: 0}
   pBullet: {fileID: 644219692578632883, guid: 939adfa70be20814285077d29c50241b, type: 3}
   rotateCore: {fileID: 1750917492}
   missilePos: {fileID: 883826533}
   missile: {fileID: 3826383629789056581, guid: 58b62414bf0a9fe47a6f3947be47643b, type: 3}
   foot: {fileID: 848722510}
+  bombPos: {fileID: 0}
   dist: 0
   pBulletParent: {fileID: 0}
   isRun: 0
@@ -2236,6 +2236,7 @@ MonoBehaviour:
   canFire: 1
   fireDelayTime: 0.8
   fireTimer: 0
+  onMoveFloor: 0
   isJumpRun: 0
   state: 0
   core: {fileID: 1750917493}
@@ -2247,6 +2248,8 @@ MonoBehaviour:
   ladderMoveTrue: 0
   ladderTop: {fileID: 0}
   ladderBtm: {fileID: 0}
+  originOffset: {x: 0, y: 0}
+  originSize: {x: 0, y: 0}
 --- !u!4 &1512809705
 Transform:
   m_ObjectHideFlags: 0
@@ -2255,7 +2258,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512809699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.55, y: -1.77, z: 0}
+  m_LocalPosition: {x: -10.08, y: 1.18, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4529,7 +4532,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -4662,7 +4664,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0

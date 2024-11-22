@@ -25,7 +25,7 @@ public class Boss1 : EnemyBoss
         }
         if(Input.GetKeyDown(KeyCode.F7))
         {
-            Debug.Log($"{data.HP}");
+            Debug.Log($"{data.CURHP}");
         }
         if(p == null)
         {
@@ -217,13 +217,17 @@ public class Boss1 : EnemyBoss
     }
     public override void Init()
     {
-        data.HP =10;
+        data.MAXHP =10;
+        data.CURHP = data.MAXHP;
         data.Index = 0;
         data.Speed = 5f;
         data.Atk1Power = 10;
         data.Atk2Power = 15;
         data.EXP = 20;
+        data.BossName = "º¸½º 1";
         originSpeed = data.Speed;
+        BossUI.Instance.boss = this;
+        BossUI.Instance.SetUI();
         base.Init();
     }
 }

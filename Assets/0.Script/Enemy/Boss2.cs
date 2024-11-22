@@ -17,14 +17,17 @@ public class Boss2 : EnemyBoss
 
     public override void Init()
     {
-        data.HP = 10;
+        data.MAXHP = 10;
+        data.CURHP = data.MAXHP;
         data.Index = 1;
         data.Speed = 5f;
         data.Atk1Power = 20;
         data.Atk2Power = 25;
         data.EXP = 30;
+        data.BossName = "º¸½º 2";
         originSpeed = data.Speed;
-
+        BossUI.Instance.boss = this;
+        BossUI.Instance.SetUI();
         base.Init();
     }
     // Update is called once per frame
@@ -43,6 +46,12 @@ public class Boss2 : EnemyBoss
 
         if (state == BossState.Dead)
         {
+            return;
+        }
+
+        if(state == BossState.Hit)
+        {
+            SpriteCheck(state);
             return;
         }
 

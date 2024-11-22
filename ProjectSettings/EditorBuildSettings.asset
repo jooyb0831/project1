@@ -18,11 +18,17 @@ EditorBuildSettings:
     path: Assets/8.Scenes/EnchantUI.unity
     guid: 3c68e0f1b7a5d424b8b607e80099183f
   - enabled: 1
+    path: Assets/8.Scenes/QuestNPCUI.unity
+    guid: ead4e449da055394f9613ecb0da6328a
+  - enabled: 1
     path: Assets/8.Scenes/GameUI.unity
     guid: 4855327583ece0d4c8165e38c06b99e9
   - enabled: 1
     path: Assets/8.Scenes/Loading.unity
     guid: 6975bcf69b3487b48b62b0324100de68
+  - enabled: 1
+    path: Assets/8.Scenes/BossUI.unity
+    guid: f22fda79c62d7db45a44a49cedef6c6c
   - enabled: 1
     path: Assets/8.Scenes/Test.unity
     guid: 191f6ad926d501749bf74d1faff6aac0

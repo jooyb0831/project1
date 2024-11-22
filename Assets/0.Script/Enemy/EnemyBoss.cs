@@ -7,12 +7,24 @@ public class EnemyBoss : MonoBehaviour
 {
     public class BossData
     {
-        public int HP { get; set; }
+        public int MAXHP { get; set; }
+
+        private int hp;
+        public int CURHP
+        {
+            get { return hp; }
+            set
+            {
+                hp = value;
+                BossUI.Instance.HP = hp;
+            }
+        }
         public int EXP { get; set; }
         public int Atk1Power { get; set; }
         public int Atk2Power { get; set; }
         public float Speed { get; set; }
         public int Index { get; set; }
+        public string BossName;
     }
 
     public enum BossState
@@ -110,6 +122,11 @@ public class EnemyBoss : MonoBehaviour
             {
                 Skill1Damage(2, collision.gameObject);
             }
+
+            if (collision.CompareTag("BombArea"))
+            {
+                TakeDamage(collision.transform.parent.GetComponent<Bomb>().damage);
+            }
         }
         
     }
@@ -117,15 +134,16 @@ public class EnemyBoss : MonoBehaviour
     public void TakeDamage(int damage)
     {
         originSpeed = data.Speed;
-        data.HP -= damage;
-        StartCoroutine(Hit());
-        if (data.HP<=0)
+        data.CURHP -= damage;
+        if (data.CURHP <= 0)
         {
             isDead = true;
             state = BossState.Dead;
             Dead();
             return;
         }
+        StartCoroutine(Hit());
+        
     }
 
     IEnumerator Hit()
@@ -142,20 +160,21 @@ public class EnemyBoss : MonoBehaviour
         data.Speed = 0;
         GetComponent<CapsuleCollider2D>().isTrigger = false;
         GetComponent<Rigidbody2D>().gravityScale = 1;
-        sa.SetSprite(deadSprite, 0.2f, false, Clear);
+        sa.SetSprite(deadSprite, 0.17f, false, Clear);
         p.data.EXP += data.EXP;
+        BossUI.Instance.UIOff();
     }
 
     void Clear()
     {
-        GetComponent<SpriteRenderer>().DOFade(0, 0.5f).OnComplete(() =>
-         {
-
-         });
-        GameObject obj = Instantiate(portal, portalPos);
-        obj.transform.SetParent(null);
-        obj.transform.localScale = new Vector2(7, 7);
-        Destroy(gameObject,0.6f);
+        GetComponent<SpriteRenderer>().DOFade(0, 1f)
+            .OnComplete(() =>
+            {
+             GameObject obj = Instantiate(portal, portalPos);
+                obj.transform.SetParent(null);
+                obj.transform.localScale = new Vector2(7, 7);
+            });
+        Destroy(gameObject,1.5f);
     }
 
     public void Idle()
@@ -167,8 +186,8 @@ public class EnemyBoss : MonoBehaviour
 
     public void Skill1Damage(int damage, GameObject bullet)
     {
-        data.HP -= damage;
-        if (data.HP<=0)
+        data.CURHP -= damage;
+        if (data.CURHP <= 0)
         {
             isDead = true;
             state = BossState.Dead;

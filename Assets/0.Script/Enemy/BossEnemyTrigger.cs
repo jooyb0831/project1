@@ -23,6 +23,7 @@ public class BossEnemyTrigger : MonoBehaviour
         {
             bossMonster.SetActive(true);
             gameObject.SetActive(false);
+            BossUI.Instance.UIOn();
         }
     }
 }

@@ -8,7 +8,8 @@ public enum DicKey
     pMissile,
     eBullet2,
     fireball,
-    boss2Bullet
+    boss2Bullet,
+    bomb
 }
 public class Pooling : Singleton<Pooling>
 {
@@ -17,12 +18,14 @@ public class Pooling : Singleton<Pooling>
     private Queue<Missile> pMsQueue = new Queue<Missile>();
     private Queue<FireBall> fireBallQueue = new Queue<FireBall>();
     private Queue<Boss2Bullet> boss2BulletQueue = new Queue<Boss2Bullet>();
+    private Queue<Bomb> bombQueue = new Queue<Bomb>();
 
     public PBullet pBullet;
     [SerializeField] EBullet2 eBullet2;
     [SerializeField] Missile pMissile;
     [SerializeField] FireBall fireball;
     [SerializeField] Boss2Bullet boss2Bullet;
+    [SerializeField] Bomb bomb;
 
     private Dictionary<DicKey, Queue<GameObject>> pool = new Dictionary<DicKey, Queue<GameObject>>();
     // Start is called before the first frame update
@@ -33,6 +36,7 @@ public class Pooling : Singleton<Pooling>
         pool.Add(DicKey.pMissile, new Queue<GameObject>());
         pool.Add(DicKey.fireball, new Queue<GameObject>());
         pool.Add(DicKey.boss2Bullet, new Queue<GameObject>());
+        pool.Add(DicKey.bomb, new Queue<GameObject>());
         
     }
 
@@ -65,6 +69,11 @@ public class Pooling : Singleton<Pooling>
                     obj.GetComponent<Boss2Bullet>().Initialize();
                 }
                 break;
+            case DicKey.bomb:
+                {
+                    obj.GetComponent<Bomb>().Initialize();
+                }
+                break;
         }
         obj.gameObject.SetActive(false);
         pool[key].Enqueue(obj);
@@ -93,6 +102,12 @@ public class Pooling : Singleton<Pooling>
                 case DicKey.fireball:
                     {
                         obj = Instantiate(fireball, trans.position, Quaternion.identity).gameObject;
+                        pool[key].Enqueue(obj);
+                    }
+                    break;
+                case DicKey.bomb:
+                    {
+                        obj = Instantiate(bomb, trans.position, Quaternion.identity).gameObject;
                         pool[key].Enqueue(obj);
                     }
                     break;
