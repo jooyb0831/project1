@@ -57,4 +57,12 @@ public class PBullet : MonoBehaviour
         transform.localScale = new Vector2(5f, 5f);
         timer = 0;
     }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.GetComponent<Boss3>())
+        {
+            collision.GetComponent<Boss3>().BossHit();
+        }
+    }
 }

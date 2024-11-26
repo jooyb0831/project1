@@ -990,6 +990,38 @@ public class Player : MonoBehaviour
             }
             Pooling.Instance.SetPool(DicKey.boss2Bullet, collision.GetComponent<Boss2Bullet>().gameObject);
         }
+
+
+        if (collision.gameObject.GetComponent<Boss3Bullet>())
+        {
+            if (data.HP > collision.GetComponent<Boss3Bullet>().damage)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<Boss3Bullet>().damage;
+                state = State.Hurt;
+            }
+            else if (data.HP <= collision.GetComponent<Boss3Bullet>().damage)
+            {
+                Dead();
+            }
+            Pooling.Instance.SetPool(DicKey.boss3Bullet, collision.GetComponent<Boss3Bullet>().gameObject);
+        }
+
+        if (collision.gameObject.GetComponent<Boss3Bullet2>())
+        {
+            if (data.HP > collision.GetComponent<Boss3Bullet2>().damage)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<Boss3Bullet2>().damage;
+                state = State.Hurt;
+            }
+            else if (data.HP <= collision.GetComponent<Boss3Bullet2>().damage)
+            {
+                Dead();
+            }
+            //Pooling.Instance.SetPool(DicKey.boss3Bullet, collision.GetComponent<Boss3Bullet>().gameObject);
+        }
+
         if (collision.gameObject.GetComponent<FallObject>())
         {
             if (!collision.GetComponent<FallObject>().isAttack)

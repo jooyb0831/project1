@@ -10,13 +10,22 @@ public class Boss3 : EnemyBoss
     [SerializeField] float attackCoolTime;
     [SerializeField] float attackTimer;
 
+    [SerializeField] float attack2CoolTime;
+    [SerializeField] float attack2Timer;
+
     [SerializeField] float fireDelay;
     [SerializeField] float fireTimer;
 
+    [SerializeField] float atk2Duration;
+    [SerializeField] float atk2DurationTimer;
+
     [SerializeField] bool isMove = false;
-    [SerializeField] bool isAttack = false;
+    [SerializeField] bool isAttack1 = false;
+    [SerializeField] bool isAttack2 = false;
+
     [SerializeField] float speed;
     [SerializeField] bool isUp = false;
+    [SerializeField] Boss3Bullet2 bullet2;
     [SerializeField] Boss3Bullet bullet1;
     [SerializeField] Transform firePos;
     int patternNum = 0;
@@ -33,9 +42,9 @@ public class Boss3 : EnemyBoss
         data.CURHP = data.MAXHP;
         data.Index = 2;
         data.Speed = 5f;
-        data.Atk1Power = 10;
-        data.Atk2Power = 15;
-        data.EXP = 20;
+        data.Atk1Power = 15;
+        data.Atk2Power = 30;
+        data.EXP = 40;
         data.BossName = "º¸½º 3";
         originSpeed = data.Speed;
         BossUI.Instance.boss = this;
@@ -59,49 +68,49 @@ public class Boss3 : EnemyBoss
             return;
         }
 
-        if(state == BossState.Hit)
+        if(!isAttack2)
         {
-            if (isMove)
+            attack2Timer += Time.deltaTime;
+            if (attack2Timer >= attack2CoolTime)
             {
-                Move();
-            }
-            else if (isAttack)
-            {
-                Attack1();
-            }
-        }
-
-        if(state != BossState.Hit)
-        {
-            if (isMove)
-            {
-                isAttack = false;
-                moveTimer += Time.deltaTime;
-                if (moveTimer >= moveCoolTime)
-                {
-                    isUp = true;
-                    moveTimer = 0;
-                }
-                Move();
-            }
-
-            if (state == BossState.Attack1)
-            {
+                attack2Timer = 0;
                 isMove = false;
-                isAttack = true;
-                attackTimer += Time.deltaTime;
-                if (attackTimer >= attackCoolTime)
-                {
-                    attackTimer = 0;
-                    state = BossState.Move;
-                    isMove = true;
-                    return;
-                }
-                Attack1();
+                isAttack1 = false;
+                isAttack2 = true;
             }
         }
-        
+        if(isAttack2)
+        {
+            Attack2();
+        }
 
+        if (isMove)
+        {
+            isAttack1 = false;
+            moveTimer += Time.deltaTime;
+            if (moveTimer >= moveCoolTime)
+            {
+                isUp = true;
+                moveTimer = 0;
+            }
+            Move();
+        }
+
+        if (isAttack1)
+        {
+            isMove = false;
+            state = BossState.Attack1;
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackCoolTime)
+            {
+                attackTimer = 0;
+                state = BossState.Move;
+                isMove = true;
+                isAttack1 = false;
+                return;
+            }
+            Attack1();
+        }
     }
 
     void Move()
@@ -112,7 +121,7 @@ public class Boss3 : EnemyBoss
             if (y >= -3.5f)
             {
                 isUp = false;
-                state = BossState.Attack1;
+                isAttack1 = true;
                 return;
             }
             transform.Translate(Vector2.up * Time.deltaTime * speed);
@@ -123,7 +132,7 @@ public class Boss3 : EnemyBoss
             if (y <= -10.35f)
             {
                 isUp = true;
-                state = BossState.Attack1;
+                isAttack1 = true;
                 return;
             }
             transform.Translate(Vector2.down * Time.deltaTime * speed);
@@ -138,9 +147,48 @@ public class Boss3 : EnemyBoss
         {
             fireTimer = 0;
             GameObject obj = Instantiate(bullet1, firePos).gameObject;
+            obj.GetComponent<Boss3Bullet>().damage = data.Atk1Power;
             obj.transform.SetParent(null);
         }
-        
+    }
+
+    [SerializeField] bool isDown = false;
+    void Attack2()
+    {
+        if(!bullet2.gameObject.activeSelf)
+        {
+            bullet2.gameObject.SetActive(true);
+            bullet2.damage = data.Atk2Power;
+        }
+        atk2DurationTimer += Time.deltaTime;
+
+        float y = transform.position.y;
+        if(y>=-3.5f)
+        {
+            isDown = true;
+        }
+        else if(y<=-10.35f)
+        {
+            isDown = false;
+        }
+
+        if(isDown)
+        {
+            transform.Translate(Vector2.down * Time.deltaTime * 10f);
+        }
+        else
+        {
+            transform.Translate(Vector2.up * Time.deltaTime * 10f);
+        }
+
+        if(atk2DurationTimer>=atk2Duration)
+        {
+            isMove = true;
+            atk2DurationTimer = 0;
+            isAttack2 = false;
+            bullet2.gameObject.SetActive(false) ;
+        }
+
     }
 
 
@@ -166,6 +214,18 @@ public class Boss3 : EnemyBoss
             patternNum++;
           
         }
+    }
+
+    public void BossHit()
+    {
+        StartCoroutine(BossHitSprite());
+    }
+
+    IEnumerator BossHitSprite()
+    {
+        GetComponent<SpriteRenderer>().color = new Color32(255,85,85,255);
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
 }

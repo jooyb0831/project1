@@ -10,6 +10,7 @@ public enum DicKey
     eBullet2,
     fireball,
     boss2Bullet,
+    boss3Bullet,
     bomb,
     fallSnowBall
 }
@@ -21,6 +22,7 @@ public class Pooling : Singleton<Pooling>
     private Queue<Missile> pMsQueue = new Queue<Missile>();
     private Queue<FireBall> fireBallQueue = new Queue<FireBall>();
     private Queue<Boss2Bullet> boss2BulletQueue = new Queue<Boss2Bullet>();
+    private Queue<Boss3Bullet> boss3BulletQueue = new Queue<Boss3Bullet>();
     private Queue<Bomb> bombQueue = new Queue<Bomb>();
     private Queue<FallSnowBall> snowBallQueue = new Queue<FallSnowBall>();
 
@@ -30,6 +32,7 @@ public class Pooling : Singleton<Pooling>
     [SerializeField] Missile pMissile;
     [SerializeField] FireBall fireball;
     [SerializeField] Boss2Bullet boss2Bullet;
+    [SerializeField] Boss3Bullet boss3Bullet;
     [SerializeField] Bomb bomb;
     [SerializeField] FallSnowBall fallSnowBall;
 
@@ -43,6 +46,7 @@ public class Pooling : Singleton<Pooling>
         pool.Add(DicKey.pMissile, new Queue<GameObject>());
         pool.Add(DicKey.fireball, new Queue<GameObject>());
         pool.Add(DicKey.boss2Bullet, new Queue<GameObject>());
+        pool.Add(DicKey.boss3Bullet, new Queue<GameObject>());
         pool.Add(DicKey.bomb, new Queue<GameObject>());
         pool.Add(DicKey.fallSnowBall, new Queue<GameObject>());
         
@@ -80,6 +84,11 @@ public class Pooling : Singleton<Pooling>
             case DicKey.boss2Bullet:
                 {
                     obj.GetComponent<Boss2Bullet>().Initialize();
+                }
+                break;
+            case DicKey.boss3Bullet:
+                {
+                    obj.GetComponent<Boss3Bullet>().Initialize();
                 }
                 break;
             case DicKey.bomb:
@@ -120,6 +129,12 @@ public class Pooling : Singleton<Pooling>
                 case DicKey.eBullet2:
                     {
                         obj = Instantiate(eBullet2, trans.position, Quaternion.identity).gameObject;
+                        pool[key].Enqueue(obj);
+                    }
+                    break;
+                case DicKey.boss3Bullet:
+                    {
+                        obj = Instantiate(boss3Bullet, trans.position, Quaternion.identity).gameObject;
                         pool[key].Enqueue(obj);
                     }
                     break;

@@ -17,6 +17,15 @@
       "damage": 3,
       "needlevel": 4,
       "skilllevel": 1
+    },
+    {
+      "skilltitle": "방어막",
+      "skillexplain": "적들의 총알을 몇초간 막아줍니다..",
+      "index": 2,
+      "cooltime": 17.0,
+      "damage": 0,
+      "needlevel": 6,
+      "skilllevel": 1
     }
   ]
 }
