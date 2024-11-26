@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnchantUI : Singleton<EnchantUI>
 {
     public GameObject window;
+    public bool isOn;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,7 @@ public class EnchantUI : Singleton<EnchantUI>
                 return;
             }
         }
+
     }
 
 }

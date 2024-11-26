@@ -4317,6 +4317,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -27644,6 +27645,8 @@ MonoBehaviour:
   skill1: {fileID: 57217449}
   skill2: {fileID: 1879057916}
   skillPos: {fileID: 2145157539}
+  originSpeed: 0
+  originRunSpeed: 0
   ladderAttach: 0
   ladder: {fileID: 0}
   ladderMoveTrue: 0
@@ -30971,11 +30974,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pBullet: {fileID: 644219692578632883, guid: 939adfa70be20814285077d29c50241b, type: 3}
+  eBullet: {fileID: 0}
   eBullet2: {fileID: 4351262320808491682, guid: 311a1aaff1e8a6d4ea78101df2758715, type: 3}
   pMissile: {fileID: 3826383629789056581, guid: 58b62414bf0a9fe47a6f3947be47643b, type: 3}
   fireball: {fileID: 1659768681343271479, guid: 707f652938d802c48b14758e67b68da2, type: 3}
   boss2Bullet: {fileID: -8333133523781970449, guid: bcd5f59cc934129409f6d29bc120f6cb, type: 3}
   bomb: {fileID: 4361412405143956840, guid: d067c9b9a912b614fbe77eb73d19b5d3, type: 3}
+  fallSnowBall: {fileID: 0}
 --- !u!4 &1471232765
 Transform:
   m_ObjectHideFlags: 0
@@ -38561,6 +38566,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0

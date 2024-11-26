@@ -17,11 +17,13 @@ public class SceneChanger : Singleton<SceneChanger>
 {
     public SceneType sceneType = SceneType.Ship;
     private Inventory inven;
+    private PlayerData pd;
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(this);
         inven = GameManager.Instance.Inven;
+        pd = GameManager.Instance.PlayerData;
     }
 
     public void GameStart()
@@ -54,5 +56,17 @@ public class SceneChanger : Singleton<SceneChanger>
     public void GoShip()
     {
         LoadingSceneManager.LoadScene("Ship");
+    }
+
+    public void ReloadScene()
+    {
+        ResetHP();
+        Scene scene = SceneManager.GetActiveScene();
+        LoadingSceneManager.LoadScene(scene.name);
+    }
+    
+    void ResetHP()
+    {
+        pd.HP = pd.MAXHP;
     }
 }

@@ -122,6 +122,8 @@ public class PlayerData : MonoBehaviour
             
         }
     }
+
+    public int AttackDamage { get; set; } = 2;
        
 
     public float RunSpeed { get; set; }

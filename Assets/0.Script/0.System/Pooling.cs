@@ -6,37 +6,45 @@ public enum DicKey
 {
     pBullet,
     pMissile,
+    eBullet,
     eBullet2,
     fireball,
     boss2Bullet,
-    bomb
+    bomb,
+    fallSnowBall
 }
 public class Pooling : Singleton<Pooling>
 {
     private Queue<PBullet> pbQueue = new Queue<PBullet>();
+    private Queue<EBullet> ebQueue = new Queue<EBullet>();
     private Queue<EBullet2> eb2Queue = new Queue<EBullet2>();
     private Queue<Missile> pMsQueue = new Queue<Missile>();
     private Queue<FireBall> fireBallQueue = new Queue<FireBall>();
     private Queue<Boss2Bullet> boss2BulletQueue = new Queue<Boss2Bullet>();
     private Queue<Bomb> bombQueue = new Queue<Bomb>();
+    private Queue<FallSnowBall> snowBallQueue = new Queue<FallSnowBall>();
 
     public PBullet pBullet;
+    [SerializeField] EBullet eBullet;
     [SerializeField] EBullet2 eBullet2;
     [SerializeField] Missile pMissile;
     [SerializeField] FireBall fireball;
     [SerializeField] Boss2Bullet boss2Bullet;
     [SerializeField] Bomb bomb;
+    [SerializeField] FallSnowBall fallSnowBall;
 
     private Dictionary<DicKey, Queue<GameObject>> pool = new Dictionary<DicKey, Queue<GameObject>>();
     // Start is called before the first frame update
     void Start()
     {
         pool.Add(DicKey.pBullet, new Queue<GameObject>());
+        pool.Add(DicKey.eBullet, new Queue<GameObject>());
         pool.Add(DicKey.eBullet2, new Queue<GameObject>());
         pool.Add(DicKey.pMissile, new Queue<GameObject>());
         pool.Add(DicKey.fireball, new Queue<GameObject>());
         pool.Add(DicKey.boss2Bullet, new Queue<GameObject>());
         pool.Add(DicKey.bomb, new Queue<GameObject>());
+        pool.Add(DicKey.fallSnowBall, new Queue<GameObject>());
         
     }
 
@@ -47,6 +55,11 @@ public class Pooling : Singleton<Pooling>
             case DicKey.pBullet:
                 {
                     obj.GetComponent<PBullet>().Initialize();
+                }
+                break;
+            case DicKey.eBullet:
+                {
+                    obj.GetComponent<EBullet>().Initialize();
                 }
                 break;
             case DicKey.eBullet2:
@@ -74,6 +87,11 @@ public class Pooling : Singleton<Pooling>
                     obj.GetComponent<Bomb>().Initialize();
                 }
                 break;
+            case DicKey.fallSnowBall:
+                {
+                    obj.GetComponent<FallSnowBall>().Initialize();
+                }
+                break;
         }
         obj.gameObject.SetActive(false);
         pool[key].Enqueue(obj);
@@ -93,6 +111,12 @@ public class Pooling : Singleton<Pooling>
                         pool[key].Enqueue(obj);
                     }
                     break;
+                case DicKey.eBullet:
+                    {
+                        obj = Instantiate(eBullet, trans.position, Quaternion.identity).gameObject;
+                        pool[key].Enqueue(obj);
+                    }
+                    break;
                 case DicKey.eBullet2:
                     {
                         obj = Instantiate(eBullet2, trans.position, Quaternion.identity).gameObject;
@@ -108,6 +132,12 @@ public class Pooling : Singleton<Pooling>
                 case DicKey.bomb:
                     {
                         obj = Instantiate(bomb, trans.position, Quaternion.identity).gameObject;
+                        pool[key].Enqueue(obj);
+                    }
+                    break;
+                case DicKey.fallSnowBall:
+                    {
+                        obj = Instantiate(fallSnowBall, trans.position, Quaternion.identity).gameObject;
                         pool[key].Enqueue(obj);
                     }
                     break;

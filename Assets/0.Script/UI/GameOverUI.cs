@@ -15,12 +15,22 @@ public class GameOverUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         GetComponent<Image>().DOFade(1, 3f);
+    }
+
+    public void OnClickedRetryBtn()
+    {
+        SceneChanger.Instance.ReloadScene();
+    }
+
+    public void OnClickedQuitBtn()
+    {
+        SceneChanger.Instance.GoShip();
     }
 }

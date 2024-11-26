@@ -26,10 +26,12 @@ public class BreakFloor : MonoBehaviour
             if(isVanish)
             {
                 tiles[idx].GetComponent<SpriteRenderer>().DOFade(0,0.2f);
+                tiles[idx].GetComponent<BoxCollider2D>().isTrigger = true;
             }
             else
             {
                 tiles[idx].GetComponent<SpriteRenderer>().DOFade(1, 0.2f);
+                tiles[idx].GetComponent<BoxCollider2D>().isTrigger = false;
             }
             
             idx++;

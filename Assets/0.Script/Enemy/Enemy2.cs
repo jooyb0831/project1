@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Enemy2 : Enemy
 {
-    
-
     [SerializeField] float fireTimer;
     [SerializeField] float fireDelayTime = 2f;
     [SerializeField] bool canFire = false;

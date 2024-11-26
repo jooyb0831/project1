@@ -75,6 +75,9 @@ public class Player : MonoBehaviour
     public Transform skill1;
     public Transform skill2;
     public GameObject skillPos;
+
+    [SerializeField] float originSpeed;
+    [SerializeField] float originRunSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -100,6 +103,8 @@ public class Player : MonoBehaviour
         state = State.Idle;
         rigid = GetComponent<Rigidbody2D>();
         speed = data.Speed;
+        
+     
 
         originOffset = GetComponent<CapsuleCollider2D>().offset;
         originSize = GetComponent<CapsuleCollider2D>().size;
@@ -866,6 +871,27 @@ public class Player : MonoBehaviour
             }
             
         }
+
+        if(collision.gameObject.GetComponent<FallSnowBall>())
+        {
+            if (!collision.gameObject.GetComponent<FallSnowBall>().isEnd && state!=State.Hurt)
+            {
+                if(data.HP>collision.gameObject.GetComponent<FallSnowBall>().damage)
+                {
+                    isHurt = true;
+                    data.HP -= collision.gameObject.GetComponent<FallSnowBall>().damage;
+                    state = State.Hurt;
+                }
+                else if(data.HP<=collision.gameObject.GetComponent<FallSnowBall>().damage)
+                {
+                    Dead();
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 
 
@@ -933,6 +959,21 @@ public class Player : MonoBehaviour
                 Dead();
             }
             Pooling.Instance.SetPool(DicKey.eBullet2, collision.GetComponent<EBullet2>().gameObject);
+        }
+
+        if (collision.gameObject.GetComponent<EBullet>())
+        {
+            if (data.HP > collision.GetComponent<EBullet>().damage)
+            {
+                isHurt = true;
+                data.HP -= collision.GetComponent<EBullet>().damage;
+                state = State.Hurt;
+            }
+            else if (data.HP <= collision.GetComponent<EBullet>().damage)
+            {
+                Dead();
+            }
+            Pooling.Instance.SetPool(DicKey.eBullet, collision.GetComponent<EBullet>().gameObject);
         }
 
         if (collision.gameObject.GetComponent<Boss2Bullet>())
@@ -1006,24 +1047,24 @@ public class Player : MonoBehaviour
             ladder = collision.gameObject;
         }
 
-        if (collision.GetComponent<Boss1>())
+        if (collision.CompareTag("Boss1Atk"))
         {
-            if(collision.GetComponent<EnemyBoss>().state == EnemyBoss.BossState.Attack1)
+            if(collision.transform.parent.GetComponent<Boss1>().state == EnemyBoss.BossState.Attack1)
             {
                 isHurt = true;
                 state = State.Hurt;
-                data.HP -= collision.GetComponent<EnemyBoss>().data.Atk1Power;
+                data.HP -= collision.transform.parent.GetComponent<EnemyBoss>().data.Atk1Power;
                 if(data.HP<=0)
                 {
                     Dead();
                 }
             }
 
-            else if (collision.GetComponent<EnemyBoss>().state == EnemyBoss.BossState.Attack2)
+            else if (collision.transform.parent.GetComponent<Boss1>().state == EnemyBoss.BossState.Attack2)
             {
                 isHurt = true;
                 state = State.Hurt;
-                data.HP -= collision.GetComponent<EnemyBoss>().data.Atk2Power;
+                data.HP -= collision.transform.parent.GetComponent<Boss1>().data.Atk2Power;
                 if (data.HP <= 0)
                 {
                     Dead();
@@ -1056,6 +1097,16 @@ public class Player : MonoBehaviour
                 Dead();
             }
         }
+
+        if(collision.CompareTag("SnowArea"))
+        {
+            originSpeed = data.Speed;
+            originRunSpeed = data.RunSpeed;
+
+            speed /= 2;
+            data.Speed /= 2;
+            data.RunSpeed /= 2;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -1064,7 +1115,7 @@ public class Player : MonoBehaviour
         {
             ladderMoveTrue = true;
         }
-            
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -1103,6 +1154,13 @@ public class Player : MonoBehaviour
             {
                 return;
             }
+        }
+
+        if(collision.CompareTag("SnowArea"))
+        {
+            speed = originSpeed;
+            data.Speed = originSpeed;
+            data.RunSpeed = originRunSpeed;
         }
 
     }

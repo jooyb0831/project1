@@ -9,6 +9,7 @@ public class Boss1 : EnemyBoss
     [SerializeField] bool posSet = false;
     [SerializeField] float atkTimer = 0;
     [SerializeField] bool atk2 = false;
+    [SerializeField] Transform atkArea;
     // Start is called before the first frame update
     void Start()
     {
@@ -125,6 +126,7 @@ public class Boss1 : EnemyBoss
         
         if (state == BossState.Idle)
         {
+            atkArea.gameObject.SetActive(false);
             SpriteCheck(state);
             posSet = false;
             return;
@@ -154,11 +156,13 @@ public class Boss1 : EnemyBoss
                 }
             case BossState.Attack1:
                 {
+                    atkArea.gameObject.SetActive(true);
                     sa.SetSprite(attack1Sprite, 0.2f, false, Idle);
                     break;
                 }
             case BossState.Attack2:
                 {
+                    atkArea.gameObject.SetActive(true);
                     sa.SetSprite(attack2Sprite, 0.1f, false, Idle);
                     break;
                 }

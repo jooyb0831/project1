@@ -31,7 +31,7 @@ public class FallenFloor : MonoBehaviour
 
     IEnumerator VanishFloor()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(delay);
         
         GetComponent<SpriteRenderer>().DOFade(0,0.3f)
             .OnComplete(() =>

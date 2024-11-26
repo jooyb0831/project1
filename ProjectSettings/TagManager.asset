@@ -11,6 +11,9 @@ TagManager:
   - Ground
   - Boss2Punch
   - BombArea
+  - Boss1Atk
+  - SnowArea
+  - SnowBallEndZone
   layers:
   - Default
   - TransparentFX

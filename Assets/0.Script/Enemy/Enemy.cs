@@ -33,6 +33,7 @@ public abstract class Enemy : MonoBehaviour
     protected SkillSystem sksystem;
 
     protected List<Sprite> enemySprite;
+    protected List<Sprite> moveSprite;
     protected List<Sprite> deadSprite;
     protected List<Sprite> attackSprite;
     [SerializeField] protected EnemyState state = EnemyState.Idle;
@@ -59,6 +60,7 @@ public abstract class Enemy : MonoBehaviour
         sksystem = GameManager.Instance.SkSystem;
         enemySprites = SpriteManager.Instance.enemySprite[data.index];
         enemySprite = enemySprites.idleSprite;
+        moveSprite = enemySprites.moveSprite;
         deadSprite = enemySprites.deadSprite;
         attackSprite = enemySprites.attackSprite;
         state = EnemyState.Idle;
@@ -74,7 +76,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PBullet>() == true)
         {
-            TakeDamage(2);
+            TakeDamage(pd.AttackDamage);
             Pooling.Instance.SetPool(DicKey.pBullet, collision.GetComponent<PBullet>().gameObject);
             Debug.Log("hit");
         }

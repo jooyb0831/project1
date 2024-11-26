@@ -98,7 +98,7 @@ public class EnemyBoss : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<PBullet>())
             {
-                TakeDamage(2);
+                TakeDamage(pd.AttackDamage);
                 Pooling.Instance.SetPool(DicKey.pBullet, collision.GetComponent<PBullet>().gameObject);
                 Debug.Log("hit");
             }
