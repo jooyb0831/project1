@@ -82,7 +82,6 @@ public class Enemy2 : Enemy
             transform.localScale = new Vector3(-5, 5, 5);
         }
 
-
         if (state == EnemyState.Attack)
         {
             SpriteCheck(state);

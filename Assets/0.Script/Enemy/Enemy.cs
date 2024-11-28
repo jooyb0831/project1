@@ -66,11 +66,8 @@ public abstract class Enemy : MonoBehaviour
         state = EnemyState.Idle;
         sa.SetSprite(enemySprite, 0.2f);
     }
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

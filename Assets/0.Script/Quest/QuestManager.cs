@@ -20,6 +20,8 @@ public class QuestManager : Singleton<QuestManager>
     public int e0;
     public int e1;
 
+    //퀘스트 진행도는 pd쪽에 넣는게 나음.
+
     // Start is called before the first frame update
     void Start()
     {

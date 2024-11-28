@@ -128,7 +128,7 @@ public class PlayerData : MonoBehaviour
 
     public float RunSpeed { get; set; }
 
-    public List<Quest> OnGoingQList;
+    public List<Quest> OnGoingQList; // Äù½ºÆ® ÀÎµ¦½º
 
     public bool[] StageCleared = { false, false, false };
     // Start is called before the first frame update

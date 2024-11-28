@@ -30,6 +30,7 @@ public class Boss2 : EnemyBoss
         BossUI.Instance.SetUI();
         base.Init();
     }
+
     // Update is called once per frame
     void Update()
     {

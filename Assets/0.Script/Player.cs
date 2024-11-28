@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public bool isAttacking = false;
     public bool isHurt = false;
     public bool isLadder = false;
+    // bool값 빼고 state로 다 처리
     [SerializeField] bool isBack = false;
     [SerializeField] float speed;
     public float jumpPower;
@@ -154,8 +155,13 @@ public class Player : MonoBehaviour
 
         Move();
         LadderAttach();
-        RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down);
-        Debug.DrawRay(foot.position, Vector3.down, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down*0.2f);
+        Debug.DrawRay(foot.position, Vector3.down*0.2f, Color.red);
+
+        if(hit.collider != null)
+        {
+            //점프 안되게
+        }
 
         if(Input.GetKeyUp(KeyCode.C))
         {
@@ -184,16 +190,14 @@ public class Player : MonoBehaviour
             speed = data.Speed;
         }
 
-        if (state == State.Hurt)
+        switch(state)
         {
-            StateCheck(state);
-            return;
-        }
-
-        if (state == State.Dead)
-        {
-            StateCheck(state);
-            return;
+            case State.Hurt:
+            case State.Dead:
+                {
+                    StateCheck(state);
+                }
+                return;
         }
 
         if(ladderAttach)
@@ -231,14 +235,9 @@ public class Player : MonoBehaviour
 
         if (x != 0)
         {
-            if (x > 0)
-            {
-                transform.localScale = new Vector3(5f, 5f, 5f);
-            }
-            else
-            {
-                transform.localScale = new Vector3(-5f, 5f, 5f);
-            }
+            // 변수 = 조건 ? 참 : 거짓
+
+            transform.localScale = x > 0 ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
             state = State.Walk;
         }
         else
@@ -246,6 +245,7 @@ public class Player : MonoBehaviour
             state = State.Idle;
         }
 
+        #region 키 이벤트
         if (Input.GetKey(KeyCode.LeftShift))
         {
 
@@ -279,6 +279,8 @@ public class Player : MonoBehaviour
                 return;
             }
         }
+
+        
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
@@ -314,13 +316,14 @@ public class Player : MonoBehaviour
             }
 
         }
+        #endregion
 
         // 아이템 사용하는 코드
-        if(inventory.quickSlot.GetComponent<QuickSlot>().isFilled)
+        if (inventory.quickSlot.GetComponent<QuickSlot>().isFilled)
         {
             InvenItem item = inventory.quickSlot.transform.GetChild(0).GetComponent<QuickInven>().invenItem;
             int itemNum = item.data.itemNumber;
-
+            // itemNum 대신 enum값으로 변경
             switch (itemNum) // 아이템 코드
             {
                 case 2: // 아이템 넘버코드가 2번(미사일일 경우)
@@ -331,7 +334,6 @@ public class Player : MonoBehaviour
                             {
                                 rotateCore.SetActive(true);
                             }
-
 
                             if (Input.GetKey(KeyCode.O))
                             {
@@ -350,6 +352,7 @@ public class Player : MonoBehaviour
                                 {
                                     state = State.BombThrow;
                                 }
+                                // 미사일 쏠 때 sin cos 사용해서 바꿔보기..
                                 if (transform.localScale.x < 0)
                                 {
                                     if (core.rotation == Quaternion.Euler(new Vector3(0, 0, -90)))
@@ -470,12 +473,6 @@ public class Player : MonoBehaviour
         StateCheck(state);
     }
 
-
-    void Run(float x)
-    {
-        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
-    }
-
     void StateCheck(State state)
     {
         switch (state)
@@ -568,6 +565,20 @@ public class Player : MonoBehaviour
 
         }
     }
+    void IdleSprite()
+    {
+        sa.SetSprite(idleSprites, 0.2f);
+        state = State.Idle;
+        if (isAttacking == true)
+        {
+            isAttacking = false;
+        }
+        if (isHurt == true)
+        {
+            isHurt = false;
+        }
+    }
+
     void Bullet()
     {
         PBullet pbullet = Pooling.Instance.GetPool(DicKey.pBullet, firePos).GetComponent<PBullet>();
@@ -586,14 +597,14 @@ public class Player : MonoBehaviour
     void Bullet(State state)
     {
         PBullet pbullet = null;
-        if (state.Equals(State.WalkAttack) || state.Equals(State.RunAttack))
+        Transform pos = (state.Equals(State.WalkAttack) || state.Equals(State.RunAttack)) ? firePos :
+                        (state.Equals(State.SitAttack)) ? sitFirePos : null;
+
+        if(pos!=null)
         {
-            pbullet = Pooling.Instance.GetPool(DicKey.pBullet, firePos).GetComponent<PBullet>();
+            pbullet = Pooling.Instance.GetPool(DicKey.pBullet, pos).GetComponent<PBullet>();
         }
-        if (state.Equals(State.SitAttack))
-        {
-            pbullet = Pooling.Instance.GetPool(DicKey.pBullet, sitFirePos).GetComponent<PBullet>();
-        }
+
         if (transform.localScale.x < 0)
         {
             pbullet.isRight = false;
@@ -611,12 +622,9 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            else if(canFire)
-            {
-                Bullet();
-                fireTimer = 0;
-                canFire = false;
-            }
+            Bullet();
+            fireTimer = 0;
+            canFire = false;
         }
 
         
@@ -626,33 +634,17 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            else if (canFire)
-            {
-                Bullet(state);
-                fireTimer = 0;
-                canFire = false;
-            }
+            Bullet(state);
+            fireTimer = 0;
+            canFire = false;
         }
         
     }
 
-    void IdleSprite()
-    {
-        sa.SetSprite(idleSprites, 0.2f);
-        state = State.Idle;
-        if (isAttacking == true)
-        {
-            isAttacking = false;
-        }
-        if(isHurt == true)
-        {
-            isHurt = false;
-        }
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Ground>())
+        if (collision.gameObject.GetComponent<Ground>()) // 태그로 처리
         {
             isJump = false;
         }
@@ -675,20 +667,23 @@ public class Player : MonoBehaviour
             isJump = false;
             onMoveFloor = true;
             transform.SetParent(collision.transform);
+            // y값 따라가게 하고
             //transform.localScale = new Vector3(5, 5, 1);
         }
 
-        if (collision.gameObject.GetComponent<Enemy>())
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        
+        if (enemy)
         {
-            if (data.HP > collision.gameObject.GetComponent<Enemy>().data.AttackPower)
+            if (data.HP > enemy.data.AttackPower)
             {
                 isHurt = true;
-                data.HP -= collision.gameObject.GetComponent<Enemy>().data.AttackPower;
+                data.HP -= enemy.data.AttackPower;
                 Debug.Log($"{data.HP}");
                 state = State.Hurt;
 
             }
-            else if (data.HP <= collision.gameObject.GetComponent<Enemy>().data.AttackPower)
+            else if (data.HP <= enemy.data.AttackPower)
             {
                 Dead();
             }
@@ -751,9 +746,13 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.GetComponent<UpDownGround>())
         {
+            /*
+            Vector3 pos = collision.gameObject.GetComponent<UpDownGround>().transform.position;
+            pos.y -= 3;
+            transform.position = pos;
+            */
             if (Input.GetButtonDown("Jump"))
             {
-                //rigid.velocity = Vector2.zero;
                 transform.SetParent(null);
             }
         }
@@ -799,10 +798,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            else
-            {
-                collision.gameObject.GetComponent<FireButton>().isOn = true;
-            }
+            collision.gameObject.GetComponent<FireButton>().isOn = true;
         }
 
         if (collision.gameObject.GetComponent<EBullet2>())
@@ -1042,6 +1038,10 @@ public class Player : MonoBehaviour
 
         if(collision.GetComponent<LadderTop>())
         {
+            if(ladder == null)
+            {
+                return;
+            }
             collision.GetComponent<LadderTop>().LadderTopTrigger(false);
             if (ladder.GetComponent<LadderTop>())
             {
@@ -1051,10 +1051,6 @@ public class Player : MonoBehaviour
                 state = State.Idle;
                 GetComponent<Rigidbody2D>().gravityScale = 1;
                 ladder = null;
-            }
-            else
-            {
-                return;
             }
         }
 

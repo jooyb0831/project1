@@ -28,8 +28,6 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         cntBG.SetActive(data.count <= 1 ? false : true);
     }
 
-    
-
     public void SetInventory(Inventory inven)
     {
         inventory = inven;
