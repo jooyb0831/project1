@@ -538,8 +538,9 @@ MonoBehaviour:
   shield: {fileID: 0}
   delay: 0
   coolTimer: 0
-  timer: 0
   isOn: 0
+  duration: 5
+  shieldTimer: 0
 --- !u!4 &187861748
 Transform:
   m_ObjectHideFlags: 0
@@ -761,6 +762,74 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &819429250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 819429251}
+  - component: {fileID: 819429252}
+  m_Layer: 0
+  m_Name: Quest2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &819429251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819429250}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1000781201}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &819429252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819429250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e8e9bf438a505b4994041848eef4446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    isStart: 0
+    QuestTitle: 
+    QuestNumber: 0
+    isDone: 0
+    isEnd: 0
+    maxCount: 0
+    curCount: 0
+    exp: 0
+    gold: 0
+    qType: 0
+    objIndex: 0
+    QuestExplain: 
+    QuestRewardTxt: 
+    basicDialogue: []
+    yesDialogue: []
+    noDialogue: []
+  questUI: {fileID: 5118186400754432002, guid: c71760cddd9978d49840f8ddb2842700, type: 3}
+  qMenuUI: {fileID: -3198823569248683210, guid: 34742225445ff4442a3216026adc18c5, type: 3}
+  thisQuestUI: {fileID: 0}
+  thisQuestMenuUI: {fileID: 0}
+  qTitle: 
+  curCnt: 0
+  maxCnt: 0
 --- !u!1 &866691170
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +903,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 10268520637221029}
+  - {fileID: 819429251}
   m_Father: {fileID: 1693046020}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -978,6 +1048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   qList:
   - {fileID: 7033643449859663994}
+  - {fileID: 819429252}
   onGoingQList: []
   qUIList: []
   qMUIList: []
@@ -1243,6 +1314,7 @@ MonoBehaviour:
     QuestTitle: 
     QuestNumber: 0
     isDone: 0
+    isEnd: 0
     maxCount: 0
     curCount: 0
     exp: 0

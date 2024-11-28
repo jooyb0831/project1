@@ -13,7 +13,7 @@ TagManager:
   - BombArea
   - Boss1Atk
   - SnowArea
-  - SnowBallEndZone
+  - Lava
   layers:
   - Default
   - TransparentFX

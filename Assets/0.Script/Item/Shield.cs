@@ -7,7 +7,7 @@ public class Shield : MonoBehaviour
     private Player p;
     [SerializeField] float duration;
     [SerializeField] float timer;
-    public bool isEnd = false;
+    public bool isStart = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,14 +17,19 @@ public class Shield : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
+        if(gameObject.activeSelf)
+        {
+            isStart = true;
+        }
         transform.position = p.transform.position;
         timer += Time.deltaTime;
         if(timer>=duration)
         {
             timer = 0;
-            isEnd = true;
-            gameObject.SetActive(false);
+            Pooling.Instance.SetPool(DicKey.shield, gameObject);
         }
+        */
         
     }
 
@@ -50,5 +55,10 @@ public class Shield : MonoBehaviour
             Pooling.Instance.SetPool(DicKey.boss3Bullet, collision.GetComponent<Boss3Bullet>().gameObject);
         }
 
+    }
+
+    public void Initialize()
+    {
+        transform.position = Vector2.zero;
     }
 }

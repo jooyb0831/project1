@@ -293,9 +293,9 @@ public class Inventory : Singleton<Inventory>
         quickSlot.GetComponent<QuickSlot>().isFilled = true;
     }
 
-    public void ItemCount(InvenItem item, int count, bool sell)
+    public void ItemCount(InvenItem item, int count, bool min)
     {
-        if(sell == true)
+        if(min == true)
         {
             int minus = item.data.count - count;
 

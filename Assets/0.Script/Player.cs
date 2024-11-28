@@ -162,86 +162,6 @@ public class Player : MonoBehaviour
             GetComponent<CapsuleCollider2D>().offset = originOffset;
             GetComponent<CapsuleCollider2D>().size = originSize;
         }
-        /*
-        if(ladderAttach)
-        {
-            if(Input.GetAxisRaw("Vertical")!=0)
-            {
-                ladderMoveTrue = true;
-            }
-            else
-            {
-                ladderMoveTrue = false;
-            }
-        }
-        if(isLadder)
-        {
-            if(Input.GetAxisRaw("Vertical")!=0)
-            {
-                ladderMoveTrue = true;
-            }
-            else
-            {
-                state = State.LadderIdle;
-                ladderMoveTrue = false;
-            }
-        }
-        */
-        /*
-        if(hit.collider.GetComponent<Ground>())
-        {
-            dist = hit.distance;
-        }
-        
-        if(isJump && Input.GetAxisRaw("Horizontal")!=0)
-        {
-            if(Input.GetKey(KeyCode.LeftShift))
-            {
-                isJumpRun = true;
-                speed = data.Speed;
-                Move();
-            }
-            
-            else
-            {
-                Move();
-            }
-        }
-        else
-        {
-            Move();
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            isJumpRun = false;
-        }
-
-        
-        if (isJump)
-        {
-            if (Input.GetAxisRaw("Horizontal") != 0)
-            {
-                if(Input.GetKey(KeyCode.LeftShift))
-                {
-                    speed = data.Speed;
-                }
-                else
-                {
-                    Move();
-                }
-            }
-            else
-            {
-                Move();
-            }
-        }
-        else
-        {
-            Move();
-        }
-        */
-
-
 
         fireTimer += Time.deltaTime;
         if (fireTimer > fireDelayTime)
@@ -305,25 +225,6 @@ public class Player : MonoBehaviour
                 }
                 isRun = false;
             }
-            /*
-            if (!ladderMoveTrue)
-            {
-                state = State.LadderIdle;
-            }
-            else if(ladderMoveTrue)
-            {
-                if (y != 0)
-                {
-                    state = State.LadderMove;
-                    transform.Translate(new Vector2(0, y) * Time.deltaTime * speed);
-                }
-                else
-                {
-                    state = State.LadderIdle;
-                }
-            }
-            */
-
             StateCheck(state);
             return;
         }
@@ -395,9 +296,8 @@ public class Player : MonoBehaviour
             }
             isRun = false;
         }
-
-        // 점프중일 때 Shift 키 막기
-
+        
+        // 총알 발사
         if (Input.GetKey(KeyCode.P))
         {
             if (state != State.Attack && state != State.WalkAttack && state!=State.SitAttack)
@@ -412,18 +312,7 @@ public class Player : MonoBehaviour
                     state = State.Attack;
                 }
             }
-            /*
-            if (canFire == true)
-            {
-                
-                canFire = false;
-                //Invoke("Bullet", 0.3f);
-            }
-            else
-            {
-                return;
-            }
-            */
+
         }
 
         // 아이템 사용하는 코드
@@ -761,49 +650,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SpriteChange(float x, float y)
-    {
-        //움직이고 있을 때
-        if(x!=0)
-        {
-            // 캐릭터의 방향
-           
-        }
-        else
-        {
-
-        }
-
-        /*
-        // 움직이지 않는 경우
-        else if(x==0)
-        {
-            // 점프하고 있을 때
-            if(y!=0 && isJump == true)
-            {
-                sa.SetSprite(jumpSprites, 0.3f);
-            }
-            // 공격중일 때
-            if (state == State.Attack)
-            {
-                sa.SetSprite(attackSprites, 0.2f);
-                Invoke("IdleSprite", 0.6f);
-            }
-            if(state.Equals(State.Hurt))
-            {
-                sa.SetSprite(hurtSprites, 0.2f);
-            }
-            if (state != State.Idle && isAttacking == false && isJump == false)
-            {
-                sa.SetSprite(idleSprites, 0.2f);
-                state = State.Idle;
-            }
-        */
-    }
-
-
-
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<Ground>())
@@ -831,8 +677,6 @@ public class Player : MonoBehaviour
             transform.SetParent(collision.transform);
             //transform.localScale = new Vector3(5, 5, 1);
         }
-
-
 
         if (collision.gameObject.GetComponent<Enemy>())
         {
@@ -894,8 +738,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<MoveGround>())
@@ -939,11 +781,28 @@ public class Player : MonoBehaviour
         {
             Dead();
         }
+
+        if(collision.CompareTag("Lava"))
+        {
+            Dead();
+        }
         
 
         if (collision.gameObject.GetComponent<Jump>() && rigid.velocity.y < 0)
         {
             rigid.AddForce(new Vector2(0, 17), ForceMode2D.Impulse);
+        }
+
+        if(collision.gameObject.GetComponent<FireButton>() && rigid.velocity.y <0)
+        {
+            if(collision.gameObject.GetComponent<FireButton>().isOn)
+            {
+                return;
+            }
+            else
+            {
+                collision.gameObject.GetComponent<FireButton>().isOn = true;
+            }
         }
 
         if (collision.gameObject.GetComponent<EBullet2>())
@@ -1138,6 +997,17 @@ public class Player : MonoBehaviour
             speed /= 2;
             data.Speed /= 2;
             data.RunSpeed /= 2;
+        }
+
+        if(collision.GetComponent<FireBar>())
+        {
+            isHurt = true;
+            state = State.Hurt;
+            data.HP -= collision.GetComponent<FireBar>().damage;
+            if(data.HP<=0)
+            {
+                Dead();
+            }
         }
     }
 

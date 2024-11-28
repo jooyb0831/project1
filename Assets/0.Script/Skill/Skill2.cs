@@ -7,8 +7,10 @@ public class Skill2 : Skill
     [SerializeField] Shield shield;
     [SerializeField] float delay;
     [SerializeField] float coolTimer;
-    [SerializeField] float timer;
     [SerializeField] bool isOn = false;
+
+    [SerializeField] float duration;
+    [SerializeField] float shieldTimer;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,19 +34,26 @@ public class Skill2 : Skill
     {
         if(!isOn)
         {
-            Instantiate(shield, p.transform);
+            shield = Pooling.Instance.GetPool(DicKey.shield, p.transform).GetComponent<Shield>();
             isOn = true;
         }
-        else
+        shield.transform.position = p.transform.position;
+        shieldTimer += Time.deltaTime;
+        if (shieldTimer >= duration)
         {
-            return;
+            shieldTimer = 0;
+            Pooling.Instance.SetPool(DicKey.shield, shield.gameObject);
+            isStart = false;
+            isOn = false;
         }
-        
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(isStart)
         {
             SkillAct();
@@ -55,6 +64,7 @@ public class Skill2 : Skill
         {
             CoolTimeCheck();
         }
+
     }
 
     void CoolTimeCheck()
@@ -62,8 +72,8 @@ public class Skill2 : Skill
         coolTimer += Time.deltaTime;
         if (coolTimer >= data.CoolTime)
         {
-            coolTimer = 0;
             isWorking = false;
+            coolTimer = 0;
         }
     }
 }

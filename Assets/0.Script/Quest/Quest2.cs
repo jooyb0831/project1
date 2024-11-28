@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Quest1 :Quest
+public class Quest2 : Quest
 {
     // Start is called before the first frame update
     void Start()
@@ -13,46 +13,44 @@ public class Quest1 :Quest
     // Update is called once per frame
     void Update()
     {
-        if(data.curCount >= data.maxCount)
+        if (data.curCount >= data.maxCount)
         {
             data.isDone = true;
         }
-
     }
-
     public override void Init()
     {
         if (gi == null)
         {
             gi = GameManager.Instance.GameUI;
         }
-        if(menuUI == null)
+        if (menuUI == null)
         {
             menuUI = GameManager.Instance.MUI;
         }
-        data.QuestTitle = "눈알 몬스터 처치";
-        data.QuestNumber = 0;
+        data.QuestTitle = "용암 몬스터 처치";
+        data.QuestNumber = 1;
         data.isDone = false;
         data.maxCount = 2;
         data.curCount = 0;
-        data.exp = 15;
-        data.gold = 20;
+        data.exp = 20;
+        data.gold = 25;
         data.qType = QuestType.Kill;
-        data.objIndex = 0;
-        data.QuestExplain = $"눈알 몬스터 {data.maxCount}마리를 처치하기.";
+        data.objIndex = 1;
+        data.QuestExplain = $"용암 몬스터 {data.maxCount}마리를 처치하기.";
         data.QuestRewardTxt = $"보상 : EXP {data.exp}, 골드 {data.gold}";
-        data.basicDialogue = JsonData.Instance.questDialogueData.questDialogueData[0].quest1Basic;
-        data.yesDialogue = JsonData.Instance.questDialogueData.questDialogueData[0].quest1Y;
-        data.noDialogue = JsonData.Instance.questDialogueData.questDialogueData[0].quest1N;
+        data.basicDialogue = JsonData.Instance.questDialogueData.questDialogueData[1].quest1Basic;
+        data.yesDialogue = JsonData.Instance.questDialogueData.questDialogueData[1].quest1Y;
+        data.noDialogue = JsonData.Instance.questDialogueData.questDialogueData[1].quest1N;
 
         questUI.quest = this;
         qMenuUI.quest = this;
-        
+
         base.Init();
     }
-
     public override void QuestAdd()
     {
+        base.QuestAdd();
         QuestUI qUI = Instantiate(questUI, gi.questArea);
         QuestMenuUIPreset qMUI = Instantiate(qMenuUI, menuUI.questArea);
         qUI.SetData(this.data);
@@ -65,7 +63,7 @@ public class Quest1 :Quest
         thisQuestUI = qUI;
         thisQuestMenuUI = qMUI;
 
-        base.QuestAdd();
+       
     }
 
     public override void SetQuestUI()
@@ -90,7 +88,7 @@ public class Quest1 :Quest
         pData.EXP += data.exp;
         pData.Coin += data.gold;
         data.isEnd = true;
-        
+
     }
 
     public override void QuesUIRemove()
@@ -98,5 +96,4 @@ public class Quest1 :Quest
         thisQuestUI.gameObject.SetActive(false);
         thisQuestMenuUI.gameObject.SetActive(false);
     }
-
 }

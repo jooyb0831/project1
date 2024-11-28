@@ -25,6 +25,12 @@ public class FallSnowBall : MonoBehaviour
             isEnd = true;
             StartCoroutine(Shrink());
         }
+
+        if(collision.GetComponent<FireBar>())
+        {
+            isEnd = true;
+            StartCoroutine(Shrink2());
+        }
     }
 
     IEnumerator Shrink()
@@ -35,6 +41,17 @@ public class FallSnowBall : MonoBehaviour
             .OnComplete(() =>
             {
                 Pooling.Instance.SetPool(DicKey.fallSnowBall,gameObject);
+            });
+    }
+
+    IEnumerator Shrink2()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        transform.DOScale(new Vector3(1, 1, 1), 1f)
+            .OnComplete(() =>
+            {
+                Pooling.Instance.SetPool(DicKey.fallSnowBall, gameObject);
             });
     }
 

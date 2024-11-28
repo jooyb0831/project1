@@ -9,6 +9,7 @@ public class QuestData
     public string QuestTitle;
     public int QuestNumber;
     public bool isDone;
+    public bool isEnd;
     public int maxCount;
     public int curCount;
     public int exp;
@@ -57,7 +58,14 @@ public abstract class Quest : MonoBehaviour
 
     public virtual void QuestAdd()
     {
-
+        if(gi == null)
+        {
+            gi = GameManager.Instance.GameUI;
+        }
+        if(menuUI == null)
+        {
+            menuUI = GameManager.Instance.MUI;
+        }
     }
 
     public virtual void SetQuestUI()
@@ -70,7 +78,20 @@ public abstract class Quest : MonoBehaviour
         {
             menuUI = GameManager.Instance.MUI;
         }
-    }    
+    }
+    
+    public virtual void QuestReward()
+    {
+        if (pData == null)
+        {
+            pData = GameManager.Instance.PlayerData;
+        }
+    }
+
+    public virtual void QuesUIRemove()
+    {
+
+    }
     // Start is called before the first frame update
     void Start()
     {

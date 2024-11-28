@@ -44,17 +44,27 @@ public class DialogueWindowUI : MonoBehaviour
         idx++;
         if (idx<currentDialogue.Count)
         {
-            stringArea.text = basicDialogue[idx];
+            stringArea.text = currentDialogue[idx];
         }    
 
-        else if (idx==basicDialogue.Count)
+        else if (idx >= currentDialogue.Count)
         {
-            if(!isBasicDialogue)
+            if(curQuest.data.isDone)
             {
+                curQuest.QuestReward();
+                curQuest.QuesUIRemove();
                 gameObject.SetActive(false);
+                curQuest = null;
+                QuestNPCUI.Instance.QuestReset();
+                idx = 0;
                 return;
             }
-            else
+            else if(curQuest.data.isStart && !curQuest.data.isDone)
+            {
+                gameObject.SetActive(false);
+               
+            }
+            else if(!curQuest.data.isStart)
             {
                 answerWindow.SetActive(true);
                 nextBtn.gameObject.SetActive(false);
@@ -81,6 +91,7 @@ public class DialogueWindowUI : MonoBehaviour
         SetCurDialogue(yesDialogue);
         isBasicDialogue = false;
         idx = 0;
+        QuestNPCUI.Instance.onGoingQuest = curQuest;
         QuestManager.Instance.AddQuest(curQuest);
         answerWindow.SetActive(false);
         nextBtn.gameObject.SetActive(true);

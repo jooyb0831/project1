@@ -620,7 +620,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6307859564404053241}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 197490291266676095}
+        m_TargetAssemblyTypeName: InvenItemOption, Assembly-CSharp
+        m_MethodName: OnDeleteBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7342973930573640167
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +646,7 @@ GameObject:
   - component: {fileID: 1138691985764997142}
   - component: {fileID: 3789128210778981293}
   m_Layer: 5
-  m_Name: UseTxt
+  m_Name: DumpTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1081,6 +1093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  dumpWindowUI: {fileID: 7406474750368646294, guid: 70789f48d070dfa4f8840072cfd73225, type: 3}
 --- !u!222 &7135343261005850909
 CanvasRenderer:
   m_ObjectHideFlags: 0

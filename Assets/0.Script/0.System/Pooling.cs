@@ -12,7 +12,8 @@ public enum DicKey
     boss2Bullet,
     boss3Bullet,
     bomb,
-    fallSnowBall
+    fallSnowBall,
+    shield
 }
 public class Pooling : Singleton<Pooling>
 {
@@ -25,6 +26,7 @@ public class Pooling : Singleton<Pooling>
     private Queue<Boss3Bullet> boss3BulletQueue = new Queue<Boss3Bullet>();
     private Queue<Bomb> bombQueue = new Queue<Bomb>();
     private Queue<FallSnowBall> snowBallQueue = new Queue<FallSnowBall>();
+    private Queue<Shield> shields = new Queue<Shield>();
 
     public PBullet pBullet;
     [SerializeField] EBullet eBullet;
@@ -35,6 +37,7 @@ public class Pooling : Singleton<Pooling>
     [SerializeField] Boss3Bullet boss3Bullet;
     [SerializeField] Bomb bomb;
     [SerializeField] FallSnowBall fallSnowBall;
+    [SerializeField] Shield shield;
 
     private Dictionary<DicKey, Queue<GameObject>> pool = new Dictionary<DicKey, Queue<GameObject>>();
     // Start is called before the first frame update
@@ -49,6 +52,7 @@ public class Pooling : Singleton<Pooling>
         pool.Add(DicKey.boss3Bullet, new Queue<GameObject>());
         pool.Add(DicKey.bomb, new Queue<GameObject>());
         pool.Add(DicKey.fallSnowBall, new Queue<GameObject>());
+        pool.Add(DicKey.shield, new Queue<GameObject>());
         
     }
 
@@ -99,6 +103,11 @@ public class Pooling : Singleton<Pooling>
             case DicKey.fallSnowBall:
                 {
                     obj.GetComponent<FallSnowBall>().Initialize();
+                }
+                break;
+            case DicKey.shield:
+                {
+                    obj.GetComponent<Shield>().Initialize();
                 }
                 break;
         }
@@ -153,6 +162,12 @@ public class Pooling : Singleton<Pooling>
                 case DicKey.fallSnowBall:
                     {
                         obj = Instantiate(fallSnowBall, trans.position, Quaternion.identity).gameObject;
+                        pool[key].Enqueue(obj);
+                    }
+                    break;
+                case DicKey.shield:
+                    {
+                        obj = Instantiate(shield, trans.position, Quaternion.identity).gameObject;
                         pool[key].Enqueue(obj);
                     }
                     break;
