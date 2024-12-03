@@ -35,6 +35,7 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void ItemCntChange(InvenData data)
     {
+        
         cntTxt.text = $"{data.count}";
         cntBG.SetActive(data.count <= 1 ? false : true);
         if(data.inQuickSlot)

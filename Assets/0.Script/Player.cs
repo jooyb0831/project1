@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform missilePos;
     [SerializeField] Missile missile;
     [SerializeField] Transform foot;
-    [SerializeField] Transform bombPos;
+    public Transform bombPos;
     [SerializeField] float dist;
     [SerializeField] Transform pBulletParent;
     public bool isRun = false;
@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     [SerializeField] float fireTimer;
 
     [SerializeField] bool onMoveFloor = false;
+    [SerializeField] GameObject moveFloor = null;
     public enum State
     {
         Idle,
@@ -71,7 +72,7 @@ public class Player : MonoBehaviour
     private List<Sprite> bombSprites;
 
     [SerializeField] bool isJumpRun = false;
-    [SerializeField] State state = State.Idle;
+    public State state = State.Idle;
     [SerializeField] Transform core;
     public Transform skill1;
     public Transform skill2;
@@ -113,17 +114,21 @@ public class Player : MonoBehaviour
 
     [SerializeField] bool ladderAttach = false;
     [SerializeField] GameObject ladder = null;
+    
+    /// <summary>
+    /// 사다리에 붙음 처리 함수
+    /// </summary>
     void LadderAttach()
     {
         if(isLadder)
         {
-            if(ladder.GetComponent<LadderTop>())
+            if (ladder.GetComponent<LadderTop>())
             {
                 if(Input.GetKeyDown(KeyCode.S))
                 {
                     ladder.GetComponent<LadderTop>().LadderTopTrigger(true);
                     ladderAttach = true;
-                    isJump = false;
+                    state = State.LadderIdle;
                 }
             }
             else
@@ -131,17 +136,25 @@ public class Player : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
                 {
                     ladderAttach = true;
-                    isJump = false;
+                    state = State.LadderIdle;
                 }
             }
+            StateCheck(state);
 
         }
     }
 
-    [SerializeField] bool ladderMoveTrue = false;
+    
     // Update is called once per frame
     void Update()
     {
+        if(onMoveFloor)
+        {
+            Vector2 pos = moveFloor.gameObject.transform.position;
+            transform.position = new Vector2(transform.position.x, pos.y+1.3f);
+        }
+
+        Missile();
         if(inventory==null)
         {
             inventory = GameManager.Instance.Inven;
@@ -154,16 +167,11 @@ public class Player : MonoBehaviour
         }
 
         Move();
+
+
         LadderAttach();
-        RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down*0.2f);
-        Debug.DrawRay(foot.position, Vector3.down*0.2f, Color.red);
 
-        if(hit.collider != null)
-        {
-            //점프 안되게
-        }
-
-        if(Input.GetKeyUp(KeyCode.C))
+        if (Input.GetKeyUp(KeyCode.C))
         {
             GetComponent<CapsuleCollider2D>().offset = originOffset;
             GetComponent<CapsuleCollider2D>().size = originSize;
@@ -179,18 +187,29 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 플레이어 점프
+    /// </summary>
+    void Jump()
+    {
+       //tate = State.Jump;
+        if(GetComponent<Rigidbody2D>().gravityScale!=1)
+        {
+            GetComponent<Rigidbody2D>().gravityScale = 1;
+        }
+        rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
+        isLadder = false;
+        ladderAttach = false;
+    }
+
+    
+    /// <summary>
     /// 플레이어 움직임
     /// </summary>
     void Move()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        if (speed == 0)
-        {
-            speed = data.Speed;
-        }
-
-        switch(state)
+        switch (state)
         {
             case State.Hurt:
             case State.Dead:
@@ -199,68 +218,125 @@ public class Player : MonoBehaviour
                 }
                 return;
         }
-
-        if(ladderAttach)
+        if (speed == 0)
+        {
+            speed = data.Speed;
+        }
+        #region 사다리 이동
+        // 사다리에 붙은 상태
+        if (ladderAttach)
         {
             GetComponent<Rigidbody2D>().gravityScale = 0;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            if (y!=0)
+
+            // 사다리에 매달려 있는 상태에서 점프키 누르면 점프로 변경
+            if (Input.GetButtonDown("Jump"))
+            {
+                Jump();
+            }
+
+            // y(종 이동)값이 0이 아닌 경우 : 위 아래로 이동중
+            if (y != 0)
             {
                 state = State.LadderMove;
+
+                // 종으로 이동
                 transform.Translate(new Vector2(0, y) * Time.deltaTime * speed);
             }
             else
             {
                 state = State.LadderIdle;
             }
+            StateCheck(state);
+            return;
+        }
+        #endregion
 
-            if (Input.GetButtonDown("Jump"))
-            {
+        // 플레이어 기본 움직임(횡 이동)
+        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
 
-                if (!isJump)
-                {
-                    state = State.Jump;
-                    GetComponent<Rigidbody2D>().gravityScale = 1;
-                    rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
-                    transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
-                    isJump = true;
-                    isLadder = false;
-                    ladderAttach = false;
-                }
-                isRun = false;
-            }
+        #region 점프
+        // 점프 Raycast
+        RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down, 0.2f);
+        Debug.DrawRay(foot.position, Vector3.down * 0.2f, Color.red);
+
+        if(hit.collider == null)
+        {
+            state = State.Jump;
+            transform.localScale = x > 0 ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
             StateCheck(state);
             return;
         }
 
+        // Raycast의 반환(hit)이 Ground인 경우
+        if(hit.collider.GetComponent<Ground>())
+        {
+            state = State.Idle;
+            if(Input.GetButtonDown("Jump"))
+            {
+                Jump();
+            }
+        }
+        else
+        {
+            state = State.Jump;
+            StateCheck(state);
+        }
+        #endregion
+
+
+        #region 횡 이동
+        // x(횡 이동)값이 0이 아닌 경우 : 좌우로 이동할 때
         if (x != 0)
         {
             // 변수 = 조건 ? 참 : 거짓
 
             transform.localScale = x > 0 ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
-            state = State.Walk;
+            
+            if(state == State.Jump)
+            {
+                StateCheck(state);
+                return;
+            }
+            
+            // 플레이어 달리기
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                speed = data.RunSpeed;
+                state = State.Run;
+
+                // 달리는 상태에서 총을 쏠 경우
+                if (Input.GetKey(KeyCode.P))
+                {
+                    state = State.RunAttack;
+                    Fire();
+                }
+            }
+            else
+            {
+                state = State.Walk;
+            }
+
+            // 키에서 손을 때면 원래 속도로
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speed = data.Speed;
+            }
+
         }
         else
         {
+            if(state==State.Jump)
+            {
+                return;
+            }
             state = State.Idle;
         }
+        #endregion
+
 
         #region 키 이벤트
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-
-            speed = data.RunSpeed;
-            state = State.Run;
-            if (Input.GetKey(KeyCode.P))
-            {
-                state = State.RunAttack;
-                Fire();
-            }
-            isRun = true;
-        }
-        
-        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
-
+        // 앉기
         if (Input.GetKey(KeyCode.C))
         {
             state = State.Sit;
@@ -272,33 +348,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if(dist>0.1f)
-            {
-                return;
-            }
-        }
-
-        
-
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            speed = data.Speed;
-            isRun = false;
-        }
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (!isJump)
-            {
-                isJump = true;
-                state = State.Jump;
-                rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
-            }
-            isRun = false;
-        }
-        
         // 총알 발사
         if (Input.GetKey(KeyCode.P))
         {
@@ -322,6 +371,33 @@ public class Player : MonoBehaviour
         if (inventory.quickSlot.GetComponent<QuickSlot>().isFilled)
         {
             InvenItem item = inventory.quickSlot.transform.GetChild(0).GetComponent<QuickInven>().invenItem;
+
+            if (item.data.type.Equals(ItemType.Missile))
+            {
+                if(Input.GetKeyDown(KeyCode.O))
+                {
+                    item.data.fItem.Using();
+                }
+                if (Input.GetKey(KeyCode.O))
+                {
+                    item.data.fItem.GetComponent<MissileItem>().FireReady();
+                }
+                if(Input.GetKeyUp(KeyCode.O))
+                {
+                    item.data.fItem.GetComponent<MissileItem>().Fire();
+                    Inventory.Instance.UseItem(item);
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.O))
+                {
+                    Inventory.Instance.UseItem(item);
+                }
+            }
+
+
+            /*
             int itemNum = item.data.itemNumber;
             // itemNum 대신 enum값으로 변경
             switch (itemNum) // 아이템 코드
@@ -461,18 +537,18 @@ public class Player : MonoBehaviour
                     }
                     break;
             }
+            */
 
         }
         
 
-        if (isJump)
-        {
-            state = State.Jump;
-        }
-
         StateCheck(state);
     }
 
+    /// <summary>
+    /// State에 따라 Sprite 바꾸는 함수
+    /// </summary>
+    /// <param name="state"></param>
     void StateCheck(State state)
     {
         switch (state)
@@ -565,20 +641,19 @@ public class Player : MonoBehaviour
 
         }
     }
+
+    /// <summary>
+    /// 특정 행동 후 Idle 상태로 바꾸는 함수
+    /// </summary>
     void IdleSprite()
     {
         sa.SetSprite(idleSprites, 0.2f);
         state = State.Idle;
-        if (isAttacking == true)
-        {
-            isAttacking = false;
-        }
-        if (isHurt == true)
-        {
-            isHurt = false;
-        }
     }
 
+    /// <summary>
+    /// 총알(IdleState)
+    /// </summary>
     void Bullet()
     {
         PBullet pbullet = Pooling.Instance.GetPool(DicKey.pBullet, firePos).GetComponent<PBullet>();
@@ -593,7 +668,10 @@ public class Player : MonoBehaviour
         pbullet.transform.SetParent(pBulletParent);
     }
 
-    
+    /// <summary>
+    /// 총알(움직일 경우)
+    /// </summary>
+    /// <param name="state"></param>
     void Bullet(State state)
     {
         PBullet pbullet = null;
@@ -613,7 +691,9 @@ public class Player : MonoBehaviour
 
     }
     
-
+    /// <summary>
+    /// 총알 발사
+    /// </summary>
     void Fire()
     {
         if(state == State.WalkAttack || state == State.RunAttack)
@@ -641,52 +721,35 @@ public class Player : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 플레이어 피격 처리 함수
+    /// </summary>
+    /// <param name="damage"></param>
+    void PlayerHit(int damage)
+    {
+        state = State.Hurt;
+        data.HP -= damage;
+        if (data.HP <= 0)
+        {
+            Dead();
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Ground>()) // 태그로 처리
-        {
-            isJump = false;
-        }
 
-        if(collision.gameObject.CompareTag("Ground"))
-        {
-            isJump = false;
-        }
-        
         if (collision.gameObject.GetComponent<MoveGround>())
         {
-            isJump = false;
-            onMoveFloor = true;
             transform.SetParent(collision.transform);
             //transform.localScale = new Vector3(5, 5, 1);
         }
 
         if (collision.gameObject.GetComponent<UpDownGround>())
         {
-            isJump = false;
+
             onMoveFloor = true;
+            moveFloor = collision.gameObject;
             transform.SetParent(collision.transform);
-            // y값 따라가게 하고
-            //transform.localScale = new Vector3(5, 5, 1);
-        }
-
-        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-        
-        if (enemy)
-        {
-            if (data.HP > enemy.data.AttackPower)
-            {
-                isHurt = true;
-                data.HP -= enemy.data.AttackPower;
-                Debug.Log($"{data.HP}");
-                state = State.Hurt;
-
-            }
-            else if (data.HP <= enemy.data.AttackPower)
-            {
-                Dead();
-            }
 
         }
 
@@ -708,23 +771,23 @@ public class Player : MonoBehaviour
                 isLadder = true;
                 collision.gameObject.GetComponent<LadderTop>().LadderTopTrigger(true);
             }
-            
+
         }
 
-        if(collision.gameObject.GetComponent<FallSnowBall>())
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        
+        if (enemy)
         {
-            if (!collision.gameObject.GetComponent<FallSnowBall>().isEnd && state!=State.Hurt)
+            PlayerHit(enemy.data.AttackPower);
+        }
+
+        FallSnowBall snowBall = collision.gameObject.GetComponent<FallSnowBall>();
+
+        if (snowBall)
+        {
+            if (!snowBall.isEnd && state!=State.Hurt)
             {
-                if(data.HP>collision.gameObject.GetComponent<FallSnowBall>().damage)
-                {
-                    isHurt = true;
-                    data.HP -= collision.gameObject.GetComponent<FallSnowBall>().damage;
-                    state = State.Hurt;
-                }
-                else if(data.HP<=collision.gameObject.GetComponent<FallSnowBall>().damage)
-                {
-                    Dead();
-                }
+                PlayerHit(snowBall.damage);
             }
             else
             {
@@ -733,26 +796,24 @@ public class Player : MonoBehaviour
         }
     }
 
+    //https://blog.naver.com/yoohee2018/221187229189
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<MoveGround>())
         {
             if(Input.GetButtonDown("Jump"))
             {
-                //rigid.velocity = Vector2.zero;
+                
                 transform.SetParent(null);
             }
         }
 
         if (collision.gameObject.GetComponent<UpDownGround>())
         {
-            /*
-            Vector3 pos = collision.gameObject.GetComponent<UpDownGround>().transform.position;
-            pos.y -= 3;
-            transform.position = pos;
-            */
             if (Input.GetButtonDown("Jump"))
             {
+                onMoveFloor = false;
+                
                 transform.SetParent(null);
             }
         }
@@ -761,14 +822,24 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<MoveGround>())
         {
-            onMoveFloor = false;
             transform.SetParent(null);
         }
 
         if (collision.gameObject.GetComponent<UpDownGround>())
         {
             onMoveFloor = false;
+            moveFloor = null;
             transform.SetParent(null);
+        }
+
+        if(collision.gameObject.GetComponent<LadderTop>())
+        {
+            if (ladder == null)
+            {
+                return;
+            }
+            ladder = null;
+            isLadder = false;
         }
     }
 
@@ -776,6 +847,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform ladderBtm;
     private void OnTriggerEnter2D(Collider2D collision)
     {
+       
         if(collision.CompareTag("DeadZone"))
         {
             Dead();
@@ -785,7 +857,6 @@ public class Player : MonoBehaviour
         {
             Dead();
         }
-        
 
         if (collision.gameObject.GetComponent<Jump>() && rigid.velocity.y < 0)
         {
@@ -801,161 +872,36 @@ public class Player : MonoBehaviour
             collision.gameObject.GetComponent<FireButton>().isOn = true;
         }
 
-        if (collision.gameObject.GetComponent<EBullet2>())
-        {
-            if(data.HP>collision.GetComponent<EBullet2>().damage)
-            {
-                isHurt = true;
-                data.HP -= collision.GetComponent<EBullet2>().damage;
-                state = State.Hurt;
-            }
-            else if (data.HP <= collision.GetComponent<EBullet2>().damage)
-            {
-                Dead();
-            }
-            Pooling.Instance.SetPool(DicKey.eBullet2, collision.GetComponent<EBullet2>().gameObject);
-        }
-
-        if (collision.gameObject.GetComponent<EBullet>())
-        {
-            if (data.HP > collision.GetComponent<EBullet>().damage)
-            {
-                isHurt = true;
-                data.HP -= collision.GetComponent<EBullet>().damage;
-                state = State.Hurt;
-            }
-            else if (data.HP <= collision.GetComponent<EBullet>().damage)
-            {
-                Dead();
-            }
-            Pooling.Instance.SetPool(DicKey.eBullet, collision.GetComponent<EBullet>().gameObject);
-        }
-
-        if (collision.gameObject.GetComponent<Boss2Bullet>())
-        {
-            if (data.HP > collision.GetComponent<Boss2Bullet>().damage)
-            {
-                isHurt = true;
-                data.HP -= collision.GetComponent<Boss2Bullet>().damage;
-                state = State.Hurt;
-            }
-            else if (data.HP <= collision.GetComponent<Boss2Bullet>().damage)
-            {
-                Dead();
-            }
-            Pooling.Instance.SetPool(DicKey.boss2Bullet, collision.GetComponent<Boss2Bullet>().gameObject);
-        }
-
-
-        if (collision.gameObject.GetComponent<Boss3Bullet>())
-        {
-            if (data.HP > collision.GetComponent<Boss3Bullet>().damage)
-            {
-                isHurt = true;
-                data.HP -= collision.GetComponent<Boss3Bullet>().damage;
-                state = State.Hurt;
-            }
-            else if (data.HP <= collision.GetComponent<Boss3Bullet>().damage)
-            {
-                Dead();
-            }
-            Pooling.Instance.SetPool(DicKey.boss3Bullet, collision.GetComponent<Boss3Bullet>().gameObject);
-        }
-
-        if (collision.gameObject.GetComponent<Boss3Bullet2>())
-        {
-            if (data.HP > collision.GetComponent<Boss3Bullet2>().damage)
-            {
-                isHurt = true;
-                data.HP -= collision.GetComponent<Boss3Bullet2>().damage;
-                state = State.Hurt;
-            }
-            else if (data.HP <= collision.GetComponent<Boss3Bullet2>().damage)
-            {
-                Dead();
-            }
-            //Pooling.Instance.SetPool(DicKey.boss3Bullet, collision.GetComponent<Boss3Bullet>().gameObject);
-        }
-
-        if (collision.gameObject.GetComponent<FallObject>())
-        {
-            if (!collision.GetComponent<FallObject>().isAttack)
-            {
-                if (data.HP > collision.GetComponent<FallObject>().damage)
-                {
-                    collision.GetComponent<FallObject>().isAttack = true;
-                    isHurt = true;
-                    data.HP -= collision.GetComponent<FallObject>().damage;
-                    state = State.Hurt;
-                }
-                else if (data.HP <= collision.GetComponent<FallObject>().damage)
-                {
-                    Dead();
-                }
-            }
-            else
-            {
-                return;
-            }
-        }
-
-        if(collision.CompareTag("Boss2Punch"))
-        {
-            Debug.Log("인식");
-            if(collision.transform.parent.GetComponent<Boss2>().state.Equals(EnemyBoss.BossState.Attack1))
-            {
-                isHurt = true;
-                state = State.Hurt;
-                data.HP -= collision.transform.parent.GetComponent<Boss2>().data.Atk1Power;
-                if(data.HP<=0)
-                {
-                    Dead();
-                }
-            }
-        }
-
-        if(collision.gameObject.GetComponent<FireBall>())
-        {
-            if(data.HP>collision.GetComponent<FireBall>().damage)
-            {
-                isHurt = true;
-                data.HP -= collision.GetComponent<FireBall>().damage;
-                state = State.Hurt;
-            }
-            else if (data.HP <= collision.GetComponent<FireBall>().damage)
-            {
-                Dead();
-            }
-        }
-
-        if(collision.GetComponent<Ladder>())
+        if (collision.GetComponent<Ladder>())
         {
             isLadder = true;
             ladder = collision.gameObject;
         }
 
+        EBullet bullet = collision.gameObject.GetComponent<EBullet>();
+        if (bullet)
+        {
+            PlayerHit(bullet.damage);
+            Pooling.Instance.SetPool(DicKey.eBullet, bullet.gameObject);
+        }
+
+        EBullet2 bullet2 = collision.gameObject.GetComponent<EBullet2>();
+        if (bullet2)
+        {
+            PlayerHit(bullet2.damage);
+            Pooling.Instance.SetPool(DicKey.eBullet2, bullet2.gameObject);
+        }
+
         if (collision.CompareTag("Boss1Atk"))
         {
-            if(collision.transform.parent.GetComponent<Boss1>().state == EnemyBoss.BossState.Attack1)
+            Boss1 boss = collision.transform.parent.GetComponent<Boss1>();
+            if (boss.state == EnemyBoss.BossState.Attack1)
             {
-                isHurt = true;
-                state = State.Hurt;
-                data.HP -= collision.transform.parent.GetComponent<EnemyBoss>().data.Atk1Power;
-                if(data.HP<=0)
-                {
-                    Dead();
-                }
+                PlayerHit(boss.data.Atk1Power);
             }
-
-            else if (collision.transform.parent.GetComponent<Boss1>().state == EnemyBoss.BossState.Attack2)
+            else if (boss.state == EnemyBoss.BossState.Attack2)
             {
-                isHurt = true;
-                state = State.Hurt;
-                data.HP -= collision.transform.parent.GetComponent<Boss1>().data.Atk2Power;
-                if (data.HP <= 0)
-                {
-                    Dead();
-                }
+                PlayerHit(boss.data.Atk2Power);
             }
             else
             {
@@ -963,26 +909,61 @@ public class Player : MonoBehaviour
             }
         }
 
+        Boss2Bullet boss2Bullet = collision.gameObject.GetComponent<Boss2Bullet>();
+        if (boss2Bullet)
+        {
+            PlayerHit(boss2Bullet.damage);
+            Pooling.Instance.SetPool(DicKey.boss2Bullet, boss2Bullet.gameObject);
+        }
+
+        Boss3Bullet boss3Bullet = collision.gameObject.GetComponent<Boss3Bullet>();
+        if (boss3Bullet)
+        {
+            PlayerHit(boss3Bullet.damage);
+            Pooling.Instance.SetPool(DicKey.boss3Bullet, boss3Bullet.gameObject);
+        }
+
+        Boss3Bullet2 boss3Bullet2 = collision.gameObject.GetComponent<Boss3Bullet2>();
+        if (boss3Bullet2)
+        {
+            PlayerHit(boss3Bullet2.damage);
+        }
+
+        FallObject fallObj = collision.gameObject.GetComponent<FallObject>();
+        if (fallObj)
+        {
+            if (!fallObj.isAttack)
+            {
+                fallObj.isAttack = true;
+                PlayerHit(fallObj.damage);
+            }
+        }
+
+        if(collision.CompareTag("Boss2Punch"))
+        {
+            Boss2 boss = collision.transform.parent.GetComponent<Boss2>();
+            if(boss.state.Equals(EnemyBoss.BossState.Attack1))
+            {
+                PlayerHit(boss.data.Atk1Power);
+            }
+        }
+
+        FireBall fireBall = collision.gameObject.GetComponent<FireBall>();
+        if (fireBall)
+        {
+            PlayerHit(fireBall.damage);
+        }
+
         if(collision.GetComponent<ThornFloor>())
         {
-            isHurt = true;
-            state = State.Hurt;
-            data.HP -= collision.GetComponent<ThornFloor>().Damage;
-            if(data.HP<=0)
-            {
-                Dead();
-            }
+            ThornFloor thornFloor = collision.GetComponent<ThornFloor>();
+            PlayerHit(thornFloor.Damage);
         }
 
         if(collision.CompareTag("BombArea"))
         {
-            isHurt = true;
-            state = State.Hurt;
-            data.HP -= collision.transform.parent.GetComponent<Bomb>().damage;
-            if(data.HP<=0)
-            {
-                Dead();
-            }
+            Bomb bomb = collision.transform.parent.GetComponent<Bomb>();
+            PlayerHit(bomb.damage);
         }
 
         if(collision.CompareTag("SnowArea"))
@@ -995,44 +976,32 @@ public class Player : MonoBehaviour
             data.RunSpeed /= 2;
         }
 
-        if(collision.GetComponent<FireBar>())
+        FireBar fireBar = collision.GetComponent<FireBar>();
+        if (fireBar)
         {
-            isHurt = true;
-            state = State.Hurt;
-            data.HP -= collision.GetComponent<FireBar>().damage;
-            if(data.HP<=0)
-            {
-                Dead();
-            }
+            PlayerHit(fireBar.damage);
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Ladders"))
-        {
-            ladderMoveTrue = true;
-        }
 
-    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Ladder>())
         {
-            if(ladder.GetComponent<LadderTop>())
+            if (ladder == null)
             {
                 return;
             }
-            else
+            if (ladder.GetComponent<LadderTop>())
             {
-                isLadder = false;
-                ladderMoveTrue = false;
-                ladderAttach = false;
-                ladder = null;
-                state = State.Idle;
-                GetComponent<Rigidbody2D>().gravityScale = 1;
+                return;
             }
+            isLadder = false;
+            ladderAttach = false;
+            ladder = null;
+            state = State.Idle;
+            GetComponent<Rigidbody2D>().gravityScale = 1;
 
         }
 
@@ -1046,7 +1015,6 @@ public class Player : MonoBehaviour
             if (ladder.GetComponent<LadderTop>())
             {
                 isLadder = false;
-                ladderMoveTrue = false;
                 ladderAttach = false;
                 state = State.Idle;
                 GetComponent<Rigidbody2D>().gravityScale = 1;
@@ -1078,5 +1046,43 @@ public class Player : MonoBehaviour
         data.HP = 0;
         state = State.Dead;
         GameUI.Instance.gameOverUI.SetActive(true);
+    }
+
+
+    float deg;
+    float turretSpeed = 50f;
+    float circleR = 0.4f;
+    bool isUp = true;
+    [SerializeField] GameObject turret;
+    void Missile()
+    {
+        if (Input.GetKey(KeyCode.K))
+        {
+            if(isUp)
+            {
+                deg = deg + Time.deltaTime * turretSpeed;
+
+                if(turret.transform.rotation == Quaternion.Euler(0,0,90f))
+                {
+                    isUp = false;
+                }
+            }
+            else
+            {
+                deg = deg - Time.deltaTime * turretSpeed;
+                if (turret.transform.rotation == Quaternion.Euler(0,0,0))
+                {
+                    isUp = true;
+                }
+            }
+            
+            float rad = deg * Mathf.Deg2Rad;
+            float x = circleR * Mathf.Cos(rad);
+            float y = circleR * Mathf.Sin(rad);
+            turret.transform.localPosition = new Vector2(x, y);
+            turret.transform.eulerAngles = new Vector3(0, 0, deg);
+
+        }
+
     }
 }

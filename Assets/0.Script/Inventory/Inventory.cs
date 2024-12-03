@@ -18,16 +18,17 @@ public class InvenData
     public int slotIdxNum;
     public bool inQuickSlot = false;
     public QuickInven qItem = null;
+    public FieldItem fItem = null;
 
 }
 
 public enum ItemType
 {
     Gem,
-    MonsterDrop,
     Potion,
     Bomb,
-    Missile
+    Missile,
+    Etc
 }
 
 public class InventoryData
@@ -75,6 +76,7 @@ public class Inventory : Singleton<Inventory>
         data.price = itemData.price;
         data.usage = itemData.usage;
         data.itemNumber = itemData.itemNumber;
+        data.fItem = itemData.fieldItem;
         data.slotIdxNum = index;
         item.SetData(data);
         item.SetInventory(this);
@@ -244,6 +246,13 @@ public class Inventory : Singleton<Inventory>
 
     public void UseItem(InvenItem item)
     {
+        ItemType type = item.data.type;
+
+       if(!type.Equals(ItemType.Missile))
+        {
+            item.data.fItem.Using();
+        }
+        
         item.data.count--;
         item.ItemCntChange(item.data);
         if(item.data.count<=0)

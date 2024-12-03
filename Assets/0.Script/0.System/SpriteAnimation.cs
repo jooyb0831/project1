@@ -31,7 +31,7 @@ public class SpriteAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (sprites.Count == 0)
+        if (sprites.Count == 0 || sprites == null)
         {
             return;
         }

@@ -18,11 +18,11 @@ public class MoveGround : MonoBehaviour
         
         float x = transform.localPosition.x;
         
-        if(x <= -15)
+        if(x <= 38.5f)
         {
             isLeft = false;
         }
-        else if( x>=0)
+        else if(x>55.5f)
         {
             isLeft = true;
         }

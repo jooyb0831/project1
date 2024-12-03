@@ -26,7 +26,6 @@ public class Missile : MonoBehaviour
         sa.SetSprite(missileSprite, 0.2f);
         rigid = GetComponent<Rigidbody2D>();
         float x = transform.position.x;
-       
 
     }
 

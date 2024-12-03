@@ -28,6 +28,8 @@ public class Boss3 : EnemyBoss
     [SerializeField] Boss3Bullet2 bullet2;
     [SerializeField] Boss3Bullet bullet1;
     [SerializeField] Transform firePos;
+
+    [SerializeField] Transform bulletParent;
     int patternNum = 0;
     // Start is called before the first frame update
     void Start()
@@ -146,9 +148,9 @@ public class Boss3 : EnemyBoss
         if (fireTimer >= fireDelay)
         {
             fireTimer = 0;
-            GameObject obj = Instantiate(bullet1, firePos).gameObject;
+            GameObject obj = Pooling.Instance.GetPool(DicKey.boss3Bullet, firePos);
             obj.GetComponent<Boss3Bullet>().damage = data.Atk1Power;
-            obj.transform.SetParent(null);
+            obj.transform.SetParent(bulletParent);
         }
     }
 

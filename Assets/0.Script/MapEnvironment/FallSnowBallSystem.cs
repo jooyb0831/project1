@@ -6,6 +6,7 @@ public class FallSnowBallSystem : Singleton<FallSnowBallSystem>
 {
     [SerializeField] float timer;
     [SerializeField] float delay;
+    [SerializeField] Transform snowBallparent;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,6 @@ public class FallSnowBallSystem : Singleton<FallSnowBallSystem>
     public void MakeBall()
     {
         GameObject obj = Pooling.Instance.GetPool(DicKey.fallSnowBall, transform).gameObject;
-        obj.transform.SetParent(null);
+        obj.transform.SetParent(snowBallparent);
     }    
 }

@@ -14,22 +14,36 @@ public class ItemData
     public int count;
     public int itemNumber;
     public int usage;
+    public FieldItem fieldItem;
 }
 public class FieldItem : MonoBehaviour
 {
     public ItemData itemData;
-    private Player p;
+    protected Player p;
+    protected PlayerData pd;
+    protected SpriteAnimation sa;
     bool isFind = false;
-
-    SpriteAnimation sa;
-    [SerializeField] List<Sprite> itemSprites;
+    [SerializeField] protected List<Sprite> itemSprites;
     // Start is called before the first frame update
     void Start()
     {
         sa = GetComponent<SpriteAnimation>();
         p = GameManager.Instance.Player;
+        pd = GameManager.Instance.PlayerData;
 
         if(itemSprites.Count >=1)
+        {
+            sa.SetSprite(itemSprites, 0.2f);
+        }
+    }
+
+    public virtual void Init()
+    {
+        sa = GetComponent<SpriteAnimation>();
+        p = GameManager.Instance.Player;
+        pd = GameManager.Instance.PlayerData;
+
+        if (itemSprites.Count >= 1)
         {
             sa.SetSprite(itemSprites, 0.2f);
         }
@@ -58,6 +72,18 @@ public class FieldItem : MonoBehaviour
         {
             Inventory.Instance.GetItem(itemData);
             Destroy(gameObject);
+        }
+    }
+
+    public virtual void Using()
+    {
+        if(p == null)
+        {
+            p = GameManager.Instance.Player;
+        }
+        if (pd == null)
+        {
+            pd = GameManager.Instance.PlayerData;
         }
     }
 }

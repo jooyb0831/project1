@@ -7,7 +7,6 @@ public class Enemy5 : Enemy
     [SerializeField] float fireTimer;
     [SerializeField] float fireDelayTime = 2f;
     [SerializeField] bool canFire = false;
-    [SerializeField] EBullet2 eBullet;
     [SerializeField] Transform firePos;
     [SerializeField] float y;
     // Start is called before the first frame update
