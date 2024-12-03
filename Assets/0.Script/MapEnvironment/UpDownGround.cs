@@ -5,7 +5,9 @@ using UnityEngine;
 public class UpDownGround : MonoBehaviour
 {
     public bool isUp;
-    [SerializeField] float speed;
+    public float speed;
+    [SerializeField] float top;
+    [SerializeField] float btm;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +19,11 @@ public class UpDownGround : MonoBehaviour
     {
         float y = transform.localPosition.y;
 
-        if (y <= 0)
+        if (y <= btm)
         {
             isUp = true;
         }
-        else if (y >= 15)
+        else if (y >= top)
         {
             isUp = false;
         }
@@ -35,7 +37,5 @@ public class UpDownGround : MonoBehaviour
         {
             transform.Translate(Vector3.down * Time.deltaTime * speed);
         }
-
-        
     }
 }

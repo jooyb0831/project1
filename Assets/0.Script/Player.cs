@@ -19,10 +19,6 @@ public class Player : MonoBehaviour
     public Transform bombPos;
     [SerializeField] float dist;
     [SerializeField] Transform pBulletParent;
-    public bool isRun = false;
-    public bool isJump = false;
-    public bool isAttacking = false;
-    public bool isHurt = false;
     public bool isLadder = false;
     // bool값 빼고 state로 다 처리
     [SerializeField] bool isBack = false;
@@ -31,9 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool canFire = false;
     [SerializeField] float fireDelayTime = 0.8f;
     [SerializeField] float fireTimer;
-
-    [SerializeField] bool onMoveFloor = false;
-    [SerializeField] GameObject moveFloor = null;
+    [SerializeField] UpDownGround moveFloor = null;
     public enum State
     {
         Idle,
@@ -148,13 +142,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(onMoveFloor)
-        {
-            Vector2 pos = moveFloor.gameObject.transform.position;
-            transform.position = new Vector2(transform.position.x, pos.y+1.3f);
-        }
-
-        Missile();
         if(inventory==null)
         {
             inventory = GameManager.Instance.Inven;
@@ -167,8 +154,6 @@ public class Player : MonoBehaviour
         }
 
         Move();
-
-
         LadderAttach();
 
         if (Input.GetKeyUp(KeyCode.C))
@@ -177,6 +162,7 @@ public class Player : MonoBehaviour
             GetComponent<CapsuleCollider2D>().size = originSize;
         }
 
+        // 총알 발사 시간 카운트
         fireTimer += Time.deltaTime;
         if (fireTimer > fireDelayTime)
         {
@@ -189,14 +175,20 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 플레이어 점프
     /// </summary>
-    void Jump()
+    public void Jump()
     {
-       //tate = State.Jump;
         if(GetComponent<Rigidbody2D>().gravityScale!=1)
         {
             GetComponent<Rigidbody2D>().gravityScale = 1;
         }
-        rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
+        if(moveFloor!=null && moveFloor.isUp)
+        {
+            rigid.AddForce(Vector2.up * (jumpPower+moveFloor.speed), ForceMode2D.Impulse);
+        }
+        else
+        {
+            rigid.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
+        }
         isLadder = false;
         ladderAttach = false;
     }
@@ -746,9 +738,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.GetComponent<UpDownGround>())
         {
-
-            onMoveFloor = true;
-            moveFloor = collision.gameObject;
+            moveFloor = collision.gameObject.GetComponent<UpDownGround>();
             transform.SetParent(collision.transform);
 
         }
@@ -812,8 +802,6 @@ public class Player : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
-                onMoveFloor = false;
-                
                 transform.SetParent(null);
             }
         }
@@ -827,8 +815,8 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.GetComponent<UpDownGround>())
         {
-            onMoveFloor = false;
             moveFloor = null;
+            rigid.bodyType = RigidbodyType2D.Dynamic;
             transform.SetParent(null);
         }
 
@@ -1085,4 +1073,6 @@ public class Player : MonoBehaviour
         }
 
     }
+
+
 }

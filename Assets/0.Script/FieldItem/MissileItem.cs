@@ -34,12 +34,31 @@ public class MissileItem : FieldItem
 
     public void FireReady()
     {
-
         // 발사 준비
+        // 화살표 움직임이 위를 향할 경우
+
+        p.state = p.state == Player.State.Walk ? Player.State.BombThrowWalk 
+                : p.state == Player.State.Run ? Player.State.BombThrowRun 
+                : Player.State.BombThrow;
+        
+        /*if (p.state == Player.State.Run)
+        {
+            p.state = Player.State.BombThrowRun;
+        }
+        else if (p.state == Player.State.Walk)
+        {
+            p.state = Player.State.BombThrowWalk;
+        }
+        else
+        {
+            p.state = Player.State.BombThrow;
+        }
+        */
+
         if (isUp)
         {
             deg += Time.deltaTime * arrowSpeed;
-            if (arrowObj.transform.rotation == Quaternion.Euler(0, 0, 90f))
+            if (arrowObj.transform.localRotation == Quaternion.Euler(0, 0, 90f))
             {
                 isUp = false;
             }
@@ -47,7 +66,7 @@ public class MissileItem : FieldItem
         else
         {
             deg -= Time.deltaTime * arrowSpeed;
-            if (arrowObj.transform.rotation == Quaternion.Euler(0, 0, 0))
+            if (arrowObj.transform.localRotation == Quaternion.Euler(0, 0, 0))
             {
                 isUp = true;
             }
@@ -55,8 +74,12 @@ public class MissileItem : FieldItem
         float rad = deg * Mathf.Deg2Rad;
         float x = circleR * Mathf.Cos(rad);
         float y = circleR * Mathf.Sin(rad);
+
+
+        arrowObj.transform.eulerAngles = p.transform.localScale.x < 0 ? new Vector3(0, 0, -deg) 
+                                         :new Vector3(0, 0, deg);
         arrowObj.transform.localPosition = new Vector2(x, y);
-        arrowObj.transform.eulerAngles = new Vector3(0, 0, deg);
+        
     }
 
     public void Fire()
