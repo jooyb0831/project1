@@ -22,8 +22,8 @@ public class AttackEnchant : StatEnchantUI
         upTxt.text = $"{enchtSystem.data.ATKdata.NextATK}";
         reqLvTxt.text = $"필요 레벨 : {enchtSystem.data.ATKdata.NeedLv}";
         coinTxt.text = $"{enchtSystem.data.ATKdata.Gold}/{pd.Coin}";
-        int itemCnt = Inventory.Instance.ItemCheck(enchtSystem.data.ATKdata.CrystalIdx);
-        itemTxt.text = $"{enchtSystem.data.ATKdata.CrystalNum}/{itemCnt}";
+        int crystalCnt = Inventory.Instance.ItemCheck(enchtSystem.data.ATKdata.CrystalIdx);
+        crystalTxt.text = $"{enchtSystem.data.ATKdata.CrystalNum}/{crystalCnt}";
     }
 
     public void OnCilcked()

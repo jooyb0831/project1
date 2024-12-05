@@ -43,6 +43,7 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
             data.qItem.ItemCntChange(this);
         }
     }
+
     // Start is called before the first frame update
     void Start()
     {

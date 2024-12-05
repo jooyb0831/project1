@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slots : MonoBehaviour
+public class MerchantInvenitem : InvenItem
 {
-    public bool isFilled = false;
-    public bool isMerchantInven = false;
-    public bool isSellInven = false;
-    public bool isLocked = false;
-    [SerializeField] GameObject cover;
+    [SerializeField] FieldItem fieldItem;
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+    
+    public void SetData(ItemData data)
+    {
+
     }
 
     // Update is called once per frame

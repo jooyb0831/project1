@@ -19,7 +19,6 @@ public class InvenData
     public bool inQuickSlot = false;
     public QuickInven qItem = null;
     public FieldItem fItem = null;
-
 }
 
 public enum ItemType
@@ -97,6 +96,7 @@ public class Inventory : Singleton<Inventory>
         int index = SlotCheck();
         InvenItem item = Instantiate(invenItem, invenSlots[index]);
         invenSlots[index].GetComponent<Slots>().isFilled = true;
+        item.data.slotIdxNum = index;
         item.SetInventory(this);
         invenItems.Add(item);
         invenDatas.Add(item.data);

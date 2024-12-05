@@ -2673,6 +2673,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 1
+  cover: {fileID: 0}
 --- !u!1 &294465782
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,6 +2920,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 1
+  cover: {fileID: 0}
 --- !u!1 &340094366
 GameObject:
   m_ObjectHideFlags: 0
@@ -3086,7 +3090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &355927199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4229,6 +4233,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 1
+  cover: {fileID: 0}
 --- !u!1 &414047173
 GameObject:
   m_ObjectHideFlags: 0
@@ -4672,6 +4678,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &444618668
 GameObject:
   m_ObjectHideFlags: 0
@@ -7202,6 +7210,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &706151745
 GameObject:
   m_ObjectHideFlags: 0
@@ -7724,6 +7734,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &816271279
 GameObject:
   m_ObjectHideFlags: 0
@@ -7876,7 +7888,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -7974,6 +7985,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 1
+  cover: {fileID: 0}
 --- !u!1 &833085236
 GameObject:
   m_ObjectHideFlags: 0
@@ -9072,6 +9085,12 @@ MonoBehaviour:
   - {fileID: 1636107167}
   - {fileID: 440279483}
   - {fileID: 810323492}
+  lockedSlots:
+  - {fileID: 311113828}
+  - {fileID: 286751202}
+  - {fileID: 825490396}
+  - {fileID: 1736557199}
+  - {fileID: 411515969}
   quickSlot: {fileID: 1582114042}
   inventory: {fileID: 0}
   sampleInvenitem: {fileID: 8853063116645017520, guid: 327d4a405be2cde46898f5c9c2f11e70, type: 3}
@@ -14543,6 +14562,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1679744261
 GameObject:
   m_ObjectHideFlags: 0
@@ -15223,6 +15244,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 1
+  cover: {fileID: 0}
 --- !u!1 &1737862642
 GameObject:
   m_ObjectHideFlags: 0
@@ -17926,6 +17949,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &2129688016
 GameObject:
   m_ObjectHideFlags: 0

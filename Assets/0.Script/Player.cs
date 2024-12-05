@@ -151,6 +151,7 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F4))
         {
             data.Level++;
+            data.Coin += 10;
         }
 
         Move();
@@ -255,7 +256,10 @@ public class Player : MonoBehaviour
         if(hit.collider == null)
         {
             state = State.Jump;
-            transform.localScale = x > 0 ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
+            if(x!=0)
+            {
+                transform.localScale = x > 0 ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
+            }
             StateCheck(state);
             return;
         }
@@ -320,6 +324,7 @@ public class Player : MonoBehaviour
         {
             if(state==State.Jump)
             {
+                StateCheck(state);
                 return;
             }
             state = State.Idle;

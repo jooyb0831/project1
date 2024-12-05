@@ -55,6 +55,7 @@ public class SceneChanger : Singleton<SceneChanger>
 
     public void GoShip()
     {
+        ResetHP();
         LoadingSceneManager.LoadScene("Ship");
     }
 

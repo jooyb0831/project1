@@ -12,7 +12,7 @@ public class StatEnchantUI : MonoBehaviour
     [SerializeField] protected TMP_Text upTxt;
     [SerializeField] protected TMP_Text reqLvTxt;
     [SerializeField] protected TMP_Text coinTxt;
-    [SerializeField] protected TMP_Text itemTxt;
+    [SerializeField] protected TMP_Text crystalTxt;
 
     
     // Start is called before the first frame update

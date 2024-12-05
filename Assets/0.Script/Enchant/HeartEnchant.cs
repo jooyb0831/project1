@@ -24,8 +24,8 @@ public class HeartEnchant : StatEnchantUI
         upTxt.text = $"{enchtSystem.data.HPdata.NextHP}";
         reqLvTxt.text = $"필요 레벨 : {enchtSystem.data.HPdata.NeedLv}";
         coinTxt.text = $"{enchtSystem.data.HPdata.Gold}/{pd.Coin}";
-        int itemCnt = Inventory.Instance.ItemCheck(enchtSystem.data.HPdata.CrystalIdx);
-        itemTxt.text = $"{enchtSystem.data.HPdata.CrystalNum}/{itemCnt}";
+        int crystalCnt = Inventory.Instance.ItemCheck(enchtSystem.data.HPdata.CrystalIdx);
+        crystalTxt.text = $"{enchtSystem.data.HPdata.CrystalNum}/{crystalCnt}";
     }
 
     public void OnCilcked()

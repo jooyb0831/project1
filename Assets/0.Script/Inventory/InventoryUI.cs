@@ -7,6 +7,7 @@ using TMPro;
 public class InventoryUI : Singleton<InventoryUI>
 {
     [SerializeField] Transform[] slots;
+    [SerializeField] Transform[] lockedSlots;
     public Transform quickSlot;
     [SerializeField] Inventory inventory;
     [SerializeField] InvenItem sampleInvenitem;
@@ -24,12 +25,21 @@ public class InventoryUI : Singleton<InventoryUI>
         inventory = GameManager.Instance.Inven;
         pData = GameManager.Instance.PlayerData;
         SetInvenSlot();
-        //SetInventory();
         InventoryCheck();
     }
 
     void SetInvenSlot()
     {
+        int curSlotNum = EnchantSystem.Instance.data.InvenEnData.BasicSlotNum;
+        if (curSlotNum > 5)
+        {
+            int gap = curSlotNum - 5;
+            for (int i = 1; i<gap+1; i++)
+            {
+                slots[slots.Length + i] = lockedSlots[i-1];
+                lockedSlots[i - 1] = null;
+            }
+        }
         for (int i = 0; i < slots.Length; i++)
         {
             inventory.invenSlots[i] = slots[i];
@@ -42,7 +52,6 @@ public class InventoryUI : Singleton<InventoryUI>
         if (inventory == null)
         {
             inventory = GameManager.Instance.Inven;
-            return;
         }
         inventory.invenItems.Clear();
         List<InvenData> invenData = inventory.invenDatas;
@@ -56,7 +65,8 @@ public class InventoryUI : Singleton<InventoryUI>
         }
 
         SceneType type = SceneChanger.Instance.sceneType;
-        if (type.Equals(SceneType.Ship) || type.Equals(SceneType.Stage1))
+        if (type.Equals(SceneType.Ship) || type.Equals(SceneType.Stage1) 
+            || type.Equals(SceneType.Stage2) || type.Equals(SceneType.Stage3))
         {
             Inventory.Instance.quickSlot = quickSlot;
         }
