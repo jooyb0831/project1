@@ -13,6 +13,16 @@ public class Enemy1 : Enemy
         Init();
     }
 
+    public override void Init()
+    {
+        data.HP = JsonData.Instance.enemyData.eData[0].hp;
+        data.Index = JsonData.Instance.enemyData.eData[0].index;
+        data.Speed = JsonData.Instance.enemyData.eData[0].speed;
+        data.AttackPower = JsonData.Instance.enemyData.eData[0].atkPower;
+        data.EXP = JsonData.Instance.enemyData.eData[0].exp;
+        base.Init();
+    }
+
     private void Update()
     {
         if (!isDead)
@@ -67,16 +77,5 @@ public class Enemy1 : Enemy
             transform.Translate(Vector2.right * Time.deltaTime * data.Speed);
         }
 
-    }
-
-
-
-    public override void Init()
-    {
-        data.HP = 6;
-        data.index = 0;
-        data.Speed = 2f;
-        data.AttackPower = 5;
-        base.Init();
     }
 }

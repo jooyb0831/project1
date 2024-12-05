@@ -1,0 +1,31 @@
+﻿{
+  "bossData": [
+    {
+      "maxHP" : 40,
+      "exp": 30,
+      "atk1Power":15,
+      "atk2Power":20,
+      "speed": 5.0,
+      "index": 0,
+      "bossName": "보스1"
+    },
+    {
+      "maxHP":50,
+      "exp":40,
+      "atk1Power":20,
+      "atk2Power":25,
+      "speed":5.0,
+      "index":1,
+      "bossName": "보스2"
+    },
+    {
+      "maxHP":65,
+      "exp":50,
+      "atk1Power":25,
+      "atk2Power":30,
+      "speed":5.0,
+      "index":2,
+      "bossName":"보스3"
+    }
+  ]
+}

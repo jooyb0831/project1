@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class EnemyBoss : MonoBehaviour
 {
-    public class BossData
+    public class Data
     {
         public int MAXHP { get; set; }
 
@@ -41,7 +41,7 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] protected Player p;
     SpriteRenderer sr;
     protected SpriteAnimation sa;
-    public BossData data = new BossData();
+    public Data data = new Data();
     protected SkillSystem sksystem;
 
     protected List<Sprite> idleSprites;

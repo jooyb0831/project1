@@ -938,10 +938,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillJson: {fileID: 4900000, guid: c7aea6f8194000746bb95012daf6c283, type: 3}
   questDialogueJson: {fileID: 4900000, guid: 1acba5f3338762f47b78a5c6c0e1bf0f, type: 3}
+  enemyJson: {fileID: 4900000, guid: 8d48d56d87ad45a4bbef0f01537fd1a3, type: 3}
+  bossJson: {fileID: 4900000, guid: ee51419ec75d39b41b5f6689993779bb, type: 3}
   skillData:
     sData: []
   questDialogueData:
     questDialogueData: []
+  enemyData:
+    eData: []
+  bossJsonData:
+    bossData: []
 --- !u!4 &1139443098
 Transform:
   m_ObjectHideFlags: 0

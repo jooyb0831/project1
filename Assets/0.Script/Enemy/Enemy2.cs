@@ -16,6 +16,17 @@ public class Enemy2 : Enemy
     {
         Init();
     }
+    public override void Init()
+    {
+        data.HP = JsonData.Instance.enemyData.eData[1].hp;
+        data.Index = JsonData.Instance.enemyData.eData[1].index;
+        data.Speed = JsonData.Instance.enemyData.eData[1].speed;
+        data.AttackPower = JsonData.Instance.enemyData.eData[1].atkPower;
+        data.EXP = JsonData.Instance.enemyData.eData[1].exp;
+        y = transform.position.y;
+
+        base.Init();
+    }
 
     // Update is called once per frame
     void Update()
@@ -73,14 +84,7 @@ public class Enemy2 : Enemy
 
     void Move()
     {
-        if (transform.position.x > p.transform.position.x)
-        {
-            transform.localScale = new Vector3(5, 5, 5);
-        }
-        else if (transform.position.x < p.transform.position.x)
-        {
-            transform.localScale = new Vector3(-5, 5, 5);
-        }
+        transform.localScale = transform.position.x > p.transform.position.x ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
 
         if (state == EnemyState.Attack)
         {
@@ -147,15 +151,6 @@ public class Enemy2 : Enemy
         state = EnemyState.Idle;
     }
 
-    public override void Init()
-    {
-        data.HP = 10;
-        data.index = 1;
-        data.Speed = 1f;
-        data.AttackPower = 8;
-        y = transform.position.y;
 
-        base.Init();
-    }
 
 }

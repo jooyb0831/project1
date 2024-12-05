@@ -17,10 +17,11 @@ public class Enemy3 : Enemy
     }
     public override void Init()
     {
-        data.HP = 15;
-        data.index = 2;
-        data.Speed = 3f;
-        data.AttackPower = 10;
+        data.HP = JsonData.Instance.enemyData.eData[2].hp;
+        data.Index = JsonData.Instance.enemyData.eData[2].index;
+        data.Speed = JsonData.Instance.enemyData.eData[2].speed;
+        data.AttackPower = JsonData.Instance.enemyData.eData[2].atkPower;
+        data.EXP = JsonData.Instance.enemyData.eData[2].exp;
 
         base.Init();
     }
@@ -70,14 +71,7 @@ public class Enemy3 : Enemy
 
     void Move()
     {
-        if(transform.position.x > p.transform.position.x)
-        {
-            transform.localScale = new Vector3(5, 5, 5);
-        }
-        else if (transform.position.x < p.transform.position.x)
-        {
-            transform.localScale = new Vector3(-5, 5, 5);
-        }
+        transform.localScale = transform.position.x > p.transform.position.x ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
 
         if (state == EnemyState.Attack)
         {

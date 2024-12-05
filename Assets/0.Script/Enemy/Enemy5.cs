@@ -16,10 +16,11 @@ public class Enemy5 : Enemy
     }
     public override void Init()
     {
-        data.HP = 25;
-        data.index = 4;
-        data.Speed = 1.8f;
-        data.AttackPower = 20;
+        data.HP = JsonData.Instance.enemyData.eData[4].hp;
+        data.Index = JsonData.Instance.enemyData.eData[4].index;
+        data.Speed = JsonData.Instance.enemyData.eData[4].speed;
+        data.AttackPower = JsonData.Instance.enemyData.eData[4].atkPower;
+        data.EXP = JsonData.Instance.enemyData.eData[4].exp;
         y = transform.position.y;
 
         base.Init();
@@ -43,6 +44,7 @@ public class Enemy5 : Enemy
 
         if (state == EnemyState.Back)
         {
+
             if (sk1isLeft)
             {
                 transform.Translate(Vector2.left * Time.deltaTime * 10f);
@@ -81,15 +83,7 @@ public class Enemy5 : Enemy
 
     void Move()
     {
-        if (transform.position.x > p.transform.position.x)
-        {
-            transform.localScale = new Vector3(5, 5, 5);
-        }
-        else if (transform.position.x < p.transform.position.x)
-        {
-            transform.localScale = new Vector3(-5, 5, 5);
-        }
-
+        transform.localScale = transform.position.x > p.transform.position.x ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
 
         if (state == EnemyState.Attack)
         {

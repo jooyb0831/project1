@@ -63,19 +63,19 @@ public class QuestManager : Singleton<QuestManager>
         }
         for (int i = 0; i< onGoingQList.Count; i++)
         {
-            if (enemy.data.index == onGoingQList[i].data.objIndex)
+            if (enemy.data.Index == onGoingQList[i].data.objIndex)
             {
                 idx = i;
-                qUI = Find(enemy.data.index);
+                qUI = Find(enemy.data.Index);
                 break;
             }
         }
         for(int i = 0; i<onGoingQList.Count; i++)
         {
-            if(enemy.data.index == onGoingQList[i].data.objIndex)
+            if(enemy.data.Index == onGoingQList[i].data.objIndex)
             {
                 idx = i;
-                qMUI = FindUI(enemy.data.index);
+                qMUI = FindUI(enemy.data.Index);
                 break;
             }
         }
@@ -86,9 +86,9 @@ public class QuestManager : Singleton<QuestManager>
         else
         {
             enemyKillCnt[idx]++;
-            onGoingQList[idx].data.curCount = enemyKillCnt[enemy.data.index];
-            qUI.curCnt = enemyKillCnt[enemy.data.index];
-            qMUI.curCnt = enemyKillCnt[enemy.data.index];
+            onGoingQList[idx].data.curCount = enemyKillCnt[enemy.data.Index];
+            qUI.curCnt = enemyKillCnt[enemy.data.Index];
+            qMUI.curCnt = enemyKillCnt[enemy.data.Index];
         }
     }
 

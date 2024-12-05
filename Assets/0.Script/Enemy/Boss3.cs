@@ -40,14 +40,14 @@ public class Boss3 : EnemyBoss
 
     public override void Init()
     {
-        data.MAXHP = 10;
+        data.MAXHP = JsonData.Instance.bossJsonData.bossData[2].maxHP;
         data.CURHP = data.MAXHP;
-        data.Index = 2;
-        data.Speed = 5f;
-        data.Atk1Power = 15;
-        data.Atk2Power = 30;
-        data.EXP = 40;
-        data.BossName = "º¸½º 3";
+        data.Index = JsonData.Instance.bossJsonData.bossData[2].index;
+        data.Speed = JsonData.Instance.bossJsonData.bossData[2].speed;
+        data.Atk1Power = JsonData.Instance.bossJsonData.bossData[2].atk1Power;
+        data.Atk2Power = JsonData.Instance.bossJsonData.bossData[2].atk2Power;
+        data.EXP = JsonData.Instance.bossJsonData.bossData[2].exp;
+        data.BossName = JsonData.Instance.bossJsonData.bossData[2].bossName;
         originSpeed = data.Speed;
         BossUI.Instance.boss = this;
         BossUI.Instance.SetUI();

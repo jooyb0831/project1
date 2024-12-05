@@ -1,0 +1,46 @@
+{
+  "itemData": [
+    {
+      "itemTitle": "Å©¸®½ºÅ»",
+      "itemType": "Gem",
+      "price": 5,
+      "numberCode": 0
+    },
+    {
+      "itemTitle": "ºÒ²É Å©¸®½ºÅ»",
+      "itemType": "Gem",
+      "price": 7,
+      "numberCode": 1
+    },
+    {
+      "itemTitle": "·ÎÄÏÆ÷",
+      "itemType": "Missile",
+      "price": 7,
+      "numberCode": 2
+    },
+    {
+      "itemTitle": "È¸º¹¾à",
+      "itemType": "Potion",
+      "price": 5,
+      "numberCode": 3
+    },
+    {
+      "itemTitle": "¹ÚÁã³¯°³",
+      "itemType": "Etc",
+      "price": 8,
+      "numberCode": 4
+    },
+    {
+      "itemTitle": "ÆøÅº",
+      "itemType": "Bomb",
+      "price": 10,
+      "numberCode": 5
+    },
+    {
+      "itemTitle": "»À´Ù±Í",
+      "itemType": "Etc",
+      "price": 9,
+      "numberCode": 6
+    }
+  ]
+}

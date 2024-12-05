@@ -1,0 +1,39 @@
+{
+  "eData": [
+    {
+      "hp": 6,
+      "index": 0,
+      "speed": 2.0,
+      "atkPower": 5,
+      "exp": 5
+    },
+    {
+      "hp": 10,
+      "index": 1,
+      "speed": 1.0,
+      "atkPower": 8,
+      "exp": 7
+    },
+    {
+      "hp": 15,
+      "index": 2,
+      "speed": 3.0,
+      "atkPower": 10,
+      "exp": 8
+    },
+    {
+      "hp": 30,
+      "index": 3,
+      "speed": 3.0,
+      "atkPower": 10,
+      "exp": 10
+    },
+    {
+      "hp": 25,
+      "index": 4,
+      "speed": 1.8,
+      "atkPower": 20,
+      "exp": 12
+    }
+  ]
+}

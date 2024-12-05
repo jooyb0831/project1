@@ -4,15 +4,13 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public class EnemyData
+    public class Data
     {
         public int HP { get; set; }
-        public int EXP { get; set; }
+        public int Index { get; set; }
         public int AttackPower { get; set; }
-        public int AttackDist { get; set; }
         public float Speed { get; set; }
-        public float AttackSpeed { get; set; }
-        public int index { get; set; }
+        public int EXP { get; set; }
     }
 
     public enum EnemyState
@@ -29,7 +27,7 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected Player p;
     SpriteRenderer sr;
     protected SpriteAnimation sa;
-    public EnemyData data = new EnemyData();
+    public Data data = new Data();
     protected SkillSystem sksystem;
 
     protected List<Sprite> enemySprite;
@@ -58,7 +56,7 @@ public abstract class Enemy : MonoBehaviour
         sa = GetComponent<SpriteAnimation>();
         pd = GameManager.Instance.PlayerData;
         sksystem = GameManager.Instance.SkSystem;
-        enemySprites = SpriteManager.Instance.enemySprite[data.index];
+        enemySprites = SpriteManager.Instance.enemySprite[data.Index];
         enemySprite = enemySprites.idleSprite;
         moveSprite = enemySprites.moveSprite;
         deadSprite = enemySprites.deadSprite;
@@ -140,10 +138,11 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator Hit()
     {
+        float originSpeed = data.Speed;
         sr.color = new Color32(255, 90, 90, 255);
         data.Speed = 0f;
         yield return new WaitForSeconds(0.2f);
-        data.Speed = 2f;
+        data.Speed = originSpeed;
         sr.color = Color.white;
     }
 
@@ -154,7 +153,7 @@ public abstract class Enemy : MonoBehaviour
             pd = GameManager.Instance.PlayerData;
         }
 
-        pd.EXP += 10;
+        pd.EXP += data.EXP;
         QuestManager.Instance.Check(this);
         sa.SetSprite(deadSprite, 0.2f);
         yield return new WaitForSeconds(0.8f);
@@ -167,6 +166,7 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator Back()
     {
+        float originSpeed = data.Speed;
         state = EnemyState.Back;
         sr.color = new Color32(255, 90, 90, 255);
         data.Speed = 0f;
@@ -182,7 +182,7 @@ public abstract class Enemy : MonoBehaviour
         }
         */
         yield return new WaitForSeconds(0.5f);
-        data.Speed = 2f;
+        data.Speed = originSpeed;
         sr.color = Color.white;
         state = EnemyState.Idle;
         ski1bulletDir = false;
