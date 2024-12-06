@@ -593,6 +593,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   invenItems: []
   invenDatas: []
   quickItem: {fileID: 8519006276642765272, guid: 9bdf16825ede48e49a0bc8956bef639c, type: 3}

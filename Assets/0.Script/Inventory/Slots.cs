@@ -7,7 +7,7 @@ public class Slots : MonoBehaviour
     public bool isFilled = false;
     public bool isMerchantInven = false;
     public bool isSellInven = false;
-    public bool isLocked = false;
+    public bool isLocked;
     [SerializeField] GameObject cover;
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,13 @@ public class Slots : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(cover!=null)
+        {
+            if (!isLocked)
+            {
+                cover.SetActive(false);
+            }
+        }
+
     }
 }

@@ -27,11 +27,11 @@ public class EnchantData
 
     public class InvenEnchatData
     {
-        public int BasicSlotNum { get; set; }
+        public int CurSlotNum { get; set; }
         public int NextSlotNum { get; set; }
         public int NeedLv { get; set; } = 7;
         public int Gold { get; set; } = 15;
-        public int CrystalIdx { get; set; } = 1;
+        public int CrystalIdx { get; set; } = 0;
         public int CrystalNum { get; set; } = 2;
         public int NeedItemIdx { get; set; } = 4;
         public int NeedItemNum { get; set; } = 1;
@@ -62,14 +62,18 @@ public class EnchantSystem : Singleton<EnchantSystem>
         pd = GameManager.Instance.PlayerData;
         data.ATKdata.BasicAttackEnchantLV = pd.AttackDamage;
         data.ATKdata.NextATK = data.ATKdata.BasicAttackEnchantLV += 3;
-        data.InvenEnData.BasicSlotNum = Inventory.Instance.invenSlots.Length;
+        data.InvenEnData.CurSlotNum = Inventory.Instance.inventoryData.curInvenNums;
+        data.InvenEnData.NextSlotNum = data.InvenEnData.CurSlotNum + 1;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.F9))
+        {
+            Debug.Log($"{data.InvenEnData.CurSlotNum}");
+        }
     }
 
     public void HPEnchant()
@@ -100,15 +104,10 @@ public class EnchantSystem : Singleton<EnchantSystem>
 
     public void InvenEnchant()
     {
-        data.InvenEnData.BasicSlotNum += 1;
+        data.InvenEnData.CurSlotNum += 1;
         data.InvenEnData.NextSlotNum += 1;
         data.InvenEnData.NeedLv += 2;
         data.InvenEnData.Gold += 10;
         data.InvenEnData.NeedItemNum += 1;
-        if (data.InvenEnData.BasicSlotNum >= 10)
-        {
-            // 더 이상 강화할 수 없음.
-            return;
-        }
     }
 }

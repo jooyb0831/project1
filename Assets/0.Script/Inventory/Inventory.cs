@@ -32,7 +32,9 @@ public enum ItemType
 
 public class InventoryData
 {
+    public int curInvenNums = 5;
     public List<InvenItem> items = new List<InvenItem>();
+    
 }
 
 public class Inventory : Singleton<Inventory>
@@ -134,7 +136,7 @@ public class Inventory : Singleton<Inventory>
         int number = 0;
         for (int i = 0; i < invenSlots.Length; i++)
         {
-            if (!invenSlots[i].GetComponent<Slots>().isFilled)
+            if (!invenSlots[i].GetComponent<Slots>().isFilled && !invenSlots[i].GetComponent<Slots>().isLocked)
             {
                 number = i;
                 break;

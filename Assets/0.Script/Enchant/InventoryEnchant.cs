@@ -16,18 +16,19 @@ public class InventoryEnchant : StatEnchantUI
     public override void Init()
     {
         base.Init();
+        SetData();
    
     }
     public void SetData()
     {
-        curTxt.text = $"{enchtSystem.data.InvenEnData.BasicSlotNum}";
+        curTxt.text = $"{enchtSystem.data.InvenEnData.CurSlotNum}";
         upTxt.text = $"{enchtSystem.data.InvenEnData.NextSlotNum}";
         reqLvTxt.text = $"필요 레벨 : {enchtSystem.data.InvenEnData.NeedLv}";
         coinTxt.text = $"{enchtSystem.data.InvenEnData.Gold}/{pd.Coin}";
         int crystalCnt = Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.CrystalIdx);
         crystalTxt.text = $"{enchtSystem.data.InvenEnData.CrystalNum}/{crystalCnt}";
         int itemCnt = Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.NeedItemIdx);
-        itemTxt.text = $"{enchtSystem.data.InvenEnData.NeedItemNum} / {itemCnt}";
+        itemTxt.text = $"{enchtSystem.data.InvenEnData.NeedItemNum}/{itemCnt}";
     }
 
 
@@ -35,15 +36,56 @@ public class InventoryEnchant : StatEnchantUI
     {
         if (enchtSystem.data.InvenEnData.Gold <= pd.Coin && enchtSystem.data.InvenEnData.NeedLv <= pd.Level
             && Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.CrystalIdx) >= enchtSystem.data.InvenEnData.CrystalNum
-            && Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.NeedItemIdx) >= enchtSystem.data.InvenEnData.NeedItemNum)
+            && Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.NeedItemIdx) >= enchtSystem.data.InvenEnData.NeedItemNum
+            && enchtSystem.data.InvenEnData.CurSlotNum<10)
         {
-          //Inventory.Instance.
+            //인벤토리 늘리는 코드
+            Inventory.Instance.inventoryData.curInvenNums = enchtSystem.data.InvenEnData.NextSlotNum;
+            
+            //인벤토리 세팅
+            InventoryUI.Instance.Init();
+
+            //아이템 및 재화 사용처리
+            pd.Coin -= enchtSystem.data.InvenEnData.Gold;
+            Inventory.Instance.Enchant(enchtSystem.data.InvenEnData.CrystalIdx, enchtSystem.data.InvenEnData.CrystalNum);
+            Inventory.Instance.Enchant(enchtSystem.data.InvenEnData.NeedItemIdx, enchtSystem.data.InvenEnData.NeedItemNum);
+
+            //다음단계 세팅
+            enchtSystem.InvenEnchant();
+            SetData();
+        }
+
+        else
+        {
+            if(enchtSystem.data.InvenEnData.Gold > pd.Coin)
+            {
+                Debug.Log("금액이 부족합니다.");
+            }
+
+            else if(enchtSystem.data.InvenEnData.NeedLv > pd.Level)
+            {
+                Debug.Log("레벨이 부족합니다.");
+            }
+            
+            else if(Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.CrystalIdx) < enchtSystem.data.InvenEnData.CrystalNum
+                || Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.NeedItemIdx) < enchtSystem.data.InvenEnData.NeedItemNum)
+            {
+                Debug.Log("강화 재료가 부족합니다.");
+            }
+
+            else if(enchtSystem.data.InvenEnData.CurSlotNum >= 10)
+            {
+                Debug.Log("더 이상 강화할 수 없습니다.");
+            }
         }
 
     }
     // Update is called once per frame
     void Update()
     {
-        
+        if (EnchantUI.Instance.window.activeSelf)
+        {
+            SetData();
+        }
     }
 }

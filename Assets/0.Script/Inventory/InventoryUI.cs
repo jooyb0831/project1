@@ -7,7 +7,6 @@ using TMPro;
 public class InventoryUI : Singleton<InventoryUI>
 {
     [SerializeField] Transform[] slots;
-    [SerializeField] Transform[] lockedSlots;
     public Transform quickSlot;
     [SerializeField] Inventory inventory;
     [SerializeField] InvenItem sampleInvenitem;
@@ -22,27 +21,37 @@ public class InventoryUI : Singleton<InventoryUI>
 
     public void Init()
     {
-        inventory = GameManager.Instance.Inven;
-        pData = GameManager.Instance.PlayerData;
+        if (inventory == null)
+        {
+            inventory = GameManager.Instance.Inven;
+        }
+
+        if (pData == null)
+        {
+            pData = GameManager.Instance.PlayerData;
+        }
+        
         SetInvenSlot();
         InventoryCheck();
     }
 
     void SetInvenSlot()
     {
-        int curSlotNum = EnchantSystem.Instance.data.InvenEnData.BasicSlotNum;
+        int curSlotNum = inventory.inventoryData.curInvenNums;
+
+        for (int i = 0; i < curSlotNum; i++)
+        {
+            inventory.invenSlots[i] = slots[i];
+        }
+
         if (curSlotNum > 5)
         {
             int gap = curSlotNum - 5;
-            for (int i = 1; i<gap+1; i++)
+
+            for(int i =1; i<gap+1; i++)
             {
-                slots[slots.Length + i] = lockedSlots[i-1];
-                lockedSlots[i - 1] = null;
+                slots[i + 4].GetComponent<Slots>().isLocked = false;
             }
-        }
-        for (int i = 0; i < slots.Length; i++)
-        {
-            inventory.invenSlots[i] = slots[i];
         }
         inventory.quickSlot = quickSlot;
     }

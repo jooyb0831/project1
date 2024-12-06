@@ -28,13 +28,19 @@ public class AttackEnchant : StatEnchantUI
 
     public void OnCilcked()
     {
-        if (enchtSystem.data.ATKdata.Gold <= pd.Coin && enchtSystem.data.ATKdata.NeedLv <= pd.Level && Inventory.Instance.ItemCheck(enchtSystem.data.ATKdata.CrystalIdx) >= enchtSystem.data.ATKdata.CrystalNum)
+        if (enchtSystem.data.ATKdata.Gold <= pd.Coin && enchtSystem.data.ATKdata.NeedLv <= pd.Level 
+            && Inventory.Instance.ItemCheck(enchtSystem.data.ATKdata.CrystalIdx) >= enchtSystem.data.ATKdata.CrystalNum)
         {
-            pd.AttackDamage = enchtSystem.data.ATKdata.NextATK; // 체력 증가 처리
-            pd.Coin -= enchtSystem.data.ATKdata.Gold; // 골드 사용 처리
-            Inventory.Instance.Enchant(enchtSystem.data.ATKdata.CrystalIdx, enchtSystem.data.ATKdata.CrystalNum); // 인벤에서 아이템 사용처리 코드
-            enchtSystem.ATKEnchant(); // 다음 단계 셋팅
+            //체력 증가 처리
+            pd.AttackDamage = enchtSystem.data.ATKdata.NextATK;
 
+            //재화 및 아이템 사용 처리
+            pd.Coin -= enchtSystem.data.ATKdata.Gold;
+            Inventory.Instance.Enchant(enchtSystem.data.ATKdata.CrystalIdx, enchtSystem.data.ATKdata.CrystalNum);
+            
+            
+            //다음 단계 세팅
+            enchtSystem.ATKEnchant(); 
             SetData();
         }
         else

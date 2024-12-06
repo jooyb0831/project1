@@ -57,6 +57,10 @@ public class MerchantSystem : Singleton<MerchantSystem>
 
         for (int i = 0; i < Inventory.Instance.invenSlots.Length; i++)
         {
+            if(Inventory.Instance.invenSlots[i] == null)
+            {
+                return;
+            }
             if (Inventory.Instance.invenSlots[i].GetComponent<Slots>().isFilled)
             {
                 merchInvenUI = inven.invenSlots[i].GetChild(0).gameObject;
