@@ -1038,7 +1038,7 @@ public class Player : MonoBehaviour
     {
         data.HP = 0;
         state = State.Dead;
-        GameUI.Instance.gameOverUI.SetActive(true);
+        GameUI.Instance.GameOver();
     }
 
 

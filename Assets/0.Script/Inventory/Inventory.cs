@@ -34,6 +34,7 @@ public class InventoryData
 {
     public int curInvenNums = 5;
     public List<InvenItem> items = new List<InvenItem>();
+    public bool InvenFull = false;
     
 }
 
@@ -64,6 +65,13 @@ public class Inventory : Singleton<Inventory>
             return;
         }
 
+        bool isFull = EmptySlotCheck();
+        if(isFull)
+        {
+            itemData.fieldItem.InvenFull();
+            return;
+        }
+        
         itemNumbers.Add(itemData.itemNumber);
         int index = SlotCheck();
         InvenItem item = Instantiate(invenItem, invenSlots[index]);
@@ -133,10 +141,11 @@ public class Inventory : Singleton<Inventory>
     */
     int SlotCheck()
     {
-        int number = 0;
+        int number = -1;
         for (int i = 0; i < invenSlots.Length; i++)
         {
-            if (!invenSlots[i].GetComponent<Slots>().isFilled && !invenSlots[i].GetComponent<Slots>().isLocked)
+            if (!invenSlots[i].GetComponent<Slots>().isFilled 
+                && !invenSlots[i].GetComponent<Slots>().isLocked)
             {
                 number = i;
                 break;
@@ -349,6 +358,31 @@ public class Inventory : Singleton<Inventory>
         }
 
     }
+
+    public bool EmptySlotCheck()
+    {
+        bool isFull = false;
+        for(int i=0; i<invenSlots.Length; i++)
+        {
+            if(invenSlots[i] == null)
+            {
+                isFull = true;
+                break;
+            }
+            if (!invenSlots[i].GetComponent<Slots>().isFilled)
+            {
+                isFull = false;
+                break;
+            }
+            else
+            {
+                isFull = true;
+            }
+
+        }
+        return isFull;
+    }
+
     
 
 

@@ -564,7 +564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 0}
   state: 0
-  dropItem: {fileID: 2862627394229396018, guid: 180a834868cfe644a9ec269830ddb22b, type: 3}
+  dropItem: {fileID: 2970092195987150136, guid: c989116d0d4eb424a9fea11d96445313, type: 3}
   eBulletParent: {fileID: 0}
   ski1bulletDir: 0
   sk1isLeft: 0
@@ -22962,7 +22962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 0}
   state: 0
-  dropItem: {fileID: 2862627394229396018, guid: 180a834868cfe644a9ec269830ddb22b, type: 3}
+  dropItem: {fileID: 2970092195987150136, guid: c989116d0d4eb424a9fea11d96445313, type: 3}
   eBulletParent: {fileID: 0}
   ski1bulletDir: 0
   sk1isLeft: 0
@@ -24517,7 +24517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 0}
   state: 0
-  dropItem: {fileID: 2862627394229396018, guid: 180a834868cfe644a9ec269830ddb22b, type: 3}
+  dropItem: {fileID: 2970092195987150136, guid: c989116d0d4eb424a9fea11d96445313, type: 3}
   eBulletParent: {fileID: 0}
   ski1bulletDir: 0
   sk1isLeft: 0
@@ -30371,7 +30371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p: {fileID: 0}
   state: 0
-  dropItem: {fileID: 2862627394229396018, guid: 180a834868cfe644a9ec269830ddb22b, type: 3}
+  dropItem: {fileID: 2970092195987150136, guid: c989116d0d4eb424a9fea11d96445313, type: 3}
   eBulletParent: {fileID: 0}
   ski1bulletDir: 0
   sk1isLeft: 0
@@ -31058,7 +31058,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699138941909097914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.4, y: -36.1, z: 0}
+  m_LocalPosition: {x: 5.1, y: -2.6, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

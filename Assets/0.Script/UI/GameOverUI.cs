@@ -21,16 +21,24 @@ public class GameOverUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Image>().DOFade(1, 3f);
+
+    }
+
+    public void Active()
+    {
+        GetComponent<Image>().DOFade(1, 1.5f).OnComplete(() => Time.timeScale = 0);
     }
 
     public void OnClickedRetryBtn()
     {
+        Time.timeScale = 1;
         SceneChanger.Instance.ReloadScene();
+
     }
 
     public void OnClickedQuitBtn()
     {
+        Time.timeScale = 1;
         SceneChanger.Instance.GoShip();
     }
 }

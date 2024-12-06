@@ -42,6 +42,7 @@ public class DialogueWindowUI : MonoBehaviour
     public void OnClickNextBtn()
     {
         idx++;
+
         if (idx<currentDialogue.Count)
         {
             stringArea.text = currentDialogue[idx];
@@ -49,6 +50,7 @@ public class DialogueWindowUI : MonoBehaviour
 
         else if (idx >= currentDialogue.Count)
         {
+            
             if(curQuest.data.isDone)
             {
                 curQuest.QuestReward();
@@ -66,10 +68,17 @@ public class DialogueWindowUI : MonoBehaviour
             }
             else if(!curQuest.data.isStart)
             {
-                answerWindow.SetActive(true);
-                nextBtn.gameObject.SetActive(false);
+                if(isBasicDialogue)
+                {
+                    answerWindow.SetActive(true);
+                    nextBtn.gameObject.SetActive(false);
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                    isBasicDialogue = true;
+                }
             }
-            
         }
     }
 
@@ -105,4 +114,6 @@ public class DialogueWindowUI : MonoBehaviour
         answerWindow.SetActive(false);
         nextBtn.gameObject.SetActive(true);
     }
+
+    
 }

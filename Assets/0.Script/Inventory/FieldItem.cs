@@ -71,8 +71,27 @@ public class FieldItem : MonoBehaviour
         if (dist < 0.2f)
         {
             Inventory.Instance.GetItem(itemData);
-            Destroy(gameObject);
+            if(!isFull)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                return;
+            }    
         }
+    }
+
+    public void ItemMoves()
+    {
+
+    }
+
+    bool isFull = false;
+    public void InvenFull()
+    {
+        bool isFull = true;
+        Debug.Log("인벤토리가 가득 찼습니다.");
     }
 
     public virtual void Using()

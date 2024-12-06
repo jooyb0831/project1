@@ -32,11 +32,12 @@ public class GameUI : Singleton<GameUI>
         coinTxt.text = pd.Coin.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GameOver()
     {
-
+        gameOverUI.SetActive(true);
+        gameOverUI.GetComponent<GameOverUI>().Active();
     }
+
     public int MAXHP
     {
         set
