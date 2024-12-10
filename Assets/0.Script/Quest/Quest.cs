@@ -26,7 +26,7 @@ public class QuestData
 public enum QuestType
 {
     Kill,
-    Get
+    Gether
 }
 public abstract class Quest : MonoBehaviour
 {
@@ -43,6 +43,7 @@ public abstract class Quest : MonoBehaviour
     public string qTitle;
     public int curCnt;
     public int maxCnt;
+
     public virtual void Init()
     {
         if(gi == null)
@@ -56,6 +57,9 @@ public abstract class Quest : MonoBehaviour
         data.curCount = 0;
     }
 
+    /// <summary>
+    /// QuestUI 추가
+    /// </summary>
     public virtual void QuestAdd()
     {
         if(gi == null)
@@ -68,18 +72,9 @@ public abstract class Quest : MonoBehaviour
         }
     }
 
-    public virtual void SetQuestUI()
-    {
-        if(gi == null)
-        {
-            gi = GameManager.Instance.GameUI;
-        }
-        if(menuUI == null)
-        {
-            menuUI = GameManager.Instance.MUI;
-        }
-    }
-    
+    /// <summary>
+    /// Quest 보상
+    /// </summary>
     public virtual void QuestReward()
     {
         if (pData == null)
@@ -88,18 +83,10 @@ public abstract class Quest : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Quest제거
+    /// </summary>
     public virtual void QuesUIRemove()
-    {
-
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
     {
 
     }

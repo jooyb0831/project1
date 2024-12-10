@@ -32,6 +32,9 @@ public class MissileItem : FieldItem
         }
     }
 
+    /// <summary>
+    /// 발사준비
+    /// </summary>
     public void FireReady()
     {
         // 발사 준비
@@ -40,20 +43,7 @@ public class MissileItem : FieldItem
         p.state = p.state == Player.State.Walk ? Player.State.BombThrowWalk 
                 : p.state == Player.State.Run ? Player.State.BombThrowRun 
                 : Player.State.BombThrow;
-        
-        /*if (p.state == Player.State.Run)
-        {
-            p.state = Player.State.BombThrowRun;
-        }
-        else if (p.state == Player.State.Walk)
-        {
-            p.state = Player.State.BombThrowWalk;
-        }
-        else
-        {
-            p.state = Player.State.BombThrow;
-        }
-        */
+       
 
         if (isUp)
         {
@@ -82,6 +72,9 @@ public class MissileItem : FieldItem
         
     }
 
+    /// <summary>
+    /// 발사
+    /// </summary>
     public void Fire()
     {
         // 발사
@@ -104,6 +97,9 @@ public class MissileItem : FieldItem
         Initialize();
     }
 
+    /// <summary>
+    /// 초기화
+    /// </summary>
     void Initialize()
     {
         isUp = true;

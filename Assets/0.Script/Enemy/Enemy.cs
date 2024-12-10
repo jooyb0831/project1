@@ -24,10 +24,10 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-    [SerializeField] protected Player p;
+    protected Player p;
     SpriteRenderer sr;
     protected SpriteAnimation sa;
-    public Data data = new Data();
+    public Data data = new();
     protected SkillSystem sksystem;
 
     protected List<Sprite> enemySprite;
@@ -69,14 +69,16 @@ public abstract class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PBullet>() == true)
+        PBullet pBullet = collision.GetComponent<PBullet>();
+        if (pBullet)
         {
             TakeDamage(pd.AttackDamage);
-            Pooling.Instance.SetPool(DicKey.pBullet, collision.GetComponent<PBullet>().gameObject);
+            Pooling.Instance.SetPool(DicKey.pBullet, pBullet.gameObject);
             Debug.Log("hit");
         }
 
-        if(collision.gameObject.GetComponent<Missile>())
+        Missile missile = collision.GetComponent<Missile>();
+        if(missile)
         {
             TakeDamage(collision.GetComponent<Missile>().data.Damage);
         }
@@ -86,9 +88,10 @@ public abstract class Enemy : MonoBehaviour
             TakeDamage(collision.transform.parent.GetComponent<Missile>().data.Damage);
         }
 
-        if(collision.GetComponent<Skill0Bullet>())
+        Skill0Bullet skill0Bullet = collision.GetComponent<Skill0Bullet>();
+        if(skill0Bullet)
         {
-            TakeDamage(collision.GetComponent<Skill0Bullet>().damage);
+            TakeDamage(skill0Bullet.damage);
         }
 
         if(collision.GetComponent<Skill1Bullet>())

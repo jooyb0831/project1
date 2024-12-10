@@ -30,17 +30,6 @@ public class QuestManager : Singleton<QuestManager>
         Init();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            pd.OnGoingQList.Add(qList[0]);
-            Quest obj= Instantiate(qList[0], transform);
-            onGoingQList.Add(obj);
-            obj.data.isStart = true;
-        }
-    }
 
     void Init()
     {
@@ -52,6 +41,10 @@ public class QuestManager : Singleton<QuestManager>
         e1 = enemyKillCnt[1];
     }
 
+    /// <summary>
+    /// 킬카운트체크
+    /// </summary>
+    /// <param name="enemy"></param>
     public void Check(Enemy enemy)
     {
         int idx = -1;
@@ -92,6 +85,11 @@ public class QuestManager : Singleton<QuestManager>
         }
     }
 
+    /// <summary>
+    /// QuestUI 찾는 함수
+    /// </summary>
+    /// <param name="idx"></param>
+    /// <returns></returns>
     QuestUI Find (int idx)
     {
         QuestUI qUI = null;
@@ -106,6 +104,11 @@ public class QuestManager : Singleton<QuestManager>
         return qUI;
     }
 
+    /// <summary>
+    /// Quest QuickUI찾는 함수
+    /// </summary>
+    /// <param name="idx"></param>
+    /// <returns></returns>
     QuestMenuUIPreset FindUI (int idx)
     {
         QuestMenuUIPreset qMUI = null;
@@ -120,6 +123,10 @@ public class QuestManager : Singleton<QuestManager>
         return qMUI;
     }
 
+    /// <summary>
+    /// Quest추가
+    /// </summary>
+    /// <param name="quest"></param>
     public void AddQuest(Quest quest)
     {
         pd.OnGoingQList.Add(quest);

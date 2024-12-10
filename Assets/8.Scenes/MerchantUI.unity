@@ -524,6 +524,8 @@ MonoBehaviour:
   isFilled: 1
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &258840679
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +768,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &368090392
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,6 +1015,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &511439350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1109,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &525275359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,6 +1339,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &601156564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,6 +1910,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &735143783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,6 +1988,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -2093,6 +2106,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &819364475
 GameObject:
   m_ObjectHideFlags: 0
@@ -2185,6 +2200,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &863259201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,6 +2371,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &928279050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,6 +2599,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1094092570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2748,6 +2769,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1141204030
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,6 +3082,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1240559393
 GameObject:
   m_ObjectHideFlags: 0
@@ -3383,6 +3408,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1371958983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3559,6 +3586,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1438676232
 GameObject:
   m_ObjectHideFlags: 0
@@ -3762,6 +3791,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1482257621
 GameObject:
   m_ObjectHideFlags: 0
@@ -4364,6 +4395,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1615880148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4682,6 +4715,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1819753796
 GameObject:
   m_ObjectHideFlags: 0
@@ -4931,6 +4966,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 1
   isSellInven: 0
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &2025462176
 GameObject:
   m_ObjectHideFlags: 0
@@ -5023,6 +5060,8 @@ MonoBehaviour:
   isFilled: 0
   isMerchantInven: 0
   isSellInven: 1
+  isLocked: 0
+  cover: {fileID: 0}
 --- !u!1 &1430815836342073477
 GameObject:
   m_ObjectHideFlags: 0

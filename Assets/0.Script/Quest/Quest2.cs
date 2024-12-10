@@ -66,21 +66,6 @@ public class Quest2 : Quest
        
     }
 
-    public override void SetQuestUI()
-    {
-        base.SetQuestUI();
-        QuestUI qUI = Instantiate(questUI, gi.questArea);
-        QuestMenuUIPreset qMUI = Instantiate(qMenuUI, menuUI.questArea);
-        qUI.SetData(this.data);
-        qMUI.SetData(this.data);
-
-
-        GameManager.Instance.QuestManager.qUIList.Add(qUI);
-        GameManager.Instance.QuestManager.qMUIList.Add(qMUI);
-
-        thisQuestUI = qUI;
-        thisQuestMenuUI = qMUI;
-    }
 
     public override void QuestReward()
     {

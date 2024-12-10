@@ -12,12 +12,6 @@ public class QuestUIManager : MonoBehaviour
         SetQuestUI();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void SetQuestUI()
     {
         if (qm.onGoingQList.Count !=0)
@@ -27,7 +21,7 @@ public class QuestUIManager : MonoBehaviour
             for (int i = 0; i<qm.onGoingQList.Count; i++)
             {
                 Debug.Log("µ¹¾Æ°¨");
-                qm.onGoingQList[i].SetQuestUI();
+                qm.onGoingQList[i].QuestAdd();
             }
         }
         else

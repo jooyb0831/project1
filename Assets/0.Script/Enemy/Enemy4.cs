@@ -65,7 +65,7 @@ public class Enemy4 : Enemy
 
     void Move()
     {
-        transform.localScale = transform.position.x > p.transform.position.x ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
+        transform.localScale = transform.position.x < p.transform.position.x ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
         transform.position = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * data.Speed);
         SpriteCheck(state);
     }

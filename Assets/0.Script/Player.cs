@@ -4,30 +4,35 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     public PlayerData data;
     public Inventory inventory;
+    private Rigidbody2D rigid;
 
-    [SerializeField] private Rigidbody2D rigid;
     public Transform firePos;
     public Transform sitFirePos;
-    [SerializeField] PBullet pBullet;
-    [SerializeField] GameObject rotateCore;
-    [SerializeField] Transform missilePos;
-    [SerializeField] Missile missile;
-    [SerializeField] Transform foot;
     public Transform bombPos;
-    [SerializeField] float dist;
+    [SerializeField] Transform foot;
+
     [SerializeField] Transform pBulletParent;
-    public bool isLadder = false;
-    // bool값 빼고 state로 다 처리
-    [SerializeField] bool isBack = false;
-    [SerializeField] float speed;
+   
+    private float speed;
     public float jumpPower;
-    [SerializeField] bool canFire = false;
+    float originSpeed;
+    float originRunSpeed;
+
+    public bool isLadder = false;
+    bool ladderAttach = false;
+    GameObject ladder = null;
+
+    public Transform skill1;
+    public Transform skill2;
+    public GameObject skillPos;
+
+    bool canFire = false;
     [SerializeField] float fireDelayTime = 0.8f;
-    [SerializeField] float fireTimer;
-    [SerializeField] UpDownGround moveFloor = null;
+    float fireTimer;
+    private UpDownGround moveFloor = null;
+
     public enum State
     {
         Idle,
@@ -65,15 +70,9 @@ public class Player : MonoBehaviour
     private List<Sprite> ladderIdleSprites;
     private List<Sprite> bombSprites;
 
-    [SerializeField] bool isJumpRun = false;
     public State state = State.Idle;
-    [SerializeField] Transform core;
-    public Transform skill1;
-    public Transform skill2;
-    public GameObject skillPos;
 
-    [SerializeField] float originSpeed;
-    [SerializeField] float originRunSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,8 +105,7 @@ public class Player : MonoBehaviour
         originSize = GetComponent<CapsuleCollider2D>().size;
     }
 
-    [SerializeField] bool ladderAttach = false;
-    [SerializeField] GameObject ladder = null;
+
     
     /// <summary>
     /// 사다리에 붙음 처리 함수
@@ -364,6 +362,7 @@ public class Player : MonoBehaviour
         }
         #endregion
 
+        #region 아이템
         // 아이템 사용하는 코드
         if (inventory.quickSlot.GetComponent<QuickSlot>().isFilled)
         {
@@ -392,152 +391,8 @@ public class Player : MonoBehaviour
                     Inventory.Instance.UseItem(item);
                 }
             }
-
-
-            /*
-            int itemNum = item.data.itemNumber;
-            // itemNum 대신 enum값으로 변경
-            switch (itemNum) // 아이템 코드
-            {
-                case 2: // 아이템 넘버코드가 2번(미사일일 경우)
-                    {
-                        if (item.data.count > 0)
-                        {
-                            if (Input.GetKeyDown(KeyCode.O))
-                            {
-                                rotateCore.SetActive(true);
-                            }
-
-                            if (Input.GetKey(KeyCode.O))
-                            {
-                                if(x!=0)
-                                {
-                                    if(isRun)
-                                    {
-                                        state = State.BombThrowRun;
-                                    }
-                                    else
-                                    {
-                                        state = State.BombThrowWalk;
-                                    }
-                                }
-                                else
-                                {
-                                    state = State.BombThrow;
-                                }
-                                // 미사일 쏠 때 sin cos 사용해서 바꿔보기..
-                                if (transform.localScale.x < 0)
-                                {
-                                    if (core.rotation == Quaternion.Euler(new Vector3(0, 0, -90)))
-                                    {
-                                        isBack = false;
-                                    }
-                                    else if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 0)))
-                                    {
-                                        isBack = true;
-                                    }
-
-                                    if (isBack == true)
-                                    {
-                                        core.Rotate(Vector3.forward * Time.deltaTime * 100f);
-                                    }
-                                    else
-                                    {
-                                        core.Rotate(Vector3.back * Time.deltaTime * 100f);
-                                    }
-                                }
-                                else
-                                {
-                                    if (core.rotation == Quaternion.Euler(new Vector3(0, 0, 90)))
-                                    {
-                                        isBack = true;
-
-                                    }
-                                    else if (core.rotation.z < 0)
-                                    {
-                                        isBack = false;
-                                    }
-
-                                    if (isBack == true)
-                                    {
-                                        core.Rotate(Vector3.back * Time.deltaTime * 100f);
-                                    }
-                                    else
-                                    {
-                                        core.Rotate(Vector3.forward * Time.deltaTime * 100f);
-                                    }
-
-                                }
-
-                            }
-                            if (Input.GetKeyUp(KeyCode.O))
-                            {
-                                Inventory.Instance.UseItem(item);
-                                state = State.Idle;
-                                float bulletSpeed = 2f;
-                                float power = 5;
-                                Vector2 dir = rotateCore.transform.rotation * new Vector2(bulletSpeed, 0) * power;
-                                GameObject obj = Pooling.Instance.GetPool(DicKey.pMissile, missilePos, rotateCore.transform.rotation).gameObject;
-                                if (transform.localScale.x < 0)
-                                {
-                                    obj.GetComponent<Missile>().Shoot(-dir);
-                                }
-                                else
-                                {
-                                    obj.GetComponent<Missile>().Shoot(dir);
-                                }
-
-                                rotateCore.transform.rotation = Quaternion.identity;
-                                rotateCore.SetActive(false);
-
-                            }
-                        }
-                        break;
-                    }
-                case 3: // 아이템 넘버코드가 3번(회복약)
-                    {
-                        int plusHP = item.data.usage;
-                        if(Input.GetKeyDown(KeyCode.O))
-                        {
-                            if(data.HP == data.MAXHP)
-                            {
-                                Debug.Log("이미 체력이 가득 찼습니다");
-                                return;
-                            }
-                            else
-                            {
-                                if(data.MAXHP - data.HP >= plusHP)
-                                {
-                                    data.HP += plusHP;
-                                }
-                                else if(data.MAXHP - data.HP < plusHP)
-                                {
-                                    data.HP = data.MAXHP;
-                                }
-                            }
-                            Debug.Log($"{data.HP}");
-                            Inventory.Instance.UseItem(item);
-                        }
-                        break;
-                    }
-                case 5: // 아이템 넘버코드 5번(폭탄)
-                    {
-                        if(Input.GetKeyDown(KeyCode.O))
-                        {
-                            if(item.data.count>0)
-                            {
-                                Inventory.Instance.UseItem(item);
-                                GameObject obj = Pooling.Instance.GetPool(DicKey.bomb, bombPos);
-                                obj.transform.SetParent(null);
-                            }
-                        }
-                    }
-                    break;
-            }
-            */
-
         }
-        
+        #endregion
 
         StateCheck(state);
     }
@@ -738,7 +593,6 @@ public class Player : MonoBehaviour
         if (collision.gameObject.GetComponent<MoveGround>())
         {
             transform.SetParent(collision.transform);
-            //transform.localScale = new Vector3(5, 5, 1);
         }
 
         if (collision.gameObject.GetComponent<UpDownGround>())
@@ -791,21 +645,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    //https://blog.naver.com/yoohee2018/221187229189
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<MoveGround>())
+        if (collision.gameObject.GetComponent<MoveGround>() || collision.gameObject.GetComponent<UpDownGround>())
         {
             if(Input.GetButtonDown("Jump"))
-            {
-                
-                transform.SetParent(null);
-            }
-        }
-
-        if (collision.gameObject.GetComponent<UpDownGround>())
-        {
-            if (Input.GetButtonDown("Jump"))
             {
                 transform.SetParent(null);
             }
@@ -841,12 +685,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
        
-        if(collision.CompareTag("DeadZone"))
-        {
-            Dead();
-        }
-
-        if(collision.CompareTag("Lava"))
+        if(collision.CompareTag("DeadZone") || collision.CompareTag("Lava"))
         {
             Dead();
         }
@@ -1024,8 +863,8 @@ public class Player : MonoBehaviour
 
     }
 
-    [SerializeField] Vector2 originOffset;
-    [SerializeField] Vector2 originSize;
+    Vector2 originOffset;
+    Vector2 originSize;
    
     void Sit()
     {
@@ -1040,44 +879,4 @@ public class Player : MonoBehaviour
         state = State.Dead;
         GameUI.Instance.GameOver();
     }
-
-
-    float deg;
-    float turretSpeed = 50f;
-    float circleR = 0.4f;
-    bool isUp = true;
-    [SerializeField] GameObject turret;
-    void Missile()
-    {
-        if (Input.GetKey(KeyCode.K))
-        {
-            if(isUp)
-            {
-                deg = deg + Time.deltaTime * turretSpeed;
-
-                if(turret.transform.rotation == Quaternion.Euler(0,0,90f))
-                {
-                    isUp = false;
-                }
-            }
-            else
-            {
-                deg = deg - Time.deltaTime * turretSpeed;
-                if (turret.transform.rotation == Quaternion.Euler(0,0,0))
-                {
-                    isUp = true;
-                }
-            }
-            
-            float rad = deg * Mathf.Deg2Rad;
-            float x = circleR * Mathf.Cos(rad);
-            float y = circleR * Mathf.Sin(rad);
-            turret.transform.localPosition = new Vector2(x, y);
-            turret.transform.eulerAngles = new Vector3(0, 0, deg);
-
-        }
-
-    }
-
-
 }

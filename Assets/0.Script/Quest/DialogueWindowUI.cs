@@ -17,18 +17,10 @@ public class DialogueWindowUI : MonoBehaviour
     [SerializeField] bool isBasicDialogue = true;
     public Quest curQuest = null;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// UI 다이얼로그 세팅
+    /// </summary>
+    /// <param name="dialogue"></param>
     public void SetCurDialogue(List<string> dialogue)
     {
         currentDialogue.Clear();
@@ -39,6 +31,9 @@ public class DialogueWindowUI : MonoBehaviour
         stringArea.text = currentDialogue[0];
     }
 
+    /// <summary>
+    /// Next버튼
+    /// </summary>
     public void OnClickNextBtn()
     {
         idx++;
@@ -82,6 +77,10 @@ public class DialogueWindowUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 다이얼로그 재생
+    /// </summary>
+    /// <param name="strs"></param>
     void DialoguePlayer(List<string> strs)
     {
         idx++;
@@ -95,6 +94,9 @@ public class DialogueWindowUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Yes버튼
+    /// </summary>
     public void OnYesClicked()
     {
         SetCurDialogue(yesDialogue);
@@ -103,16 +105,19 @@ public class DialogueWindowUI : MonoBehaviour
         QuestNPCUI.Instance.onGoingQuest = curQuest;
         QuestManager.Instance.AddQuest(curQuest);
         answerWindow.SetActive(false);
-        nextBtn.gameObject.SetActive(true);
+        nextBtn.SetActive(true);
     }
 
+    /// <summary>
+    /// No버튼
+    /// </summary>
     public void OnNoClicked()
     {
         SetCurDialogue(noDialogue);
         isBasicDialogue = false;
         idx = 0;
         answerWindow.SetActive(false);
-        nextBtn.gameObject.SetActive(true);
+        nextBtn.SetActive(true);
     }
 
     

@@ -22,14 +22,7 @@ public class Quest1 :Quest
 
     public override void Init()
     {
-        if (gi == null)
-        {
-            gi = GameManager.Instance.GameUI;
-        }
-        if(menuUI == null)
-        {
-            menuUI = GameManager.Instance.MUI;
-        }
+        base.Init();
         data.QuestTitle = "눈알 몬스터 처치";
         data.QuestNumber = 0;
         data.isDone = false;
@@ -48,34 +41,16 @@ public class Quest1 :Quest
         questUI.quest = this;
         qMenuUI.quest = this;
         
-        base.Init();
+        
     }
 
     public override void QuestAdd()
     {
-        QuestUI qUI = Instantiate(questUI, gi.questArea);
-        QuestMenuUIPreset qMUI = Instantiate(qMenuUI, menuUI.questArea);
-        qUI.SetData(this.data);
-        qMUI.SetData(this.data);
-
-
-        GameManager.Instance.QuestManager.qUIList.Add(qUI);
-        GameManager.Instance.QuestManager.qMUIList.Add(qMUI);
-
-        thisQuestUI = qUI;
-        thisQuestMenuUI = qMUI;
-
         base.QuestAdd();
-    }
-
-    public override void SetQuestUI()
-    {
-        base.SetQuestUI();
         QuestUI qUI = Instantiate(questUI, gi.questArea);
         QuestMenuUIPreset qMUI = Instantiate(qMenuUI, menuUI.questArea);
         qUI.SetData(this.data);
         qMUI.SetData(this.data);
-
 
         GameManager.Instance.QuestManager.qUIList.Add(qUI);
         GameManager.Instance.QuestManager.qMUIList.Add(qMUI);

@@ -15,6 +15,7 @@ public class ItemData
     public int itemNumber;
     public int usage;
     public FieldItem fieldItem;
+    public GameObject obj;
 }
 public class FieldItem : MonoBehaviour
 {
@@ -23,18 +24,14 @@ public class FieldItem : MonoBehaviour
     protected PlayerData pd;
     protected SpriteAnimation sa;
     bool isFind = false;
+    float speed;
     [SerializeField] protected List<Sprite> itemSprites;
+
+    bool isFull = false;
     // Start is called before the first frame update
     void Start()
     {
-        sa = GetComponent<SpriteAnimation>();
-        p = GameManager.Instance.Player;
-        pd = GameManager.Instance.PlayerData;
-
-        if(itemSprites.Count >=1)
-        {
-            sa.SetSprite(itemSprites, 0.2f);
-        }
+        Init();
     }
 
     public virtual void Init()
@@ -42,7 +39,7 @@ public class FieldItem : MonoBehaviour
         sa = GetComponent<SpriteAnimation>();
         p = GameManager.Instance.Player;
         pd = GameManager.Instance.PlayerData;
-
+        itemData.obj = this.gameObject;
         if (itemSprites.Count >= 1)
         {
             sa.SetSprite(itemSprites, 0.2f);
@@ -55,43 +52,37 @@ public class FieldItem : MonoBehaviour
 
         float dist = Vector2.Distance(p.transform.position, transform.position);
 
-        if(dist<=1.5f)
+        if (dist<=1.5f)
         {
-            isFind = true;
+            if(!isFull)
+            {
+                isFind = true;
+            }
+            else
+            {
+                isFind = false;
+            }
         }
-        if (isFind)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * 5f);
-        }
-        else
-        {
-            return;
-        }
+
+        speed = isFind ? 5f :0f;
+        transform.position = Vector2.MoveTowards(transform.position, p.transform.position, Time.deltaTime * speed);
 
         if (dist < 0.2f)
         {
             Inventory.Instance.GetItem(itemData);
-            if(!isFull)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                return;
-            }    
         }
-    }
 
-    public void ItemMoves()
-    {
 
     }
-
-    bool isFull = false;
-    public void InvenFull()
+    
+    public void InvenFull(bool invenFull)
     {
-        bool isFull = true;
-        Debug.Log("인벤토리가 가득 찼습니다.");
+        isFull = invenFull;
+        if(invenFull)
+        {
+            Debug.Log("인벤토리가 가득 찼습니다.");
+        }
+        
     }
 
     public virtual void Using()

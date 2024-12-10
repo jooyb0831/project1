@@ -651,7 +651,10 @@ MonoBehaviour:
   basicDialogue: []
   yesDialogue: []
   noDialogue: []
+  questGoingDialogue: []
+  questEndDialogue: []
   curQuest: {fileID: 0}
+  onGoingQuest: {fileID: 0}
 --- !u!4 &401361515
 Transform:
   m_ObjectHideFlags: 0
@@ -1541,6 +1544,7 @@ MonoBehaviour:
   answerWindow: {fileID: 2018607137}
   nextBtn: {fileID: 335119132}
   isBasicDialogue: 1
+  curQuest: {fileID: 0}
 --- !u!1 &1646800964
 GameObject:
   m_ObjectHideFlags: 0
