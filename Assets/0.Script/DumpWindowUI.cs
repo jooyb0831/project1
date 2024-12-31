@@ -21,11 +21,6 @@ public class DumpWindowUI : MonoBehaviour
         pd = GameManager.Instance.PlayerData;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void SetItem(InvenItem item)
     {

@@ -54,14 +54,15 @@ public class ItemSellWindow : MonoBehaviour
     {
         if(int.Parse(numInputField.text)>invenItem.data.count)
         {
-            Debug.Log("수량이 너무 많습니다.");
+            GameUI.Instance.fullInvenObj.SetActive(true);
+            GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(7);
             return;
         }
         if(pd == null)
         {
             pd = GameManager.Instance.PlayerData;
         }
-        MerchantSystem.Instance.FindItem(invenItem, int.Parse(numInputField.text));
+        MerchantSystem.Instance.SellItemCheck(invenItem, int.Parse(numInputField.text));
         Inventory.Instance.ItemCount(invenItem, int.Parse(numInputField.text), true);
         
         pd.Coin += totalPrice;

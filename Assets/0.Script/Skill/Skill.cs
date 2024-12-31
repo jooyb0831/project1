@@ -28,11 +28,7 @@ public class Skill : MonoBehaviour
     public SkillUISample ui;
     public bool isStart = false;
     public bool isWorking = false;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
 
 
 

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+//애니메이션을 사용하는 대신 Sprite를 Delay에 맞게 연속으로 재생시켜
+//마치 애니메이션처럼 보이게 하는 스크립트
+
 public class SpriteAnimation : MonoBehaviour
 {
     SpriteRenderer sr;
@@ -22,13 +26,7 @@ public class SpriteAnimation : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (sprites.Count == 0 || sprites == null)
@@ -36,7 +34,7 @@ public class SpriteAnimation : MonoBehaviour
             return;
         }
 
-        if (isStop == false)
+        if (!isStop)
         {
             timer += Time.deltaTime;
             if (timer >= delay)
@@ -47,7 +45,7 @@ public class SpriteAnimation : MonoBehaviour
                 if (index >= sprites.Count)
                 {
                     index = 0;
-                    if (loop == false)
+                    if (!loop)
                     {
                         if(action != null)
                         {
@@ -59,19 +57,20 @@ public class SpriteAnimation : MonoBehaviour
                     }
                 }
                 sr.sprite = sprites[index];
-
-
             }
         }
-        else if (isStop == true)
+        else
         {
             return;
         }
-
-
-
     }
 
+    /// <summary>
+    /// Sprite를 받아와 세팅
+    /// </summary>
+    /// <param name="sprites"></param>
+    /// <param name="delay"></param>
+    /// <param name="loop"></param>
     public void SetSprite(List<Sprite> sprites, float delay, bool loop = true)
     {
         if (sr == null)
@@ -84,6 +83,13 @@ public class SpriteAnimation : MonoBehaviour
         this.loop = loop;
     }
 
+    /// <summary>
+    /// Sprite를 받아와 세팅(action인수)
+    /// </summary>
+    /// <param name="sprites"></param>
+    /// <param name="delay"></param>
+    /// <param name="loop"></param>
+    /// <param name="action"></param>
     public void SetSprite(List<Sprite> sprites, float delay, bool loop, UnityAction action)
     {
         if (sr == null)

@@ -390,6 +390,8 @@ MonoBehaviour:
   cntBG: {fileID: 1754643618}
   cntTxt: {fileID: 164241514}
   invenOption: {fileID: 0}
+  invenExplain: {fileID: 0}
+  itemExplainWindow: {fileID: 0}
   itemOptionWindow: {fileID: 8974422446151241562, guid: 6cd5b05ef3ade8f4ba5ad9f0235a2838, type: 3}
   itemSellWindow: {fileID: 1151259264737084745, guid: 26e3d67405da7604b9d216a04e5a9fa4, type: 3}
   itemBuyWindow: {fileID: 1151259264737084745, guid: 97274198b21356f4ab14641052714478, type: 3}
@@ -2789,7 +2791,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 2038707644}
-  isOn: 0
 --- !u!4 &267131964
 Transform:
   m_ObjectHideFlags: 0
@@ -3940,7 +3941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -72}
+  m_AnchoredPosition: {x: 0, y: -45}
   m_SizeDelta: {x: 800, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &517431624
@@ -7701,6 +7702,8 @@ MonoBehaviour:
   cntBG: {fileID: 973484350}
   cntTxt: {fileID: 2043761706}
   invenOption: {fileID: 0}
+  invenExplain: {fileID: 0}
+  itemExplainWindow: {fileID: 0}
   itemOptionWindow: {fileID: 8974422446151241562, guid: 6cd5b05ef3ade8f4ba5ad9f0235a2838, type: 3}
   itemSellWindow: {fileID: 1151259264737084745, guid: 26e3d67405da7604b9d216a04e5a9fa4, type: 3}
   itemBuyWindow: {fileID: 1151259264737084745, guid: 97274198b21356f4ab14641052714478, type: 3}
@@ -7892,10 +7895,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2038707644}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 267131963}
+        m_TargetAssemblyTypeName: EnchantUI, Assembly-CSharp
+        m_MethodName: OnExitBtn
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11297,6 +11300,8 @@ MonoBehaviour:
   cntBG: {fileID: 2118365737}
   cntTxt: {fileID: 198446751}
   invenOption: {fileID: 0}
+  invenExplain: {fileID: 0}
+  itemExplainWindow: {fileID: 0}
   itemOptionWindow: {fileID: 8974422446151241562, guid: 6cd5b05ef3ade8f4ba5ad9f0235a2838, type: 3}
   itemSellWindow: {fileID: 1151259264737084745, guid: 26e3d67405da7604b9d216a04e5a9fa4, type: 3}
   itemBuyWindow: {fileID: 1151259264737084745, guid: 97274198b21356f4ab14641052714478, type: 3}
@@ -12335,7 +12340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1621343927
 RectTransform:
   m_ObjectHideFlags: 0

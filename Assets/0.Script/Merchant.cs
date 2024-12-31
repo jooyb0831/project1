@@ -38,6 +38,7 @@ public class Merchant : MonoBehaviour
             {
                 MerchantSystem.Instance.window.SetActive(true);
                 MerchantSystem.Instance.SetInven();
+                Time.timeScale = 0;
             }
         }
         else

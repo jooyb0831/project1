@@ -67,13 +67,6 @@ public class BossJsonData
     public List<BossEnemyData> bossData = new List<BossEnemyData>();
 }
 
-/*
-[System.Serializable]
-public class QuestDialogueJsonData
-{
-    public List<QuestDialogueData> questDialogueData = new List<QuestDialogueData>();
-} 
-*/
 
 public class JsonData : Singleton<JsonData>
 {
@@ -86,7 +79,7 @@ public class JsonData : Singleton<JsonData>
     public QuestDialogueData questDialogueData = new QuestDialogueData();
     public EnemyJsonData enemyData = new EnemyJsonData();
     public BossJsonData bossJsonData = new BossJsonData();
-    //public QuestDialogueJsonData qDiaData = new QuestDialogueJsonData();
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -97,12 +90,4 @@ public class JsonData : Singleton<JsonData>
         bossJsonData = JsonUtility.FromJson<BossJsonData>(bossJson.text);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.F3))
-        {
-            Debug.Log($"{skillData.sData[0].skillexplain}");
-        }
-    }
 }

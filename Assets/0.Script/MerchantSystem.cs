@@ -27,10 +27,6 @@ public class MerchantSystem : Singleton<MerchantSystem>
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F6))
-        {
-            SetInven();
-        }
 
     }
 
@@ -44,9 +40,11 @@ public class MerchantSystem : Singleton<MerchantSystem>
 
     }
 
+    /// <summary>
+    /// 상점에서 내 인벤토리 세팅
+    /// </summary>
     public void SetInven()
     {
-        Debug.Log("작동");
         for(int i = 0; i<merchInvenSlots.Length; i++)
         {
             if(merchInvenSlots[i].transform.childCount>=1)
@@ -69,28 +67,41 @@ public class MerchantSystem : Singleton<MerchantSystem>
         }
     }
 
-    public void FindItem(InvenItem item, int count)
+    /// <summary>
+    /// 아이템 판매 체크 함수
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="count"></param>
+    public void SellItemCheck(InvenItem item, int count)
     {
         int index = item.transform.parent.GetSiblingIndex();
         Debug.Log($"{index}");
 
+        //전체 판매할 경우
         if(merchInvenSlots[index].GetChild(0).GetComponent<InvenItem>().data.count==count)
         {
+            //인벤토리에서 아이템 삭제
             Destroy(inven.invenSlots[index].GetChild(0).gameObject);
+            //인벤토리 빈 것으로 체크
             inven.invenSlots[index].GetComponent<Slots>().isFilled = false;
         }
+
+        //일부만 판매할 경우
         else if(merchInvenSlots[index].GetChild(0).GetComponent<InvenItem>().data.count > count)
         {
+            //인벤토리에서 수량만 변경
             Inventory.Instance.ItemCount(inven.invenSlots[index].GetChild(0).GetComponent<InvenItem>(), count, true);
         }
     }
 
-    /*
-    public void BuyItems(InvenItem item, int count)
+    public void BuyItemCheck(InvenItem item)
     {
-        int index = transform.parent.GetSiblingIndex();
 
-        
     }
-    */
+
+   public void OnExitBtn()
+    {
+        Time.timeScale = 1;
+        window.SetActive(false);
+    }
 }

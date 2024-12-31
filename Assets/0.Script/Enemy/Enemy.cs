@@ -157,13 +157,13 @@ public abstract class Enemy : MonoBehaviour
         }
 
         pd.EXP += data.EXP;
-        QuestManager.Instance.Check(this);
+        QuestManager.Instance.Check(data.Index);
         sa.SetSprite(deadSprite, 0.2f);
         yield return new WaitForSeconds(0.8f);
         GameObject item = Instantiate(dropItem, transform);
         
         item.transform.SetParent(null);
-        item.transform.localScale = new Vector3(5f,5f,5f);
+
         Destroy(gameObject);
     }
 

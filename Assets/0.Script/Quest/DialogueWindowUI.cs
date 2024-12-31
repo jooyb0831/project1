@@ -45,7 +45,7 @@ public class DialogueWindowUI : MonoBehaviour
 
         else if (idx >= currentDialogue.Count)
         {
-            
+            //퀘스트 조건 달성 시
             if(curQuest.data.isDone)
             {
                 curQuest.QuestReward();
@@ -56,20 +56,37 @@ public class DialogueWindowUI : MonoBehaviour
                 idx = 0;
                 return;
             }
+            
+            //퀘스트 수락 중 조건 미달성 시
             else if(curQuest.data.isStart && !curQuest.data.isDone)
             {
+                Time.timeScale = 1;
                 gameObject.SetActive(false);
                
             }
+            
+            //모든 퀘스트 종료했을 경우
+            else if (QuestNPCUI.Instance.allDone)
+            {
+                Time.timeScale = 1;
+                gameObject.SetActive(false);
+            }
+
+            //퀘스트 미수락 상태
             else if(!curQuest.data.isStart)
             {
+                //기본 다이얼로그였다면
                 if(isBasicDialogue)
                 {
+                    //수락 창 활성화
                     answerWindow.SetActive(true);
                     nextBtn.gameObject.SetActive(false);
                 }
+
+                //기본 다이얼로그가 아닌 상태 : 대화 종료
                 else
                 {
+                    Time.timeScale = 1;
                     gameObject.SetActive(false);
                     isBasicDialogue = true;
                 }

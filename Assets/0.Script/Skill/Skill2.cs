@@ -32,6 +32,10 @@ public class Skill2 : Skill
 
     void SkillAct()
     {
+        if (p == null)
+        {
+            p = GameManager.Instance.Player;
+        }
         if(!isOn)
         {
             shield = Pooling.Instance.GetPool(DicKey.shield, p.transform).GetComponent<Shield>();

@@ -47,19 +47,22 @@ public class AttackEnchant : StatEnchantUI
         {
             if (enchtSystem.data.ATKdata.Gold > pd.Coin)
             {
-                Debug.Log("금액이 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(4);
                 return;
             }
 
             else if (enchtSystem.data.ATKdata.NeedLv > pd.Level)
             {
-                Debug.Log("레벨이 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(5);
                 return;
             }
 
             else if (Inventory.Instance.ItemCheck(enchtSystem.data.ATKdata.CrystalIdx) < enchtSystem.data.ATKdata.CrystalNum)
             {
-                Debug.Log("강화 재료가 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(6);
                 return;
             }
         }

@@ -30,7 +30,9 @@ public class HeartEnchant : StatEnchantUI
 
     public void OnCilcked()
     {
-        if (enchtSystem.data.HPdata.Gold <= pd.Coin && enchtSystem.data.HPdata.NeedLv <= pd.Level && Inventory.Instance.ItemCheck(enchtSystem.data.HPdata.CrystalIdx) >= enchtSystem.data.HPdata.CrystalNum)
+        if (enchtSystem.data.HPdata.Gold <= pd.Coin 
+            && enchtSystem.data.HPdata.NeedLv <= pd.Level 
+            && Inventory.Instance.ItemCheck(enchtSystem.data.HPdata.CrystalIdx) >= enchtSystem.data.HPdata.CrystalNum)
         {
             pd.MAXHP = enchtSystem.data.HPdata.NextHP; // 체력 증가 처리
             pd.Coin -= enchtSystem.data.HPdata.Gold; // 골드 사용 처리
@@ -43,19 +45,22 @@ public class HeartEnchant : StatEnchantUI
         {
             if (enchtSystem.data.HPdata.Gold > pd.Coin)
             {
-                Debug.Log("금액이 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(4);
                 return;
             }
 
             else if (enchtSystem.data.HPdata.NeedLv > pd.Level)
             {
-                Debug.Log("레벨이 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(5);
                 return;
             }
 
             else if (Inventory.Instance.ItemCheck(0) < enchtSystem.data.HPdata.CrystalNum)
             {
-                Debug.Log("강화 재료가 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(6);
                 return;
             }
         }

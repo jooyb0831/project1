@@ -76,8 +76,8 @@ public class Inventory : Singleton<Inventory>
             itemData.fieldItem.InvenFull(isFull);
             return;
         }
-
         itemData.fieldItem.InvenFull(isFull);
+
         itemNumbers.Add(itemData.itemNumber);
         int index = SlotCheck();
         InvenItem item = Instantiate(invenItem, invenSlots[index]);
@@ -113,6 +113,14 @@ public class Inventory : Singleton<Inventory>
         if (itemNumbers.Contains(invenItem.data.itemNumber))
         {
             ItemCheck(invenItem);
+            return;
+        }
+
+        bool isFull = EmptySlotCheck();
+        if(isFull)
+        {
+            GameUI.Instance.fullInvenObj.SetActive(true);
+            GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(0);
             return;
         }
 
@@ -156,7 +164,7 @@ public class Inventory : Singleton<Inventory>
     }
 
     /// <summary>
-    /// 슬롯 인덱스
+    /// 슬롯 인덱스 부여
     /// </summary>
     /// <returns></returns>
     int SlotCheck()
@@ -250,7 +258,7 @@ public class Inventory : Singleton<Inventory>
     }
 
     /// <summary>
-    /// 강화 시 찾는 함수
+    /// 강화시 아이템 찾는 함수
     /// </summary>
     /// <param name="itemNum"></param>
     /// <param name="useCnt"></param>
@@ -288,10 +296,20 @@ public class Inventory : Singleton<Inventory>
         ItemType type = item.data.type;
 
        if(!type.Equals(ItemType.Missile))
-        {
-            item.data.fItem.Using();
-        }
+       {
+           item.data.fItem.Using();
+       }
         
+       if(type.Equals(ItemType.Potion))
+        {
+            if(pd.HP==pd.MAXHP)
+            {
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(1);
+                return;
+            }
+        }
+
         item.data.count--;
         item.ItemCntChange(item.data);
         if(item.data.count<=0)
@@ -390,6 +408,7 @@ public class Inventory : Singleton<Inventory>
                 }
                 invenItem.data.count += count;
                 invenItem.ItemCntChange(invenItem.data);
+
                 if (invenItem.data.inQuickSlot)
                 {
                     invenItem.data.qItem.ItemCntChange(invenItem);
@@ -399,9 +418,7 @@ public class Inventory : Singleton<Inventory>
             {
                 GetItem(item);
             }
-
         }
-
     }
 
 

@@ -192,7 +192,7 @@ public class Player : MonoBehaviour
         ladderAttach = false;
     }
 
-    
+
     /// <summary>
     /// 플레이어 움직임
     /// </summary>
@@ -213,6 +213,7 @@ public class Player : MonoBehaviour
         {
             speed = data.Speed;
         }
+
         #region 사다리 이동
         // 사다리에 붙은 상태
         if (ladderAttach)
@@ -251,10 +252,10 @@ public class Player : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(foot.position, Vector3.down, 0.2f);
         Debug.DrawRay(foot.position, Vector3.down * 0.2f, Color.red);
 
-        if(hit.collider == null)
+        if (hit.collider == null)
         {
             state = State.Jump;
-            if(x!=0)
+            if (x != 0)
             {
                 transform.localScale = x > 0 ? Vector3.one * 5f : new Vector3(-5f, 5f, 5f);
             }
@@ -263,10 +264,10 @@ public class Player : MonoBehaviour
         }
 
         // Raycast의 반환(hit)이 Ground인 경우
-        if(hit.collider.GetComponent<Ground>())
+        if (hit.collider.GetComponent<Ground>())
         {
             state = State.Idle;
-            if(Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump"))
             {
                 Jump();
             }
@@ -277,7 +278,6 @@ public class Player : MonoBehaviour
             StateCheck(state);
         }
         #endregion
-
 
         #region 횡 이동
         // x(횡 이동)값이 0이 아닌 경우 : 좌우로 이동할 때
@@ -329,7 +329,6 @@ public class Player : MonoBehaviour
         }
         #endregion
 
-
         #region 키 이벤트
         // 앉기
         if (Input.GetKey(KeyCode.C))
@@ -343,7 +342,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        // 총알 발사
+        // 기본공격(총 발사)
         if (Input.GetKey(KeyCode.P))
         {
             if (state != State.Attack && state != State.WalkAttack && state!=State.SitAttack)
@@ -360,7 +359,6 @@ public class Player : MonoBehaviour
             }
 
         }
-        #endregion
 
         #region 아이템
         // 아이템 사용하는 코드
@@ -392,6 +390,8 @@ public class Player : MonoBehaviour
                 }
             }
         }
+        #endregion
+
         #endregion
 
         StateCheck(state);
@@ -558,8 +558,6 @@ public class Player : MonoBehaviour
             fireTimer = 0;
             canFire = false;
         }
-
-        
         if(state == State.SitAttack)
         {
             if(canFire == false)

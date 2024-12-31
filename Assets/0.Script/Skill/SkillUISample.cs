@@ -35,12 +35,9 @@ public class SkillUISample : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// 스킬 클릭 버튼을 눌렀을 때 작동하는 함수
+    /// </summary>
     public void OnClickBtn()
     {
         if(!isUnlock)

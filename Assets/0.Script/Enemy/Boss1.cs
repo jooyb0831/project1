@@ -24,10 +24,6 @@ public class Boss1 : EnemyBoss
         {
             pd.StageCleared[0] = true;
         }
-        if(Input.GetKeyDown(KeyCode.F7))
-        {
-            Debug.Log($"{data.CURHP}");
-        }
         if(p == null)
         {
             p = GameManager.Instance.Player;
@@ -100,14 +96,8 @@ public class Boss1 : EnemyBoss
 
     void Move()
     {
-        if(transform.position.x > p.transform.position.x)
-        {
-            transform.localScale = new Vector3(-10, 10, 10);
-        }
-        else if (transform.position.x<p.transform.position.x)
-        {
-            transform.localScale = new Vector3(10, 10, 10);
-        }
+        transform.localScale = transform.position.x > p.transform.position.x ? new Vector3(-10, 10, 10)
+                                                                             : 10 * Vector3.one;
 
         if(state == BossState.Attack1)
         {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameStartScene : MonoBehaviour
 {
+    [SerializeField] GameObject helpWindow;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +20,15 @@ public class GameStartScene : MonoBehaviour
     public void OnStartBtn()
     {
         SceneChanger.Instance.GameStart();
+    }
+
+    public void OnHelpBtn()
+    {
+        helpWindow.SetActive(true);
+    }
+
+    public void OnExitBtn()
+    {
+        Application.Quit();
     }
 }

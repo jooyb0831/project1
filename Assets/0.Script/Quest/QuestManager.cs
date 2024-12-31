@@ -6,6 +6,8 @@ public class QuestManagerData
 {
     public bool isQuest1Started = false;
 }
+
+
 public class QuestManager : Singleton<QuestManager>
 {
     public List<Quest> qList;
@@ -22,7 +24,7 @@ public class QuestManager : Singleton<QuestManager>
 
     //퀘스트 진행도는 pd쪽에 넣는게 나음.
 
-    // Start is called before the first frame update
+
     void Start()
     {
         DontDestroyOnLoad(this);
@@ -45,7 +47,7 @@ public class QuestManager : Singleton<QuestManager>
     /// 킬카운트체크
     /// </summary>
     /// <param name="enemy"></param>
-    public void Check(Enemy enemy)
+    public void Check(int eIdx)
     {
         int idx = -1;
         QuestUI qUI = null;
@@ -56,19 +58,11 @@ public class QuestManager : Singleton<QuestManager>
         }
         for (int i = 0; i< onGoingQList.Count; i++)
         {
-            if (enemy.data.Index == onGoingQList[i].data.objIndex)
+            if (eIdx == onGoingQList[i].data.objIndex)
             {
-                idx = i;
-                qUI = Find(enemy.data.Index);
-                break;
-            }
-        }
-        for(int i = 0; i<onGoingQList.Count; i++)
-        {
-            if(enemy.data.Index == onGoingQList[i].data.objIndex)
-            {
-                idx = i;
-                qMUI = FindUI(enemy.data.Index);
+                idx = onGoingQList[i].data.objIndex;
+                qUI = Find(eIdx);
+                qMUI = FindUI(eIdx);
                 break;
             }
         }
@@ -79,9 +73,9 @@ public class QuestManager : Singleton<QuestManager>
         else
         {
             enemyKillCnt[idx]++;
-            onGoingQList[idx].data.curCount = enemyKillCnt[enemy.data.Index];
-            qUI.curCnt = enemyKillCnt[enemy.data.Index];
-            qMUI.curCnt = enemyKillCnt[enemy.data.Index];
+            onGoingQList[0].data.curCount = enemyKillCnt[eIdx];
+            qUI.curCnt = enemyKillCnt[eIdx];
+            qMUI.curCnt = enemyKillCnt[eIdx];
         }
     }
 
@@ -130,7 +124,6 @@ public class QuestManager : Singleton<QuestManager>
     public void AddQuest(Quest quest)
     {
         pd.OnGoingQList.Add(quest);
-        //Quest obj = Instantiate(qList[0], transform);
         onGoingQList.Add(quest);
         quest.data.isStart = true;
         quest.QuestAdd();

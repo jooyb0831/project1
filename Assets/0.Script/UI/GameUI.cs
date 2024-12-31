@@ -19,6 +19,8 @@ public class GameUI : Singleton<GameUI>
 
     public GameObject gameOverUI;
 
+    public GameObject fullInvenObj;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -119,5 +121,11 @@ public class GameUI : Singleton<GameUI>
             }
             coinTxt.text = pd.Coin.ToString();
         }
+    }
+
+    public void OnQuitBtn()
+    {
+        Time.timeScale = 1;
+        SceneChanger.Instance.Title();
     }
 }

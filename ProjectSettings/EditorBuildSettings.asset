@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/8.Scenes/GameStart.unity
     guid: ba12dfe21b497bf4a8bb8fd7e2f8dd55
   - enabled: 1
+    path: Assets/8.Scenes/Init.unity
+    guid: e870eb83541cde14da6ed43ddd22b34f
+  - enabled: 1
     path: Assets/8.Scenes/Ship.unity
     guid: 95cfb83dbbf6c404f8578dbfbd97423b
   - enabled: 1

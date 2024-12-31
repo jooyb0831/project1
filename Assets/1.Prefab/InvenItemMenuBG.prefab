@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1426210991992878647}
   m_Layer: 5
   m_Name: Equip
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,9 +162,10 @@ GameObject:
   - component: {fileID: 6190652493745465511}
   - component: {fileID: 2084749736375570227}
   - component: {fileID: 1176901532085405600}
+  - component: {fileID: 7001304026035829860}
   m_Layer: 5
   m_Name: ExitBtn
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,6 +284,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!61 &7001304026035829860
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751022694829851296}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 25, y: 25}
+  m_EdgeRadius: 0
 --- !u!1 &6224073187199215806
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +324,7 @@ GameObject:
   - component: {fileID: 7451860696196746733}
   m_Layer: 5
   m_Name: UseTxt
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -443,9 +470,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4134729938846508050}
   - component: {fileID: 1836922151272571028}
+  - component: {fileID: 8420931507165183217}
   m_Layer: 5
   m_Name: Btn
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -499,6 +527,32 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!61 &8420931507165183217
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6615455506071172101}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -11.944458}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 150, y: 135.12195}
+  m_EdgeRadius: 0
 --- !u!1 &6793461580979948428
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,9 +565,10 @@ GameObject:
   - component: {fileID: 1375186065911231529}
   - component: {fileID: 6307859564404053241}
   - component: {fileID: 3914257355990934608}
+  - component: {fileID: 157703425302744977}
   m_Layer: 5
   m_Name: DumpBtn
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -633,6 +688,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!61 &157703425302744977
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6793461580979948428}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 140, y: 40}
+  m_EdgeRadius: 0
 --- !u!1 &7342973930573640167
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,7 +728,7 @@ GameObject:
   - component: {fileID: 3789128210778981293}
   m_Layer: 5
   m_Name: DumpTxt
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -795,9 +876,10 @@ GameObject:
   - component: {fileID: 6608775139100040812}
   - component: {fileID: 2384943501824735946}
   - component: {fileID: 7669040466562588039}
+  - component: {fileID: 6316528230751651775}
   m_Layer: 5
   m_Name: UseBtn
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -904,7 +986,45 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2384943501824735946}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 197490291266676095}
+        m_TargetAssemblyTypeName: InvenItemOption, Assembly-CSharp
+        m_MethodName: OnUseBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!61 &6316528230751651775
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8784130986201012941}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 140, y: 40}
+  m_EdgeRadius: 0
 --- !u!1 &8838773537458822188
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,9 +1037,10 @@ GameObject:
   - component: {fileID: 5845797955090827564}
   - component: {fileID: 1206507297992081064}
   - component: {fileID: 7844059559444204702}
+  - component: {fileID: 1338227662500080550}
   m_Layer: 5
   m_Name: EquipBtn
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1029,7 +1150,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 197490291266676095}
         m_TargetAssemblyTypeName: InvenItemOption, Assembly-CSharp
-        m_MethodName: OnEquiqBtn
+        m_MethodName: OnEquipBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1039,6 +1160,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!61 &1338227662500080550
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8838773537458822188}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 140, y: 40}
+  m_EdgeRadius: 0
 --- !u!1 &8974422446151241562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,9 +1198,10 @@ GameObject:
   - component: {fileID: 197490291266676095}
   - component: {fileID: 7135343261005850909}
   - component: {fileID: 4796618832806830870}
+  - component: {fileID: 7481916592640613517}
   m_Layer: 5
   m_Name: InvenItemMenuBG
-  m_TagString: Untagged
+  m_TagString: InvenItemMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1132,3 +1280,29 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &7481916592640613517
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8974422446151241562}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.4161682, y: -0.8323364}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 146.65558, y: 166.6311}
+  m_EdgeRadius: 0

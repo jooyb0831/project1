@@ -26,9 +26,8 @@ public class FieldItem : MonoBehaviour
     bool isFind = false;
     float speed;
     [SerializeField] protected List<Sprite> itemSprites;
-
     bool isFull = false;
-    // Start is called before the first frame update
+
     void Start()
     {
         Init();
@@ -46,7 +45,6 @@ public class FieldItem : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -74,15 +72,15 @@ public class FieldItem : MonoBehaviour
 
 
     }
-    
+
     public void InvenFull(bool invenFull)
     {
         isFull = invenFull;
-        if(invenFull)
+        if (invenFull)
         {
-            Debug.Log("인벤토리가 가득 찼습니다.");
+            GameUI.Instance.fullInvenObj.SetActive(true);
+            GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(0);
         }
-        
     }
 
     public virtual void Using()
@@ -96,4 +94,5 @@ public class FieldItem : MonoBehaviour
             pd = GameManager.Instance.PlayerData;
         }
     }
+
 }

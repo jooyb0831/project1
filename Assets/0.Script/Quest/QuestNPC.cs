@@ -37,6 +37,7 @@ public class QuestNPC : MonoBehaviour
             {
                 QuestNPCUI.Instance.SetString();
                 QuestNPCUI.Instance.window.SetActive(true);
+                Time.timeScale = 0;
             }
         }
         else

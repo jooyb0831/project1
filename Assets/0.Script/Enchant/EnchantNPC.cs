@@ -36,6 +36,7 @@ public class EnchantNPC : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 EnchantUI.Instance.window.SetActive(true);
+                Time.timeScale = 0;
             }
         }
         else

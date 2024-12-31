@@ -45,20 +45,17 @@ public class ItemBuyWindow : MonoBehaviour
 
     public void OnBuyBtn()
     {
-        if(int.Parse(numInputField.text)>invenItem.data.count)
-        {
-            Debug.Log("수량이 너무 많습니다.");
-            return;
-        }
-
         if(totalPrice>pd.Coin)
         {
-            Debug.Log("골드가 부족합니다.");
+            GameUI.Instance.fullInvenObj.SetActive(true);
+            GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(4);
             return;
         }
 
-        Inventory.Instance.ItemCount(invenItem, int.Parse(numInputField.text), false);
-        //MerchantSystem.Instance.FindItem(invenItem, int.Parse(numInputField.text));
+        for (int i = 0; i < int.Parse(numInputField.text); i++)
+        {
+            Inventory.Instance.GetItem(invenItem);
+        }
         pd.Coin -= totalPrice;
         MerchantSystem.Instance.SetInven();
         Destroy(gameObject);

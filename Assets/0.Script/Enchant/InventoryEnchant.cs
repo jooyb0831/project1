@@ -59,23 +59,31 @@ public class InventoryEnchant : StatEnchantUI
         {
             if(enchtSystem.data.InvenEnData.Gold > pd.Coin)
             {
-                Debug.Log("금액이 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(4);
+                return;
             }
 
             else if(enchtSystem.data.InvenEnData.NeedLv > pd.Level)
             {
-                Debug.Log("레벨이 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(5);
+                return;
             }
             
             else if(Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.CrystalIdx) < enchtSystem.data.InvenEnData.CrystalNum
                 || Inventory.Instance.ItemCheck(enchtSystem.data.InvenEnData.NeedItemIdx) < enchtSystem.data.InvenEnData.NeedItemNum)
             {
-                Debug.Log("강화 재료가 부족합니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(6);
+                return;
             }
 
             else if(enchtSystem.data.InvenEnData.CurSlotNum >= 10)
             {
-                Debug.Log("더 이상 강화할 수 없습니다.");
+                GameUI.Instance.fullInvenObj.SetActive(true);
+                GameUI.Instance.fullInvenObj.GetComponent<FullInvenObj>().Act(8);
+                return;
             }
         }
 

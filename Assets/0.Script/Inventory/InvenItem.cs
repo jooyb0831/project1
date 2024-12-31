@@ -5,13 +5,17 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] Image itemBG;
     [SerializeField] Image itemIcon;
     [SerializeField] GameObject cntBG;
     [SerializeField] TMP_Text cntTxt;
+
     public GameObject invenOption = null;
+    public GameObject invenExplain = null;
+
+    public GameObject itemExplainWindow;
     public GameObject itemOptionWindow;
     public GameObject itemSellWindow;
     public GameObject itemBuyWindow;
@@ -44,43 +48,42 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
+
         if(Input.GetMouseButtonDown(1))
         {
-            if(transform.parent.GetComponent<Slots>().isMerchantInven || transform.transform.parent.GetComponent<Slots>().isSellInven)
+            if(transform.parent.GetComponent<Slots>().isMerchantInven 
+                || transform.transform.parent.GetComponent<Slots>().isSellInven)
             {
                 return;
             }
             if(invenOption == null)
             {
                 invenOption = Instantiate(itemOptionWindow, transform);
-                //아이템 종류에 따라서 목록 다르게 수정
                 invenOption.GetComponent<InvenItemOption>().item = this;
+
+                //아이템 종류에 따라서 목록 다르게 수정
 
                 for (int i = 0; i < invenOption.transform.GetChild(1).childCount; i++)
                 {
                     invenOption.transform.GetChild(1).GetChild(i).gameObject.SetActive(true);
                 }
-                if (invenOption.GetComponent<InvenItemOption>().item.data.type.Equals(ItemType. Gem))
+
+                //아이템 종류에 따라서 목록 다르게 수정
+                if (invenOption.GetComponent<InvenItemOption>().item.data.type.Equals(ItemType. Gem)
+                    || invenOption.GetComponent<InvenItemOption>().item.data.type.Equals(ItemType.Etc))
                 {
                     invenOption.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
                     invenOption.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
                 }
+                if(invenOption.GetComponent<InvenItemOption>().item.data.type.Equals(ItemType.Missile)
+                    || invenOption.GetComponent<InvenItemOption>().item.data.type.Equals(ItemType.Bomb))
+                {
+                    invenOption.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+                }
 
-                invenOption.transform.SetParent(transform.parent.parent.parent);
+                invenOption.transform.SetParent(transform.parent.parent.parent.parent);
                 invenOption.transform.SetAsLastSibling();
             }
 
@@ -110,11 +113,31 @@ public class InvenItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        
+
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (invenExplain == null)
+        {
+            ItemExplainWindow window = Instantiate(itemExplainWindow, transform).GetComponent<ItemExplainWindow>();
+            window.SetData(this);
+            invenExplain = window.gameObject;
+            invenExplain.transform.SetParent(transform.parent.parent.parent.parent);
+            invenExplain.transform.SetAsLastSibling();
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if(invenExplain !=null)
+        {
+            Destroy(invenExplain);
+        }
     }
 }

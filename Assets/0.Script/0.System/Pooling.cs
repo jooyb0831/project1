@@ -15,6 +15,7 @@ public enum DicKey
     fallSnowBall,
     shield
 }
+
 public class Pooling : Singleton<Pooling>
 {
     private Queue<PBullet> pbQueue = new Queue<PBullet>();
@@ -55,6 +56,8 @@ public class Pooling : Singleton<Pooling>
         pool.Add(DicKey.shield, new Queue<GameObject>());
         
     }
+
+    
 
     public void SetPool(DicKey key, GameObject obj)
     {
@@ -111,9 +114,8 @@ public class Pooling : Singleton<Pooling>
                 }
                 break;
         }
-        obj.gameObject.SetActive(false);
+        obj.SetActive(false);
         pool[key].Enqueue(obj);
-        Debug.Log("s");
     }
 
     public GameObject GetPool(DicKey key, Transform trans = null)
@@ -175,7 +177,6 @@ public class Pooling : Singleton<Pooling>
         }
         obj = pool[key].Dequeue();
         obj.transform.localPosition = trans.position;
-        //obj.transform.localRotation = trans.rotation;
         obj.SetActive(true);
         return obj;
     }

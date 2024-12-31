@@ -21,33 +21,37 @@ public class SkillSystem : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            if(qSkill == null)
-            {
-                Debug.Log("장착된 스킬이 없습니다.");
-                return;
-            }
-            if(qSkill.GetComponent<Skill>().isStart || qSkill.GetComponent<Skill>().isWorking)
-            {
-                return;
-            }
-            qSkill.GetComponent<Skill>().isStart = true;
+            UseSkill(qSkill);
         }
 
         if(Input.GetKeyDown(KeyCode.I))
         {
-            if (iSkill == null)
-            {
-                Debug.Log("장착된 스킬이 없습니다.");
-                return;
-            }
-            if (iSkill.GetComponent<Skill>().isStart || iSkill.GetComponent<Skill>().isWorking)
-            {
-                return;
-            }
-            iSkill.GetComponent<Skill>().isStart = true;
+            UseSkill(iSkill);
         }
     }
 
+    /// <summary>
+    /// 스킬 사용
+    /// </summary>
+    /// <param name="skillObj"></param>
+    void UseSkill(GameObject skillObj)
+    {
+        Skill skill = skillObj.GetComponent<Skill>();
+        if (skillObj == null)
+        {
+            return;
+        }
+        if (skill.GetComponent<Skill>().isStart || skill.GetComponent<Skill>().isWorking)
+        {
+            return;
+        }
+        skill.GetComponent<Skill>().isStart = true;
+    }
+
+
+    /// <summary>
+    /// 스킬 세팅
+    /// </summary>
     public void SetSkill()
     {
         if(qSkill!=null)
@@ -68,6 +72,9 @@ public class SkillSystem : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 스킬UI 세팅
+    /// </summary>
     public void SetSkillUI()
     {
         for(int i = 0; i<skills.Length; i++)

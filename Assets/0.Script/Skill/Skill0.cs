@@ -39,15 +39,15 @@ public class Skill0 : Skill
             SkillAct();
             isWorking = true;
         }
-
         if (isWorking)
         {
             CoolTimeCheck();
         }
-
- 
     }
 
+    /// <summary>
+    /// 스킬 작동
+    /// </summary>
     void SkillAct()
     {
         if(!setPos)
@@ -70,6 +70,9 @@ public class Skill0 : Skill
         }
     }
 
+    /// <summary>
+    /// 쿨타임 체크
+    /// </summary>
     void CoolTimeCheck()
     {
         coolTimer += Time.deltaTime;
@@ -80,12 +83,19 @@ public class Skill0 : Skill
         }
     }
 
+    /// <summary>
+    /// 총알발사(생성)
+    /// </summary>
     public void FireBullet()
     {
         Vector3 randPos = Return_RandomPosition();
         Instantiate(bullet, randPos, Quaternion.identity);
     }
 
+    /// <summary>
+    /// bulletArea 내에서 랜덤 포지션으로 생성하는 코드
+    /// </summary>
+    /// <returns></returns>
     Vector3 Return_RandomPosition()
     {
         Vector3 originPosition = bulletArea.transform.position;
@@ -101,6 +111,10 @@ public class Skill0 : Skill
         return respawnPosition;
     }
 
+    /// <summary>
+    /// bulletArea의 위치
+    /// </summary>
+    /// <returns></returns>
     public Vector2 SetPosition()
     {
         if (p == null)
@@ -114,4 +128,5 @@ public class Skill0 : Skill
         Vector2 vec = new(x, y);
         return vec;
     }
+
 }

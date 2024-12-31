@@ -12,9 +12,11 @@ public class QuestNPCUI : Singleton<QuestNPCUI>
     public List<string> noDialogue;
     public List<string> questGoingDialogue;
     public List<string> questEndDialogue;
+    public List<string> noQuestDialogue;
     public Quest curQuest = null;
     public Quest onGoingQuest = null;
     private QuestManager qm;
+    public bool allDone = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,33 +28,23 @@ public class QuestNPCUI : Singleton<QuestNPCUI>
     {
         questGoingDialogue.Add("임무가 끝나거든 알려주시오.");
         questEndDialogue.Add("고맙소. 여기 약속한 보상일세.");
+        noQuestDialogue.Add("당분간은 부탁할 일이 없소.");
 
-        if(qm.onGoingQList.Count!=0)
+        if(qm.onGoingQList.Count!=0 && !allDone)
         {
             onGoingQuest = qm.onGoingQList[0];
+        }
+        
+        if(curQuest == null)
+        {
+            allDone = true;
         }
 
     }
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            //Debug.Log($"{curQuest.data.dialogue.Length}");
-        }
-        /*
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (window.activeSelf)
-            {
-                window.SetActive(false);
-            }
-            else if (!window.activeSelf)
-            {
-                return;
-            }
-        }
-        */
+        
     }
 
     public void SetQuest()
@@ -66,19 +58,19 @@ public class QuestNPCUI : Singleton<QuestNPCUI>
             }
         }
         window.GetComponent<DialogueWindowUI>().curQuest = curQuest;
-        /*
-        if (!qm.data.isQuest1Started)
-        {
-            curQuest = qm.qList[0];
-            window.GetComponent<DialogueWindowUI>().curQuest = curQuest;
-            //window.GetComponent<DialogueWindowUI>().stringArea.text = window.GetComponent<DialogueWindowUI>().dialogue[0];
-        }
-        */
+
+       
     }
 
     public void SetString()
     {
-        if(onGoingQuest == null)
+        if(allDone)
+        {
+            window.GetComponent<DialogueWindowUI>().SetCurDialogue(noQuestDialogue);
+            return;
+        }
+
+        if(onGoingQuest == null && !allDone)
         {
             for (int i = 0; i < curQuest.data.basicDialogue.Length; i++)
             {
@@ -112,6 +104,7 @@ public class QuestNPCUI : Singleton<QuestNPCUI>
             }
             
         }
+
         
     }
 

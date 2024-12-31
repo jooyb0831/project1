@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpriteManager : Singleton<SpriteManager>
 {
+    // Sprite를 관리해주는 스크립트
+
     [System.Serializable]
     public class PlayerSprite
     {
