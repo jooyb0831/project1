@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class GameManager : Singleton<GameManager>
 {
     void Start()
@@ -123,6 +119,19 @@ public class GameManager : Singleton<GameManager>
                 enchtSystem = FindAnyObjectByType<EnchantSystem>();
             }
             return enchtSystem;
+        }
+    }
+
+    private Pooling pooling;
+    public Pooling Pooling
+    {
+        get
+        {
+            if(pooling == null)
+            {
+                pooling = FindAnyObjectByType<Pooling>();
+            }
+            return pooling;
         }
     }
 }

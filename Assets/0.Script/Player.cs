@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     public PlayerData data;
     public Inventory inventory;
+    private Pooling pooling;
     private Rigidbody2D rigid;
 
     public Transform firePos;
@@ -73,12 +74,15 @@ public class Player : MonoBehaviour
     public State state = State.Idle;
 
 
-    // Start is called before the first frame update
+
     void Start()
     {
         inventory = GameManager.Instance.Inven;
         data = GameManager.Instance.PlayerData;
+        pooling = GameManager.Instance.Pooling;
+
         sa = GetComponent<SpriteAnimation>();
+
         SpriteManager.PlayerSprite pSprite = SpriteManager.Instance.playerSprite[0];
         idleSprites = pSprite.idleSprites;
         walkSprites = pSprite.walkSprites;
@@ -508,11 +512,12 @@ public class Player : MonoBehaviour
     /// </summary>
     void Bullet()
     {
-        PBullet pbullet = Pooling.Instance.GetPool(DicKey.pBullet, firePos).GetComponent<PBullet>();
-        if (pbullet == null)
-        {
-            return;
-        }
+        //Pool에서 총알 가져오기
+        PBullet pbullet = pooling.GetPool(DicKey.pBullet, firePos).GetComponent<PBullet>();
+        
+        //총알이 없으면 리턴
+        if (pbullet == null) return;
+        //플레이어 방향에 따른 발사 방향 처리
         if (transform.localScale.x < 0)
         {
             pbullet.isRight = false;
@@ -521,20 +526,25 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 총알(움직일 경우)
+    /// 총알
     /// </summary>
     /// <param name="state"></param>
     void Bullet(State state)
     {
         PBullet pbullet = null;
-        Transform pos = (state.Equals(State.WalkAttack) || state.Equals(State.RunAttack)) ? firePos :
+        //총알 발사 위치 Transform 받기
+        //서서 공격 시 firePos, 앉아서 공격시 sitFirePos로 세팅
+        Transform pos = (state.Equals(State.Attack) || state.Equals(State.WalkAttack) 
+                        || state.Equals(State.RunAttack)) ? firePos :
                         (state.Equals(State.SitAttack)) ? sitFirePos : null;
 
-        if(pos!=null)
+        //발사 위치가 있다면
+        if(pos != null)
         {
-            pbullet = Pooling.Instance.GetPool(DicKey.pBullet, pos).GetComponent<PBullet>();
+            //총알 Pool에서 꺼내서 발사처리
+            pbullet = pooling.GetPool(DicKey.pBullet, pos).GetComponent<PBullet>();
         }
-
+        //플레이어 방향에 따른 발사 방향 처리
         if (transform.localScale.x < 0)
         {
             pbullet.isRight = false;
@@ -548,26 +558,14 @@ public class Player : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        if(state == State.WalkAttack || state == State.RunAttack)
-        {
-            if(!canFire)
-            {
-                return;
-            }
-            Bullet();
-            fireTimer = 0;
-            canFire = false;
-        }
-        if(state == State.SitAttack)
-        {
-            if(canFire == false)
-            {
-                return;
-            }
-            Bullet(state);
-            fireTimer = 0;
-            canFire = false;
-        }
+        //발사할 수 없는 상태면 리턴 
+        if (!canFire) return;
+        //총알 처리
+        Bullet(state);
+        //발사시간 초기화 
+        fireTimer = 0;
+        //발사 불가능한 상태로 체크
+        canFire = false;
         
     }
 
@@ -712,14 +710,14 @@ public class Player : MonoBehaviour
         if (bullet)
         {
             PlayerHit(bullet.damage);
-            Pooling.Instance.SetPool(DicKey.eBullet, bullet.gameObject);
+            pooling.SetPool(DicKey.eBullet, bullet.gameObject);
         }
 
         EBullet2 bullet2 = collision.gameObject.GetComponent<EBullet2>();
         if (bullet2)
         {
             PlayerHit(bullet2.damage);
-            Pooling.Instance.SetPool(DicKey.eBullet2, bullet2.gameObject);
+            pooling.SetPool(DicKey.eBullet2, bullet2.gameObject);
         }
 
         if (collision.CompareTag("Boss1Atk"))
@@ -743,14 +741,14 @@ public class Player : MonoBehaviour
         if (boss2Bullet)
         {
             PlayerHit(boss2Bullet.damage);
-            Pooling.Instance.SetPool(DicKey.boss2Bullet, boss2Bullet.gameObject);
+            pooling.SetPool(DicKey.boss2Bullet, boss2Bullet.gameObject);
         }
 
         Boss3Bullet boss3Bullet = collision.gameObject.GetComponent<Boss3Bullet>();
         if (boss3Bullet)
         {
             PlayerHit(boss3Bullet.damage);
-            Pooling.Instance.SetPool(DicKey.boss3Bullet, boss3Bullet.gameObject);
+            pooling.SetPool(DicKey.boss3Bullet, boss3Bullet.gameObject);
         }
 
         Boss3Bullet2 boss3Bullet2 = collision.gameObject.GetComponent<Boss3Bullet2>();

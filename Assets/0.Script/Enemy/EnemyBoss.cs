@@ -160,7 +160,7 @@ public class EnemyBoss : MonoBehaviour
         data.Speed = 0;
         GetComponent<CapsuleCollider2D>().isTrigger = false;
         GetComponent<Rigidbody2D>().gravityScale = 1;
-        sa.SetSprite(deadSprite, 0.17f, false, Clear);
+        sa.SetSprite(deadSprite, 0.2f, false, Clear);
         p.data.EXP += data.EXP;
         BossUI.Instance.UIOff();
     }

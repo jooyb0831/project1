@@ -26,7 +26,7 @@ public class GameOverUI : MonoBehaviour
 
     public void Active()
     {
-        GetComponent<Image>().DOFade(1, 1.5f).OnComplete(() => Time.timeScale = 0);
+        GetComponent<Image>().DOFade(1, 1.5f).SetUpdate(true).OnComplete(() => Time.timeScale = 0);
     }
 
     public void OnClickedRetryBtn()

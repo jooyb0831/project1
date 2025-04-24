@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 public class TipText : MonoBehaviour
 {
@@ -12,14 +9,14 @@ public class TipText : MonoBehaviour
 
     float timer;
     float delay = 3f;
-    int index = 0;
-    // Start is called before the first frame update
+    int index;
+
     void Start()
     {
+        index = RandomIndex();
         GetComponent<TMP_Text>().text = $"Tip. {tips[index]}";
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
@@ -33,5 +30,10 @@ public class TipText : MonoBehaviour
             }
             GetComponent<TMP_Text>().text = $"Tip. {tips[index]}";
         }
+    }
+
+    int RandomIndex()
+    {
+        return Random.Range(0, tips.Length);
     }
 }

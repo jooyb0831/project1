@@ -37,6 +37,7 @@ public class GameUI : Singleton<GameUI>
     public void GameOver()
     {
         gameOverUI.SetActive(true);
+        BossUI.Instance.UIOff();
         gameOverUI.GetComponent<GameOverUI>().Active();
     }
 

@@ -12,17 +12,6 @@ public class BossUI : Singleton<BossUI>
     [SerializeField] GameObject obj;
     public EnemyBoss boss;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void SetUI()
     {
