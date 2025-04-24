@@ -43,11 +43,6 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected bool ski1bulletDir = false;
     [SerializeField] protected bool sk1isLeft = false;
     protected SpriteManager.EnemySprite enemySprites;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public virtual void Init()
     {
@@ -149,21 +144,36 @@ public abstract class Enemy : MonoBehaviour
         sr.color = Color.white;
     }
 
+    /// <summary>
+    /// 적 사망시 호출
+    /// </summary>
+    /// <returns></returns>
     protected IEnumerator Dead()
     {
         if(pd == null)
         {
             pd = GameManager.Instance.PlayerData;
+            StopCoroutine("Dead");
+            StartCoroutine("Dead");
+            yield return null;
         }
 
+        //경험치 추가
         pd.EXP += data.EXP;
-        QuestManager.Instance.Check(data.Index);
-        sa.SetSprite(deadSprite, 0.2f);
-        yield return new WaitForSeconds(0.8f);
-        GameObject item = Instantiate(dropItem, transform);
         
+        //퀘스트 진행 체크
+        QuestManager.Instance.Check(data.Index);
+
+        //Sprite 세팅
+        sa.SetSprite(deadSprite, 0.2f);
+
+        yield return new WaitForSeconds(0.8f);
+
+        //드랍아이템 생성
+        GameObject item = Instantiate(dropItem, transform);
         item.transform.SetParent(null);
 
+        //적 오브젝트 삭제
         Destroy(gameObject);
     }
 
@@ -173,17 +183,7 @@ public abstract class Enemy : MonoBehaviour
         state = EnemyState.Back;
         sr.color = new Color32(255, 90, 90, 255);
         data.Speed = 0f;
-        /*
-        if (transform.localScale.x < 0)
-        {
-            transform.Translate(Vector2.left * Time.deltaTime * 10f);
-        }
-        else
-        {
-            Vector2 pos = new Vector2(transform.position.x + 10f, transform.position.y);
-            transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * 5f);
-        }
-        */
+
         yield return new WaitForSeconds(0.5f);
         data.Speed = originSpeed;
         sr.color = Color.white;
